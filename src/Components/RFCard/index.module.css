@@ -1,0 +1,37 @@
+.cardBox {
+    width: fit-content;
+    margin-top: 120px;
+    margin-left: 15px;
+}
+
+.cardBox:hover {
+    transform: scale(1.2);
+}
+
+.cardImage img{
+    max-height: 220px;
+}
+
+.cardDamage {
+    width: 32px;
+    height: 32px;
+    background-color: #db2828;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: x-large;
+    line-height: initial;
+    position: relative;
+    left: 130px;
+    top: 60px;
+    z-index: 2;
+    color: white;
+}
+
+.skill {
+    position: relative;
+    top: 178px;
+    left: 6px;
+    z-index: 10;
+    margin: 2px;
+}
