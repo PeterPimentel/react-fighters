@@ -4,7 +4,7 @@ import CardInfo from './cardInfo'
 
 import styles from './index.module.css';
 
-export default function Card({card, showAttr, className}) {
+export default function Card({card, showAttr, className, onAttack}) {
     return (
         <div className={`${className}`}>
             {
@@ -26,7 +26,7 @@ export default function Card({card, showAttr, className}) {
                     <div className={styles.image}>
                         <img alt="card" src={card.image} />
                     </div>
-                    <CardInfo card={card}/>
+                    <CardInfo card={card} onAttack={onAttack}/>
                     <div className={styles.description}>{card.description}</div>
                 </div>
             </div>

@@ -96,4 +96,10 @@ const CARDS = [
 
 export const FIGTHERS = [CARDS[0], CARDS[1], CARDS[2]]
 
+export const TYPES = {
+	ITEM:'item',
+	ENERGY:'energy',
+	FIGTHER:'figther'
+}
+
 export default CARDS

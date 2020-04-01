@@ -7,7 +7,6 @@ import CARDS  from '../data/CARDS'
 
 import Ring from '../Components/Ring'
 import Room from '../Components/Room'
-import Card from '../Components/Card'
 
 export default function App() {
   const [user, setUser] = useState({
@@ -41,7 +40,7 @@ export default function App() {
                 <Ring />
               </Route>
               <Route path="/" exact>
-                <Card card={CARDS[0]}/>
+                <Home/>
               </Route>
             </OpponentContext.Provider>
           </UserContext.Provider>

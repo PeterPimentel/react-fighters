@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 import { OpponentContext } from "../../context/opponentContext"
 import { UserContext } from "../../context/userContext"
 
@@ -72,80 +74,88 @@ export default function Ring() {
         }
     }
 
+    const onDragEnd = (result) => {
+        // dropped outside the list
+        // if (!result.destination) {
+        //     return;
+        // }
+        //     result.source.index,
+        //   result.destination.index
+        console.log("RESULT", result)
+    }
+
     return (
-        <div>
-            <div>
-                <Card card={figther} showAttr={true}/>
-                <Card card={opponentFigther} showAttr={true}/>
-            </div>
-            <div>
-                <button onClick={receiveEnergy}>Give Energy</button>
-            </div>
-            <div>
-                <button onClick={endTurn}>Pass</button>
-            </div>
-            {/* <div>
-                {
-                    CARDS.map(card => <RFCard card={card} key={card.id} />)
-                }
-            </div> */}
-            {/* ################## INICIO DOS TESTES ######################*/}
-            <div>
-                <div className={styles.cards}>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>1</div>
-                        </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+
+            <div className={styles.gameBoard}>
+                <div className={styles.matchInfo}>
+                    matchInfo
+                </div>
+                {/* Arena */}
+                <div className={styles.ring}>
+                    <div className={styles.figthersContainer}>
+                        <Card className={styles.figtherOnRing} card={figther} showAttr={true} />
                     </div>
-                    {/* <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>2</div>
-                        </div>
-                    </div> */}
-                    <img alt="card" className={styles.card} src={CARDS[3].image}/>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>3</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>4</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>5</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>6</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>7</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>8</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>9</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>10</div>
-                        </div>
+
+                    <div className={styles.figthersContainer}>
+                        <Card className={styles.figtherOnRing} card={opponentFigther} showAttr={true} />
                     </div>
                 </div>
+                {/* FIM Arena */}
+                <div className={styles.deck}>
+                    DECk
+                </div>
+                <div className={styles.reserve}>
+                    <Droppable droppableId="reserve">
+                        {(provided, ) => (
+                            <div style={{ background: "red", height: "100%", width: "100%" }}
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                            >
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </div>
+                {/* <div className={styles.hand}> */}
+                <Droppable droppableId="hand">
+                    {(provided, ) => (
+                        <div className={styles.hand}
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                        >
+                            {
+                                CARDS.map((card, index) => (
+                                    <Draggable key={card.id} draggableId={`ID-${figther.id + 5}`} index={index}>
+
+                                        {
+                                            (provided) => (
+                                                <div
+                                                    className={styles.figthersContainer}
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                >
+                                                    <Card className={styles.cardInHand} card={card} />
+                                                </div>
+                                            )
+                                        }
+
+                                    </Draggable>
+                                ))
+                            }
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
             </div>
-            {/* ############################################# */}
-        </div>
+            {/* <div>
+                    <button onClick={receiveEnergy}>Give Energy</button>
+                </div>
+                <div>
+                    <button onClick={endTurn}>Pass</button>
+                </div> */}
+            {/* </div> */}
+        </DragDropContext>
     );
 }

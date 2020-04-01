@@ -2,13 +2,17 @@ import React from 'react';
 
 import styles from './index.module.css';
 
-const FigtherInfo = ({skills}) => {
+const FigtherInfo = ({skills, onAttack}) => {
+    const handleAttack = (skill) => {
+        onAttack(skill.damage)
+    }
+
     return (
         <div className={styles.info}>
             {/* energia | Nome attack | dano */}
             {
                 skills.map(skill => 
-                    <div key={skill.id} className={styles.attackInfo}>
+                    <div onClick={()=>handleAttack(skill)} key={skill.id} className={styles.attackInfo}>
                         <div className={styles.attackEnergy}>{skill.cost}</div>
                         <div className={styles.attackName}>{skill.name}</div>
                         <div className={styles.attackDamage}>{skill.damage}</div>
@@ -35,10 +39,10 @@ const EnergyInfo = () => {
     )
 }
 
-const Info = ({card}) => {
+const Info = ({card, onAttack}) => {
     switch (card.type) {
         case "figther":
-            return <FigtherInfo skills={card.skills}/>
+            return <FigtherInfo skills={card.skills} onAttack={onAttack}/>
         case "item":
             return <ItemInfo effect={card.effect}/>
         case "energy":
@@ -49,8 +53,8 @@ const Info = ({card}) => {
 }
 
 
-export default function CardInfo({card}) {
+export default function CardInfo({card, onAttack}) {
     return (
-        <Info card={card}/>
+        <Info card={card} onAttack={onAttack}/>
     );
 }
