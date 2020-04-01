@@ -1,8 +1,8 @@
 .container {
-    /* width:166px;
-    height: 236px; */
     width: 216px; /*MODEL 1*/
     height: 316px; /*MODEL 1*/
+    width:186px;
+    height: 246px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,16 +12,16 @@
 }
 
 .box {
-    /* width: 150px;
-    height: 220px; */
     width: 200px; /*MODEL 1*/
     height: 300px; /*MODEL 1*/
-    background-image: url("../../assets/bg.png");
+    width: 170px;
+    height: 230px;
+    background-image: url("../../assets/bg2.png");
     display: grid;
-    /* grid-template-columns: 110px 40px;
-    grid-template-rows: 25px 90px 90px 15px; */
     grid-template-columns: 160px 40px; /*MODEL 1*/
     grid-template-rows: 25px 150px 100px 25px; /*MODEL 1*/
+    grid-template-columns: 130px 40px;
+    grid-template-rows: 25px 110px 80px 15px;
     grid-template-areas: "name life"
                         "image image"
                         "info info"
@@ -80,8 +80,8 @@
     border-radius: 10px 0px 10px 0px;
     transform: scale(1.2);
     margin-bottom: 3px;
-    background: #81afef;
-    background: linear-gradient(0deg, rgba(0,0,0,0.2) 50%, rgba(129,175,239,1) 100%);
+    background: rgb(130,130,130);
+    background: linear-gradient(0deg, rgba(0,0,0,0.2) 50%, rgb(130,130,130, 1) 100%);
 }
 
 .attackEnergy {
@@ -132,7 +132,7 @@
     background: rgb(254,213,0);
     background: radial-gradient(circle, rgba(254,213,0,1) 0%, rgba(253,29,29,1) 50%, rgba(252,158,69,1) 100%);
     position: relative;
-    left: 180px;
+    left: 160px;
     top: 100px;
     z-index: 9;
 }

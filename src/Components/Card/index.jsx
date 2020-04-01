@@ -8,7 +8,7 @@ export default function Card({card, showAttr, className}) {
     return (
         <div className={`${className}`}>
             {
-                showAttr &&
+                card.damageReceived !== 0 && showAttr &&
                 <div className={styles.damageCounter}>
                     <span>{card.damageReceived}</span>
                 </div>

@@ -361,33 +361,19 @@
 
 
 
-.figthersContainer {
-  width: fit-content;
-  height: fit-content;
-  perspective: 800px; /* Perspectiva que esse elemento tera em relação ao filho dele */
-}
-
-.figtherOnRing {
-  transform-style: preserve-3d;
-  transform: rotateX(45deg) scale(0.7);
-}
-
-.figtherOnRing:hover {
-  transform-style: preserve-3d;
-  transform: rotateX(0deg);
-}
-
-
+  
+  
 .gameBoard {
-  padding: 15px;
+  overflow-y: hidden;
+  padding: 10px;
   height: 100vh;
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 0.5fr 4fr 3fr;
+  grid-template-rows: 0.5fr 4fr 2fr;
   grid-template-areas: "mInfo mInfo mInfo"
                         "reserve ring deck"
-                        "reserve hand graveyard";
+                        "hand hand hand";
 }
 .matchInfo {
   background-color: teal;
@@ -399,6 +385,23 @@
   display: flex;
   justify-content: space-evenly;
   background-color: burlywood;
+}
+
+.figthersContainer {
+  width: fit-content;
+  height: fit-content;
+  /* Perspectiva que esse elemento tera em relação ao filho dele */
+  perspective: 800px;
+}
+
+.figtherOnRing {
+  transform-style: preserve-3d;
+  transform: rotateX(45deg) scale(0.7);
+}
+
+.figtherOnRing:hover {
+  transform-style: preserve-3d;
+  transform: rotateX(0deg);
 }
 
 .deck {
@@ -421,12 +424,17 @@
   grid-area: hand;
   display: flex;
   background-color: chartreuse;
+  justify-content: center;
 }
 
 .cardInHand {
-  transform: translateY(45px) scale(0.7);
+  margin-right: 2.5px;
+  margin-left: 2.5px;
+  transform: translateY(85px) scale(1);
 }
 
 .cardInHand:hover {
-  transform: translateY(-10px) scale(1);
+  margin-right: 25px;
+  margin-left: 25px;
+  transform: translateY(-40px) scale(1.2);
 }

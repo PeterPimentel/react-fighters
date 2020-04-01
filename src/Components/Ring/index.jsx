@@ -79,12 +79,12 @@ export default function Ring() {
             </div>
             {/* Arena */}
             <div className={styles.ring}>
-                {/* <div className={styles.figthersContainer}>
+                <div className={styles.figthersContainer}>
                     <Card className={styles.figtherOnRing} card={figther} showAttr={true}/>
                 </div>
                 <div className={styles.figthersContainer}>
                     <Card className={styles.figtherOnRing} card={opponentFigther} showAttr={true}/>
-                </div> */}
+                </div>
             </div>
             {/* FIM Arena */}
             <div className={styles.deck}>
@@ -93,13 +93,10 @@ export default function Ring() {
             <div className={styles.reserve}>
                 Reserva
             </div>
-            <div className={styles.graveyard}>
-                GRAVEYARD
-            </div>
             <div className={styles.hand}>
-                {/* {
+                {
                     CARDS.map(card => <Card className={styles.cardInHand} card={card} key={card.id} />)
-                } */}
+                }
             </div>
             {/* <div>
                 <button onClick={receiveEnergy}>Give Energy</button>
