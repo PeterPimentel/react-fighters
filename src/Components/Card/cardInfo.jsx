@@ -19,35 +19,38 @@ const FigtherInfo = ({skills}) => {
     )
 }
 
-const ItemInfo = () => {
-
+const ItemInfo = ({effect}) => {
+    return (
+        <div className={`${styles.info} ${styles.center}`}>
+            <div>{effect.description}</div>
+        </div>
+    )
 }
+
+const EnergyInfo = () => {
+    return (
+        <div className={`${styles.info} ${styles.center}`}>
+            <div>Give 1 energy to target figther</div>
+        </div>
+    )
+}
+
+const Info = ({card}) => {
+    switch (card.type) {
+        case "figther":
+            return <FigtherInfo skills={card.skills}/>
+        case "item":
+            return <ItemInfo effect={card.effect}/>
+        case "energy":
+            return <EnergyInfo/>
+        default:
+            return <EnergyInfo/>
+    }
+}
+
 
 export default function CardInfo({card}) {
     return (
-        <FigtherInfo skills={card.skills}/>
+        <Info card={card}/>
     );
 }
-// export default function CardInfo() {
-//     return (
-//         <div className={styles.info}>
-//             {/* energia | Nome attack | dano */}
-//             <div className={styles.attackInfo}>
-//                 <div className={styles.attackEnergy}>1</div>
-//                 <div className={styles.attackName}>Attack 1</div>
-//                 <div className={styles.attackDamage}>20</div>
-//             </div>
-//             {/* energia | Nome attack | dano */}
-//             <div className={styles.attackInfo}>
-//                 <div className={styles.attackEnergy}>2</div>
-//                 <div className={styles.attackName}>Kick</div>
-//                 <div className={styles.attackDamage}>40</div>
-//             </div>
-//             <div className={styles.attackInfo}>
-//                 <div className={styles.attackEnergy}>3</div>
-//                 <div className={styles.attackName}>High Jump Kick</div>
-//                 <div className={styles.attackDamage}>40</div>
-//             </div>
-//         </div>
-//     );
-// }

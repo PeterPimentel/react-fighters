@@ -73,79 +73,40 @@ export default function Ring() {
     }
 
     return (
-        <div>
-            <div>
-                <Card card={figther} showAttr={true}/>
-                <Card card={opponentFigther} showAttr={true}/>
+        <div className={styles.gameBoard}>
+            <div className={styles.matchInfo}>
+                matchInfo
             </div>
-            <div>
+            {/* Arena */}
+            <div className={styles.ring}>
+                {/* <div className={styles.figthersContainer}>
+                    <Card className={styles.figtherOnRing} card={figther} showAttr={true}/>
+                </div>
+                <div className={styles.figthersContainer}>
+                    <Card className={styles.figtherOnRing} card={opponentFigther} showAttr={true}/>
+                </div> */}
+            </div>
+            {/* FIM Arena */}
+            <div className={styles.deck}>
+                deck
+            </div>
+            <div className={styles.reserve}>
+                Reserva
+            </div>
+            <div className={styles.graveyard}>
+                GRAVEYARD
+            </div>
+            <div className={styles.hand}>
+                {/* {
+                    CARDS.map(card => <Card className={styles.cardInHand} card={card} key={card.id} />)
+                } */}
+            </div>
+            {/* <div>
                 <button onClick={receiveEnergy}>Give Energy</button>
             </div>
             <div>
                 <button onClick={endTurn}>Pass</button>
-            </div>
-            {/* <div>
-                {
-                    CARDS.map(card => <RFCard card={card} key={card.id} />)
-                }
             </div> */}
-            {/* ################## INICIO DOS TESTES ######################*/}
-            <div>
-                <div className={styles.cards}>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>1</div>
-                        </div>
-                    </div>
-                    {/* <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>2</div>
-                        </div>
-                    </div> */}
-                    <img alt="card" className={styles.card} src={CARDS[3].image}/>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>3</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>4</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>5</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>6</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>7</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>8</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>9</div>
-                        </div>
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles['card-face']}>
-                            <div className={styles['card-label']}>10</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* ############################################# */}
         </div>
     );
 }

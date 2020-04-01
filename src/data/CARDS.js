@@ -77,9 +77,12 @@ const CARDS = [
 		"id": 4,
 		"name": "Fresh Water",
 		"image":"https://i.pinimg.com/236x/f9/ae/22/f9ae22494da601fdfafab3d69ff3ed13.jpg",
-		"effect": (figther) => {
-			figther.damageReceived = figther.damageReceived >= 10 ? figther.damageReceived - 10 : 0
-			return figther
+		"effect": {
+			"description": "Reduz em 10 os danos sofridos",
+			"use":(figther) => {
+				figther.damageReceived = figther.damageReceived >= 10 ? figther.damageReceived - 10 : 0
+				return figther
+			}
 		},
 		"type":"item"
 	},

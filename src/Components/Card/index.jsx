@@ -4,9 +4,9 @@ import CardInfo from './cardInfo'
 
 import styles from './index.module.css';
 
-export default function Card({card, showAttr}) {
+export default function Card({card, showAttr, className}) {
     return (
-        <div className={styles.root}>
+        <div className={`${className}`}>
             {
                 showAttr &&
                 <div className={styles.damageCounter}>
@@ -14,7 +14,8 @@ export default function Card({card, showAttr}) {
                 </div>
             }
             {/* Card container */}
-            <div className={`${styles.container} ${styles.shakeHorizontal}`}>
+            {/* <div className={`${styles.container} ${styles.shakeHorizontal}`}> */}
+            <div className={`${styles.container}`}>
                 <div className={styles.box}>
                     {/* Nome Carta | vida */}
                     <div className={styles.name}>{card.name}</div>

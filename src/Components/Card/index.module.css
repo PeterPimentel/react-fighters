@@ -1,10 +1,8 @@
-.root {
-    margin:50px 50px 0px 50px;
-}
-
 .container {
-    width: 216px;
-    height: 316px;
+    /* width:166px;
+    height: 236px; */
+    width: 216px; /*MODEL 1*/
+    height: 316px; /*MODEL 1*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,13 +12,16 @@
 }
 
 .box {
-    margin: 50px;
-    width: 200px;
-    height: 300px;
+    /* width: 150px;
+    height: 220px; */
+    width: 200px; /*MODEL 1*/
+    height: 300px; /*MODEL 1*/
     background-image: url("../../assets/bg.png");
     display: grid;
-    grid-template-columns: 160px 40px;
-    grid-template-rows: 25px 150px 100px 25px;
+    /* grid-template-columns: 110px 40px;
+    grid-template-rows: 25px 90px 90px 15px; */
+    grid-template-columns: 160px 40px; /*MODEL 1*/
+    grid-template-rows: 25px 150px 100px 25px; /*MODEL 1*/
     grid-template-areas: "name life"
                         "image image"
                         "info info"
@@ -29,7 +30,6 @@
 }
 
 .name {
-    /* background-color: orange; */
     grid-area: name;
     padding-left: 6px;
     align-self: center;
@@ -37,7 +37,6 @@
 }
 
 .life {
-    /* background-color: red; */
     grid-area: life;
     align-self: center;
 }
@@ -64,7 +63,6 @@
 }
 
 .info {
-    /* background-color: yellowgreen; */
     grid-area: info;
     padding: 6px;
     font-weight: 900;
@@ -100,7 +98,6 @@
 }
 
 .description {
-    /* background-color:green; */
     grid-area: desc;
     font-size: x-small;
     padding-left: 6px;
@@ -145,6 +142,13 @@
     font-size: 26px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     color: white;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 /* ------------------- ANIMATIONS -------------------- */
