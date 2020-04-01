@@ -3,9 +3,7 @@ import React, { useState, useContext } from 'react';
 import { OpponentContext } from "../../context/opponentContext"
 import { UserContext } from "../../context/userContext"
 
-import { Card } from 'semantic-ui-react'
-
-import RFCard from '../RFCard'
+import Card from '../Card'
 
 import CARDS from '../../data/CARDS'
 
@@ -29,6 +27,7 @@ export default function Ring() {
     const { opponent, setOpponent } = useContext(OpponentContext)
 
     const [figther, setFighter] = useState(findFigther(user.figther.id))
+    const [opponentFigther, setOpponentFighter] = useState(findFigther(opponent.figther.id))
 
     const [myTurn, setTurn] = useState(true)
     const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
@@ -76,14 +75,8 @@ export default function Ring() {
     return (
         <div>
             <div>
-                <Card.Group centered>
-                    <RFCard
-                        card={figther}
-                        attack={handleAttack}
-                        myTurn={myTurn}
-                    />
-                    <RFCard card={opponent} />
-                </Card.Group>
+                <Card card={figther} showAttr={true}/>
+                <Card card={opponentFigther} showAttr={true}/>
             </div>
             <div>
                 <button onClick={receiveEnergy}>Give Energy</button>

@@ -20,7 +20,10 @@ export default function App() {
 
   const [opponent, setOpponent] = useState({
     username:'',
-    figther: {}
+    figther: {
+      id: CARDS[0].id,
+      name: CARDS[0].name
+    }
   })
 
   const userProvider = useMemo(() => ({user, setUser}), [user, setUser])
@@ -38,7 +41,7 @@ export default function App() {
                 <Ring />
               </Route>
               <Route path="/" exact>
-                <Card />
+                <Card card={CARDS[0]}/>
               </Route>
             </OpponentContext.Provider>
           </UserContext.Provider>
