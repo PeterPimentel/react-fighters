@@ -15,7 +15,7 @@ import Modal from '../Components/modal'
 export default function App() {
   const [user, setUser] = useState({
     username: `GUEST-${Math.floor(Math.random() * 10)}`,
-    figther: {
+    fighter: {
       id: CARDS[0].id,
       name: CARDS[0].name
     },
@@ -24,7 +24,7 @@ export default function App() {
 
   const [opponent, setOpponent] = useState({
     username: '',
-    figther: {
+    fighter: {
       id: CARDS[0].id,
       name: CARDS[0].name
     },

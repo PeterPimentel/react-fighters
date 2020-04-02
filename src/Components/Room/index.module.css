@@ -26,6 +26,7 @@
     padding: 50px 130px 20px 130px;
     clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
     color: #fcc010;
+    color: linear-gradient(180deg, rgba(255,228,91,1) 0%, rgba(252,158,69,1) 50%, rgba(242,32,0,1) 100%);
     font-size: 30px;
     margin-bottom: 50px;
 }
@@ -67,6 +68,7 @@
     color: #fcc010;
     font-size: 30px;
     border-radius: 40px;
+    text-decoration: none;
 }
 
 .button:hover {

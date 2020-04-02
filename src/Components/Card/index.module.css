@@ -1,8 +1,6 @@
 .container {
-    width: 216px; /*MODEL 1*/
-    height: 316px; /*MODEL 1*/
-    width:186px;
-    height: 246px;
+    width:170px;
+    height: 230px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,8 +10,6 @@
 }
 
 .box {
-    width: 200px; /*MODEL 1*/
-    height: 300px; /*MODEL 1*/
     width: 170px;
     height: 230px;
     background-image: url("../../assets/bg2.png");
@@ -33,7 +29,7 @@
     grid-area: name;
     padding-left: 6px;
     align-self: center;
-    font-weight: 900;
+    font-weight: 500;
 }
 
 .life {
@@ -46,7 +42,7 @@
     padding-right: 1px;
 }
 .life span {
-    font-weight: bolder;
+    font-weight: 500;
 }
 
 .image {
@@ -54,18 +50,22 @@
     background: rgb(130,130,130);
     grid-area: image;
     margin: 6px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .image img {
     width: 100%;
     height: 100%;
-    padding: 3px;
 }
 
 .info {
     grid-area: info;
     padding: 6px;
-    font-weight: 900;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .attackInfo {
@@ -82,19 +82,6 @@
     margin-bottom: 3px;
     background: rgb(130,130,130);
     background: linear-gradient(0deg, rgba(0,0,0,0.2) 50%, rgb(130,130,130, 1) 100%);
-}
-
-.attackEnergy {
-    /* background-color: blue; */
-}
-
-.attackName {
-    /* background-color: violet; */
-    
-}
-
-.attackDamage {
-    /* background-color: aqua; */
 }
 
 .description {

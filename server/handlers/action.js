@@ -1,5 +1,5 @@
 const handleAction = (socket, io) => (action) => {
-    console.log(`Enemy - added a energy on figther`)
+    console.log(`Enemy - added a energy on fighter`)
     io.of('/').in('battle').clients(function(error,clients){
         for(let i in clients){
             if(socket.id !== clients[i]){

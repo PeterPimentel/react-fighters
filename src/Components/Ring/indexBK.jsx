@@ -28,8 +28,8 @@ export default function Ring() {
     const { user } = useContext(UserContext)
     const { opponent, setOpponent } = useContext(OpponentContext)
 
-    const [figther, setFighter] = useState(findFigther(user.figther.id))
-    const [opponentFigther, setOpponentFighter] = useState(findFigther(opponent.figther.id))
+    const [fighter, setFighter] = useState(findFigther(user.fighter.id))
+    const [opponentFigther, setOpponentFighter] = useState(findFigther(opponent.fighter.id))
 
     const [myTurn, setTurn] = useState(true)
     const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
@@ -62,8 +62,8 @@ export default function Ring() {
     const receiveEnergy = () => {
         if (turnActions.energy === false) {
             setFighter({
-                ...figther,
-                energy: ++figther.energy
+                ...fighter,
+                energy: ++fighter.energy
             })
             setTurnActions({
                 ...turnActions,
@@ -94,7 +94,7 @@ export default function Ring() {
                 {/* Arena */}
                 <div className={styles.ring}>
                     <div className={styles.figthersContainer}>
-                        <Card className={styles.figtherOnRing} card={figther} showAttr={true} />
+                        <Card className={styles.figtherOnRing} card={fighter} showAttr={true} />
                     </div>
 
                     <div className={styles.figthersContainer}>
@@ -126,7 +126,7 @@ export default function Ring() {
                         >
                             {
                                 CARDS.map((card, index) => (
-                                    <Draggable key={card.id} draggableId={`ID-${figther.id + 5}`} index={index}>
+                                    <Draggable key={card.id} draggableId={`ID-${fighter.id + 5}`} index={index}>
 
                                         {
                                             (provided) => (

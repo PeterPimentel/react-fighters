@@ -3,7 +3,7 @@ import CARDS from '../data/CARDS'
 
 const getRandom = (ids) => ids[Math.floor(Math.random() * ids.length)]
 
-const generateKey = () => Math.random().toString(36).substr(2, 9)
+const generateKey = () => Math.random().toString(36).substr(2, 9)+'_'
 
 export const findCardById = (id) =>{
     const card = JSON.parse(JSON.stringify(CARDS.find(card => card.id === id)))
@@ -13,6 +13,7 @@ export const findCardById = (id) =>{
     }
 }
 
+// TO DO quando tem varias cartas iguais na mão está removendo todas
 export const removeFromHand = (id, hand) => JSON.parse(JSON.stringify(hand.filter(card => card.id !== id)))
 
 export const drawHand = (deck) => {

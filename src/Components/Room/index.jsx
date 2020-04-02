@@ -45,12 +45,12 @@ export default function Room() {
     [selectedOpponent, setOpponent, setTurn]
   );
 
-  const handleSelect = (figther) => {
+  const handleSelect = (fighter) => {
     const userData = {
       ...user,
-      figther: {
-        id: figther.id,
-        name: figther.name
+      fighter: {
+        id: fighter.id,
+        name: fighter.name
       }
     }
     setSelected(userData)
@@ -81,12 +81,12 @@ export default function Room() {
       <h3 className={`${styles.roomTitle}`}>CHOOSE YOUR FIGTHER</h3>
       <Row>
         {
-          FIGTHERS.map(figther =>
+          FIGTHERS.map(fighter =>
             <FigtherBox
               onSelect={handleSelect}
-              key={figther.id}
-              figther={figther}
-              selected={selectedFigther.figther.id === figther.id}
+              key={fighter.id}
+              fighter={fighter}
+              selected={selectedFigther.fighter.id === fighter.id}
             />
           )
         }

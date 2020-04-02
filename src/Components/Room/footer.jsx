@@ -9,8 +9,8 @@ const footer = ({selectedOpponent, opponent }) => {
         <p>{selectedOpponent.username}</p>
         <p>{`Ready - ${opponent.ready}`}</p>
         <div>
-          <span>Figther:</span>
-          <span>{selectedOpponent.figther.name}</span>
+          <span>Fighter:</span>
+          <span>{selectedOpponent.fighter.name}</span>
         </div>
       </div>
     )

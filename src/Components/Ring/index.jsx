@@ -40,7 +40,7 @@ const ACTIONS_INITIAL_STATE = {
 }
 
 const DROPPABLE_ARES = {
-    FIGHTER: 'figther',
+    FIGHTER: 'fighter',
     RESERVE: 'reserve',
     RESERVE_FIGTHER: 'reserveFigther',
     HAND: 'hand'
@@ -52,13 +52,14 @@ export default function Ring() {
     const { opponent } = useContext(OpponentContext)
     const { turn } = useContext(TurnContext)
 
-    const [figther, setFighter] = useState(
-        JSON.parse(JSON.stringify(findCardById(user.figther.id)))
+    const [fighter, setFighter] = useState(
+        JSON.parse(JSON.stringify(findCardById(user.fighter.id)))
     )
     const [opponentFigther, setOpponentFighter] = useState(
-        JSON.parse(JSON.stringify(findCardById(opponent.figther.id)))
+        JSON.parse(JSON.stringify(findCardById(opponent.fighter.id)))
     )
 
+    //Deck
     const [deck, setDeck] = useState(DECK)
 
     //Cards in hand
@@ -94,7 +95,7 @@ export default function Ring() {
 
     const handleAttack = (skill) => {
         if (turnActions.attack === false) {
-            if (skill.cost <= figther.energy) {
+            if (skill.cost <= fighter.energy) {
                 eventAction({
                     type: 'attack',
                     value: skill.damage
@@ -109,7 +110,7 @@ export default function Ring() {
                 })
                 setTurn(false)
             } else {
-                setModal({ show: true, message: "Insufficient energy on this figther" })
+                setModal({ show: true, message: "Insufficient energy on this fighter" })
             }
         } else {
             setModal({ show: true, message: "Only one attack per turn" })
@@ -118,22 +119,22 @@ export default function Ring() {
 
     const receiveEnergy = () => {
         if (turnActions.energy === false) {
-            const newEnergyCount = figther.energy
+            const newEnergyCount = fighter.energy
             eventAction({
                 type: 'addEnergy',
                 value: newEnergyCount + 1
             })
-            setFighter({ ...figther, energy: ++figther.energy })
+            setFighter({ ...fighter, energy: ++fighter.energy })
             setTurnActions({ ...turnActions, energy: true })
         } else {
             setModal({ show: true, message: "You already have set a energy on this Turn" })
         }
     }
 
-    const setFigtherOnReserver = (figther) => {
+    const setFigtherOnReserver = (fighter) => {
         if (reserveCards.length <= 6 && turnActions.reserve === false) {
-            setReserveCards([...reserveCards, figther])
-            setHand(removeFromHand(figther.id, hand))
+            setReserveCards([...reserveCards, fighter])
+            setHand(removeFromHand(fighter.id, hand))
             setTurnActions({ ...turnActions, reserve: true })
         } else {
             setModal({ show: true, message: "You already did that" })
@@ -141,7 +142,9 @@ export default function Ring() {
     }
 
     const handleReserveFighterDragEnd = (result) => {
-        const card = findCardById(Number(result.draggableId.charAt(5)))
+        const idx = result.draggableId.indexOf("_")
+        const id = result.draggableId.substring(idx+1)
+        const card = findCardById(Number(id))
         switch (card.type) {
             // case TYPES.ENERGY:
             //     receiveEnergy()
@@ -149,17 +152,14 @@ export default function Ring() {
             case TYPES.FIGTHER:
                 setFigtherOnReserver(card)
                 break;
-            case TYPES.RESERVE_FIGTHER:
-                setFigtherOnReserver(card)
-                break;
-
             default:
                 break;
         }
     }
 
     const handleFighterDragEnd = (result) => {
-        const id = Number(result.draggableId.charAt(5))
+        const idx = result.draggableId.indexOf("_")
+        const id = Number(result.draggableId.substring(idx+1))
         const card = findCardById(id)
         if (card.type === TYPES.ENERGY) {
             receiveEnergy()
@@ -168,15 +168,14 @@ export default function Ring() {
     }
 
     const handleReserveDragEnd = (result) => {
-        const card = findCardById(Number(result.draggableId.charAt(5)))
+        const idx = result.draggableId.indexOf("_")
+        const id = result.draggableId.substring(idx+1)
+        const card = findCardById(Number(id))
         switch (card.type) {
             case TYPES.ENERGY:
                 receiveEnergy()
                 break;
             case TYPES.FIGTHER:
-                setFigtherOnReserver(card)
-                break;
-            case TYPES.RESERVE_FIGTHER:
                 setFigtherOnReserver(card)
                 break;
             default:
@@ -192,8 +191,8 @@ export default function Ring() {
                     break;
                 case 'attack':
                     setFighter({
-                        ...figther,
-                        damageReceived: figther.damageReceived + action.value
+                        ...fighter,
+                        damageReceived: fighter.damageReceived + action.value
                     })
                     handleNewTurn()
                     break;
@@ -204,13 +203,12 @@ export default function Ring() {
                     break;
             }
         },
-        [figther, handleNewTurn, opponentFigther],
+        [fighter, handleNewTurn, opponentFigther],
     );
 
     useEffect(() => {
         onAction(memorizedHandleActions)
         return function cleanup() {
-            console.log("Cleaning Up")
             removeAllListeners()
         }
     }, [memorizedHandleActions])
@@ -246,7 +244,7 @@ export default function Ring() {
                 <Header turn={myTurn} skipTurn={handleSkipTurn} />
                 {/* Arena */}
                 <div className={styles.ring}>
-                    <Droppable droppableId="figther">
+                    <Droppable droppableId="fighter">
                         {(provided, ) => (
                             <div className={styles.figthersContainer}
                                 {...provided.droppableProps}
@@ -255,7 +253,7 @@ export default function Ring() {
                                 <Card
                                     className={styles.figtherOnRing}
                                     onAttack={handleAttack}
-                                    card={figther}
+                                    card={fighter}
                                     showAttr={true}
                                 />
                                 {provided.placeholder}

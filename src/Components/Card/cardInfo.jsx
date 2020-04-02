@@ -34,14 +34,14 @@ const ItemInfo = ({effect}) => {
 const EnergyInfo = () => {
     return (
         <div className={`${styles.info} ${styles.center}`}>
-            <div>Give 1 energy to target figther</div>
+            <div>Give 1 energy to target fighter</div>
         </div>
     )
 }
 
 const Info = ({card, onAttack}) => {
     switch (card.type) {
-        case "figther":
+        case "fighter":
             return <FigtherInfo skills={card.skills} onAttack={onAttack}/>
         case "item":
             return <ItemInfo effect={card.effect}/>
