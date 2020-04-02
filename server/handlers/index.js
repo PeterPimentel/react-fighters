@@ -1,8 +1,9 @@
 const handleAction = require('./action')
-const {handleJoin, handleFigtherSelected} = require('./room')
+const {handleJoin, handleFigtherSelected, handleReady} = require('./room')
 
 module.exports = {
     handleAction,
     handleJoin,
-    handleFigtherSelected
+    handleFigtherSelected,
+    handleReady
 }

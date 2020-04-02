@@ -4,8 +4,8 @@ import styles from './index.module.css';
 
 const FigtherInfo = ({skills, onAttack}) => {
     const handleAttack = (skill) => {
-        if(typeof onAttack === "function")
-            onAttack(skill.damage)
+        if(typeof onAttack === "function" )
+            onAttack(skill)
     }
 
     return (

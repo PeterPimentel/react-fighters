@@ -173,6 +173,37 @@
  * ----------------------------------------
  */
 
+.scaleOutCenter {
+	-webkit-animation: scaleOutCenter 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: scaleOutCenter 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+@-webkit-keyframes scaleOutCenter {
+    0% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+      opacity: 1;
+    }
+  }
+  @keyframes scaleOutCenter {
+    0% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+      opacity: 1;
+    }
+  }
+  
+
 .shakeHorizontal {
 	-webkit-animation: shakeHorizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
     animation: shakeHorizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;

@@ -16,7 +16,7 @@ const DefaultCard = ({card, showAttr, className, onAttack}) => {
     return (
         <div className={`${className}`}>
             {
-                card.damageReceived !== 0 && showAttr &&
+                showAttr &&
                 <div className={styles.damageCounter}>
                     <span>{card.damageReceived}</span>
                 </div>

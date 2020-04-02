@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Link } from "react-router-dom";
 
 import { OpponentContext } from "../../context/opponentContext"
 import { UserContext } from "../../context/userContext"
 import { Row, Column } from '../RFCentralized'
 import FigtherBox from './figtherBox'
+import Footer from './footer'
 
 import { FIGTHERS } from '../../data/CARDS'
 import styles from './index.module.css'
@@ -12,7 +13,10 @@ import styles from './index.module.css'
 import {
   join,
   onEnemySelected,
-  emitFigtherSelected
+  emitFigtherSelected,
+  removeAllListeners,
+  ready,
+  onReady
 } from '../../service/events'
 
 export default function Room() {
@@ -24,11 +28,16 @@ export default function Room() {
   const [selectedOpponent, setSelectedOpponent] = useState(opponent)
 
   const handleReady = () => {
-    console.log("Joining in match...")
-    setUser(selectedFigther)
-    setOpponent(selectedOpponent)
-    join(selectedFigther)
+    setUser({ ...selectedFigther, ready: true })
+    ready(true)
   }
+
+  const handleEnemyReady = useCallback(
+    () => {
+      setOpponent({ ...selectedOpponent, ready: true })
+    },
+    [selectedOpponent, setOpponent]
+  );
 
   const handleSelect = (figther) => {
     const userData = {
@@ -43,17 +52,23 @@ export default function Room() {
   }
 
   const handleOpponentSelect = (data) => {
-    console.log("Recebendo dados do oponente")
     setSelectedOpponent(data)
   }
 
   useEffect(() => {
     join({ username: user.username })
+    return function cleanup() {
+      removeAllListeners()
+    }
   }, [user.username])
 
   useEffect(() => {
     onEnemySelected(handleOpponentSelect)
-  }, [])
+    onReady(handleEnemyReady)
+    return function cleanup() {
+      removeAllListeners()
+    }
+  }, [handleEnemyReady])
 
   return (
     <Column className={styles.container}>
@@ -71,16 +86,9 @@ export default function Room() {
         }
       </Row>
       <div>
-        <Link className={`${styles.button} ${styles.flashit}`} to="/game" onClick={handleReady}>READY </Link>
+        <Link className={`${styles.button} ${styles.flashit}`} to="/loading" onClick={handleReady}>READY </Link>
       </div>
-      <div className={styles.opponentInfo}>
-        <p>Opponent</p>
-        <p>{selectedOpponent.username}</p>
-        <div>
-          <span>Figther:</span>
-          <span>{selectedOpponent.figther.name}</span>
-        </div>
-      </div>
+      <Footer selectedOpponent={selectedOpponent} opponent={opponent} />
     </Column>
   );
 }

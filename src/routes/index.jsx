@@ -7,6 +7,9 @@ import CARDS  from '../data/CARDS'
 
 import Ring from '../Components/Ring'
 import Room from '../Components/Room'
+import Loading from '../Components/Loading'
+
+import Modal from '../Components/modal'
 
 export default function App() {
   const [user, setUser] = useState({
@@ -14,7 +17,8 @@ export default function App() {
     figther: {
       id: CARDS[0].id,
       name: CARDS[0].name
-    }
+    },
+    ready: false
   })
 
   const [opponent, setOpponent] = useState({
@@ -22,7 +26,8 @@ export default function App() {
     figther: {
       id: CARDS[0].id,
       name: CARDS[0].name
-    }
+    },
+    ready:false
   })
 
   const userProvider = useMemo(() => ({user, setUser}), [user, setUser])
@@ -35,6 +40,9 @@ export default function App() {
             <OpponentContext.Provider value={opponentProvider}>
               <Route path="/room">
                 <Room />
+              </Route>
+              <Route path="/loading">
+                <Loading />
               </Route>
               <Route path="/game">
                 <Ring />
@@ -50,5 +58,11 @@ export default function App() {
 }
 
 function Home() {
-  return <h2>Home</h2>;
+  return (
+    <>
+    <Modal show={true} message={"hello modal"} />
+    <h2>Home</h2>
+    </>
+  )
+  
 }

@@ -4,22 +4,19 @@ let socket
 
 export const connect = () => socket = io.connect()
 
-export const action = (action) => {
-    socket.emit('action', action);
-}
+export const removeAllListeners = () => socket.removeAllListeners()
 
 export const join = (username) => {
     socket.emit('joinInGame', username);
 }
 
-export const replyMyFigtherData = (data) => {
-    console.log("CALLED - replyMyFigtherData")
-    socket.emit('replyMyFigtherData', data)
+export const action = (action) => {
+    socket.emit('action', action);
 }
 
-export const onOpponentReady = (callback) => {
-    console.log("Called --- onOpponentReady")
-    socket.on('enemyJoin', function(data){
+export const onAction = (callback) => {
+    console.log("Called - onAction")
+    socket.on('actionReceived', function(data){
         callback(data)
     });
 }
@@ -36,9 +33,13 @@ export const onEnemySelected = (callback) => {
     });
 }
 
-export const onFigtherData = (callback) => {
-    console.log("Called --- onFigtherData")
-    socket.on('figtherData', function(data){
-        callback(data)
+export const ready = () => {
+    socket.emit('ready', true)
+}
+
+export const onReady = (callback) => {
+    console.log("Called - onEnemySelected")
+    socket.on('enemyReady', function(status){
+        callback(status)
     });
 }

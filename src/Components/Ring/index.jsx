@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -11,9 +11,14 @@ import CARDS, { TYPES } from '../../data/CARDS'
 
 import Reserve from './reserve'
 import Hand from './hand'
+import Header from './header'
+
+import Modal from '../modal'
 
 import {
-    action as eventAction
+    action as eventAction,
+    onAction,
+    removeAllListeners
 } from '../../service/events'
 
 import {
@@ -49,60 +54,75 @@ export default function Ring() {
         JSON.parse(JSON.stringify(findCardById(opponent.figther.id)))
     )
     
-    //Cards que possuo na mão
+    //Cards in hand
     const [hand, setHand] = useState([...CARDS])
     
-    // cards que tenho no banco de reservas
+    //cards que tenho no banco de reservas
     const [reserveCards, setReserveCards] = useState([])
 
-    const [myTurn, setTurn] = useState(true)
+    //modal controll
+    const [modal, setModal] = useState({show:false, message:''})
+    
+    //Turn Controll
+    const [myTurn, setTurn] = useState(false)
+    
+    //Actions Controll
     const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
 
-    const endTurn = () => {
-        setTurn(!myTurn)
+    const handleNewTurn = () => {
+        setTurn(true)
         setTurnActions(ACTIONS_INITIAL_STATE)
     }
 
-    const handleAttack = (damage) => {
-        // if (turnActions.attack === false) {
-        if (false === false) {
-            setOpponentFighter({
-                ...opponentFigther,
-                damageReceived: opponentFigther.damageReceived + damage
-            })
-            setTurnActions({
-                ...turnActions,
-                attack: true
-            })
+    const handleAttack = (skill) => {
+        if (turnActions.attack === false) {
+            if(skill.cost <= figther.energy){
+                eventAction({
+                    type:'attack',
+                    value: skill.damage
+                })
+                setOpponentFighter({
+                    ...opponentFigther,
+                    damageReceived: opponentFigther.damageReceived + skill.damage
+                })
+                setTurnActions({
+                    ...turnActions,
+                    attack: true
+                })
+            }else{
+                setModal({show:true, message:"Insufficient energy on this figther"})
+            }
+        }else{
+            setModal({show:true, message:"Only one attack per turn"})
+        }
             // endTurn()
             // eventAction({
             //     'name': 'attack',
             //     'damage': damage
             // })
-        } else {
-            console.log("You already have attacked this Turn")
-        }
     }
 
     const receiveEnergy = () => {
         if (turnActions.energy === false) {
+            const newEnergyCount = figther.energy
+            eventAction({
+                type:'addEnergy',
+                value: newEnergyCount + 1
+            })
             setFighter({ ...figther, energy: ++figther.energy })
             setTurnActions({ ...turnActions, energy: true })
         } else {
-            console.log("You already have used a energy on this Turn")
+            setModal({show:true, message:"You already have set a energy on this Turn"})
         }
     }
 
     const setFigtherOnReserver = (figther) => {
-        // if(reserveCards.length <= 6 && turnActions.reserve === false){
-        if(reserveCards.length <= 6){
+        if(reserveCards.length <= 6 && turnActions.reserve === false){
             setReserveCards([...reserveCards, figther])
             setHand(removeFromHand(figther.id, hand))
             setTurnActions({ ...turnActions, reserve: true })
         }else{
-            console.log(
-                "Maximun figthers on the reserve is six or you already did this action on this turn"
-            )
+            setModal({show:true, message:"You already did that"})
         }
     }
 
@@ -145,11 +165,51 @@ export default function Ring() {
             case TYPES.RESERVE_FIGTHER:
                 setFigtherOnReserver(card)
                 break;
-
             default:
                 break;
         }
     }
+
+    // const handleAction = (action) => {
+    //     switch (action.type) {
+    //         case 'addEnergy':
+    //             setOpponentFighter({...opponentFigther, energy:action.newEnergyCount})
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
+
+    const memorizedHandleActions = useCallback(
+        (action) => {
+            switch (action.type) {
+                case 'addEnergy':
+                    setOpponentFighter({...opponentFigther, energy:action.value})
+                    break;
+                case 'attack':
+                    setFighter({
+                        ...figther,
+                        damageReceived: figther.damageReceived + action.value
+                    })
+                    handleNewTurn()
+                    break;
+                case 'endTurn':
+                    handleNewTurn()
+                    break;
+                default:
+                    break;
+            }
+        },
+        [figther, opponentFigther],
+    );
+
+    useEffect(() => {
+        onAction(memorizedHandleActions)
+        return function cleanup() {
+            console.log("Cleaning Up")
+            removeAllListeners()
+        }
+    }, [memorizedHandleActions])
 
     const onDragEnd = (result) => {
         // dropped outside the list
@@ -174,11 +234,12 @@ export default function Ring() {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-
+            <Modal
+                show={modal.show} message={modal.message}
+                handleClose={()=>setModal({...modal, show:false})}
+            />
             <div className={styles.gameBoard}>
-                <div className={styles.matchInfo}>
-                    matchInfo
-                </div>
+                <Header turn={myTurn}/>
                 {/* Arena */}
                 <div className={styles.ring}>
                     <Droppable droppableId="figther">
