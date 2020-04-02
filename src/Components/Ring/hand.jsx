@@ -18,7 +18,7 @@ export default function Ring({ hand }) {
                     >
                         {
                             hand.map((card, index) => (
-                                <Draggable key={`card-${card.id}`} draggableId={`card-${card.id}`} index={index}>
+                                <Draggable key={card.key} draggableId={`card-${card.id}`} index={index}>
                                     {
                                         (provided, snapshot) => (
                                             <div

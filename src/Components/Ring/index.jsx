@@ -4,10 +4,12 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { OpponentContext } from "../../context/opponentContext"
 import { UserContext } from "../../context/userContext"
+import { TurnContext } from "../../context/gameContext"
 
 import Card from '../Card'
 
 import CARDS, { TYPES } from '../../data/CARDS'
+import { DECK } from '../../data/DECK'
 
 import Reserve from './reserve'
 import Hand from './hand'
@@ -23,7 +25,9 @@ import {
 
 import {
     findCardById,
-    removeFromHand
+    removeFromHand,
+    drawCard,
+    drawHand
 } from '../../service/game'
 
 import styles from './index.module.css'
@@ -38,7 +42,7 @@ const ACTIONS_INITIAL_STATE = {
 const DROPPABLE_ARES = {
     FIGHTER: 'figther',
     RESERVE: 'reserve',
-    RESERVE_FIGTHER:'reserveFigther',
+    RESERVE_FIGTHER: 'reserveFigther',
     HAND: 'hand'
 }
 
@@ -46,6 +50,7 @@ export default function Ring() {
 
     const { user } = useContext(UserContext)
     const { opponent } = useContext(OpponentContext)
+    const { turn } = useContext(TurnContext)
 
     const [figther, setFighter] = useState(
         JSON.parse(JSON.stringify(findCardById(user.figther.id)))
@@ -53,32 +58,45 @@ export default function Ring() {
     const [opponentFigther, setOpponentFighter] = useState(
         JSON.parse(JSON.stringify(findCardById(opponent.figther.id)))
     )
-    
+
+    const [deck, setDeck] = useState(DECK)
+
     //Cards in hand
-    const [hand, setHand] = useState([...CARDS])
-    
+    const [hand, setHand] = useState(drawHand(DECK))
+
     //cards que tenho no banco de reservas
     const [reserveCards, setReserveCards] = useState([])
 
     //modal controll
-    const [modal, setModal] = useState({show:false, message:''})
-    
+    const [modal, setModal] = useState({ show: false, message: '' })
+
     //Turn Controll
-    const [myTurn, setTurn] = useState(false)
-    
+    const [myTurn, setTurn] = useState(turn)
+
     //Actions Controll
     const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
 
-    const handleNewTurn = () => {
+    const handleSkipTurn = () => {
+        setTurn(false)
+        eventAction({ type: 'endTurn'})
+    }
+
+    const handleNewTurn =  useCallback(
+        () => {
+        const result = drawCard(deck)
+        setHand([...hand, result.card])
+        setDeck(result.deck)
         setTurn(true)
         setTurnActions(ACTIONS_INITIAL_STATE)
-    }
+        },
+        [deck, hand],
+    )
 
     const handleAttack = (skill) => {
         if (turnActions.attack === false) {
-            if(skill.cost <= figther.energy){
+            if (skill.cost <= figther.energy) {
                 eventAction({
-                    type:'attack',
+                    type: 'attack',
                     value: skill.damage
                 })
                 setOpponentFighter({
@@ -89,40 +107,36 @@ export default function Ring() {
                     ...turnActions,
                     attack: true
                 })
-            }else{
-                setModal({show:true, message:"Insufficient energy on this figther"})
+                setTurn(false)
+            } else {
+                setModal({ show: true, message: "Insufficient energy on this figther" })
             }
-        }else{
-            setModal({show:true, message:"Only one attack per turn"})
+        } else {
+            setModal({ show: true, message: "Only one attack per turn" })
         }
-            // endTurn()
-            // eventAction({
-            //     'name': 'attack',
-            //     'damage': damage
-            // })
     }
 
     const receiveEnergy = () => {
         if (turnActions.energy === false) {
             const newEnergyCount = figther.energy
             eventAction({
-                type:'addEnergy',
+                type: 'addEnergy',
                 value: newEnergyCount + 1
             })
             setFighter({ ...figther, energy: ++figther.energy })
             setTurnActions({ ...turnActions, energy: true })
         } else {
-            setModal({show:true, message:"You already have set a energy on this Turn"})
+            setModal({ show: true, message: "You already have set a energy on this Turn" })
         }
     }
 
     const setFigtherOnReserver = (figther) => {
-        if(reserveCards.length <= 6 && turnActions.reserve === false){
+        if (reserveCards.length <= 6 && turnActions.reserve === false) {
             setReserveCards([...reserveCards, figther])
             setHand(removeFromHand(figther.id, hand))
             setTurnActions({ ...turnActions, reserve: true })
-        }else{
-            setModal({show:true, message:"You already did that"})
+        } else {
+            setModal({ show: true, message: "You already did that" })
         }
     }
 
@@ -170,21 +184,11 @@ export default function Ring() {
         }
     }
 
-    // const handleAction = (action) => {
-    //     switch (action.type) {
-    //         case 'addEnergy':
-    //             setOpponentFighter({...opponentFigther, energy:action.newEnergyCount})
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
-
     const memorizedHandleActions = useCallback(
         (action) => {
             switch (action.type) {
                 case 'addEnergy':
-                    setOpponentFighter({...opponentFigther, energy:action.value})
+                    setOpponentFighter({ ...opponentFigther, energy: action.value })
                     break;
                 case 'attack':
                     setFighter({
@@ -200,7 +204,7 @@ export default function Ring() {
                     break;
             }
         },
-        [figther, opponentFigther],
+        [figther, handleNewTurn, opponentFigther],
     );
 
     useEffect(() => {
@@ -236,10 +240,10 @@ export default function Ring() {
         <DragDropContext onDragEnd={onDragEnd}>
             <Modal
                 show={modal.show} message={modal.message}
-                handleClose={()=>setModal({...modal, show:false})}
+                handleClose={() => setModal({ ...modal, show: false })}
             />
             <div className={styles.gameBoard}>
-                <Header turn={myTurn}/>
+                <Header turn={myTurn} skipTurn={handleSkipTurn} />
                 {/* Arena */}
                 <div className={styles.ring}>
                     <Droppable droppableId="figther">
@@ -267,7 +271,7 @@ export default function Ring() {
                 <div className={styles.deck}>
                     DECk
                 </div>
-                <Reserve reserveCards={reserveCards}/>
+                <Reserve reserveCards={reserveCards} />
                 <Hand hand={hand} />
             </div>
         </DragDropContext>

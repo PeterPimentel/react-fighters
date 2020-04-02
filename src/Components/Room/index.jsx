@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { OpponentContext } from "../../context/opponentContext"
 import { UserContext } from "../../context/userContext"
+import { TurnContext } from "../../context/gameContext"
 import { Row, Column } from '../RFCentralized'
 import FigtherBox from './figtherBox'
 import Footer from './footer'
@@ -23,20 +24,25 @@ export default function Room() {
 
   const { opponent, setOpponent } = useContext(OpponentContext)
   const { user, setUser } = useContext(UserContext)
+  const { setTurn } = useContext(TurnContext)
 
   const [selectedFigther, setSelected] = useState(user)
   const [selectedOpponent, setSelectedOpponent] = useState(opponent)
 
   const handleReady = () => {
+    if(opponent.ready === false){
+      setTurn(true)
+    }
     setUser({ ...selectedFigther, ready: true })
     ready(true)
   }
 
   const handleEnemyReady = useCallback(
     () => {
+      setTurn(false)
       setOpponent({ ...selectedOpponent, ready: true })
     },
-    [selectedOpponent, setOpponent]
+    [selectedOpponent, setOpponent, setTurn]
   );
 
   const handleSelect = (figther) => {

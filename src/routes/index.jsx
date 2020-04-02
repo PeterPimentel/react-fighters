@@ -1,9 +1,10 @@
-import React, {useState, useMemo} from "react";
+import React, { useState, useMemo } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import {UserContext} from '../context/userContext'
-import {OpponentContext} from '../context/opponentContext'
+import { UserContext } from '../context/userContext'
+import { OpponentContext } from '../context/opponentContext'
+import { TurnContext } from '../context/gameContext'
 
-import CARDS  from '../data/CARDS'
+import CARDS from '../data/CARDS'
 
 import Ring from '../Components/Ring'
 import Room from '../Components/Room'
@@ -13,7 +14,7 @@ import Modal from '../Components/modal'
 
 export default function App() {
   const [user, setUser] = useState({
-    username:`GUEST-${Math.floor(Math.random() * 10)}`,
+    username: `GUEST-${Math.floor(Math.random() * 10)}`,
     figther: {
       id: CARDS[0].id,
       name: CARDS[0].name
@@ -22,22 +23,27 @@ export default function App() {
   })
 
   const [opponent, setOpponent] = useState({
-    username:'',
+    username: '',
     figther: {
       id: CARDS[0].id,
       name: CARDS[0].name
     },
-    ready:false
+    ready: false
   })
 
-  const userProvider = useMemo(() => ({user, setUser}), [user, setUser])
-  const opponentProvider = useMemo(() => ({opponent, setOpponent}), [opponent, setOpponent])
+  const [turn, setTurn] = useState(false)
+
+  const userProvider = useMemo(() => ({ user, setUser }), [user, setUser])
+  const opponentProvider = useMemo(() => ({ opponent, setOpponent }), [opponent, setOpponent])
+
+  const turnProvider = useMemo(() => ({ turn, setTurn }), [turn])
 
   return (
     <Router>
-        <Switch>
-          <UserContext.Provider value={userProvider}>
-            <OpponentContext.Provider value={opponentProvider}>
+      <Switch>
+        <UserContext.Provider value={userProvider}>
+          <OpponentContext.Provider value={opponentProvider}>
+            <TurnContext.Provider value={turnProvider}>
               <Route path="/room">
                 <Room />
               </Route>
@@ -48,11 +54,12 @@ export default function App() {
                 <Ring />
               </Route>
               <Route path="/" exact>
-                <Home/>
+                <Home />
               </Route>
-            </OpponentContext.Provider>
-          </UserContext.Provider>
-        </Switch>
+            </TurnContext.Provider>
+          </OpponentContext.Provider>
+        </UserContext.Provider>
+      </Switch>
     </Router>
   );
 }
@@ -60,9 +67,9 @@ export default function App() {
 function Home() {
   return (
     <>
-    <Modal show={true} message={"hello modal"} />
-    <h2>Home</h2>
+      <Modal show={true} message={"hello modal"} />
+      <h2>Home</h2>
     </>
   )
-  
+
 }
