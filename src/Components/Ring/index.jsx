@@ -7,14 +7,18 @@ import { UserContext } from "../../context/userContext"
 
 import Card from '../Card'
 
-import CARDS, {TYPES} from '../../data/CARDS'
+import CARDS, { TYPES } from '../../data/CARDS'
+
+import Reserve from './reserve'
+import Hand from './hand'
 
 import {
     action as eventAction
 } from '../../service/events'
 
 import {
-    findCardById
+    findCardById,
+    removeFromHand
 } from '../../service/game'
 
 import styles from './index.module.css'
@@ -23,13 +27,20 @@ const ACTIONS_INITIAL_STATE = {
     energy: false,
     attack: false,
     equipment: false,
-    itens: 0
+    reserve: false
+}
+
+const DROPPABLE_ARES = {
+    FIGHTER: 'figther',
+    RESERVE: 'reserve',
+    RESERVE_FIGTHER:'reserveFigther',
+    HAND: 'hand'
 }
 
 export default function Ring() {
 
     const { user } = useContext(UserContext)
-    const { opponent, setOpponent } = useContext(OpponentContext)
+    const { opponent } = useContext(OpponentContext)
 
     const [figther, setFighter] = useState(
         JSON.parse(JSON.stringify(findCardById(user.figther.id)))
@@ -37,6 +48,12 @@ export default function Ring() {
     const [opponentFigther, setOpponentFighter] = useState(
         JSON.parse(JSON.stringify(findCardById(opponent.figther.id)))
     )
+    
+    //Cards que possuo na mão
+    const [hand, setHand] = useState([...CARDS])
+    
+    // cards que tenho no banco de reservas
+    const [reserveCards, setReserveCards] = useState([])
 
     const [myTurn, setTurn] = useState(true)
     const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
@@ -68,37 +85,90 @@ export default function Ring() {
     }
 
     const receiveEnergy = () => {
-        // if (turnActions.energy === false) {
-        if (false === false) {
-            setFighter({...figther, energy: ++figther.energy })
+        if (turnActions.energy === false) {
+            setFighter({ ...figther, energy: ++figther.energy })
             setTurnActions({ ...turnActions, energy: true })
         } else {
             console.log("You already have used a energy on this Turn")
         }
     }
 
-    const handleFighterDragEnd = (result) => {
+    const setFigtherOnReserver = (figther) => {
+        // if(reserveCards.length <= 6 && turnActions.reserve === false){
+        if(reserveCards.length <= 6){
+            setReserveCards([...reserveCards, figther])
+            setHand(removeFromHand(figther.id, hand))
+            setTurnActions({ ...turnActions, reserve: true })
+        }else{
+            console.log(
+                "Maximun figthers on the reserve is six or you already did this action on this turn"
+            )
+        }
+    }
+
+    const handleReserveFighterDragEnd = (result) => {
         const card = findCardById(Number(result.draggableId.charAt(5)))
-        if(card.type === TYPES.ENERGY){
+        switch (card.type) {
+            // case TYPES.ENERGY:
+            //     receiveEnergy()
+            //     break;
+            case TYPES.FIGTHER:
+                setFigtherOnReserver(card)
+                break;
+            case TYPES.RESERVE_FIGTHER:
+                setFigtherOnReserver(card)
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    const handleFighterDragEnd = (result) => {
+        const id = Number(result.draggableId.charAt(5))
+        const card = findCardById(id)
+        if (card.type === TYPES.ENERGY) {
             receiveEnergy()
+            setHand(removeFromHand(id, hand))
+        }
+    }
+
+    const handleReserveDragEnd = (result) => {
+        const card = findCardById(Number(result.draggableId.charAt(5)))
+        switch (card.type) {
+            case TYPES.ENERGY:
+                receiveEnergy()
+                break;
+            case TYPES.FIGTHER:
+                setFigtherOnReserver(card)
+                break;
+            case TYPES.RESERVE_FIGTHER:
+                setFigtherOnReserver(card)
+                break;
+
+            default:
+                break;
         }
     }
 
     const onDragEnd = (result) => {
-
         // dropped outside the list
         if (!result.destination) {
             return;
         }
         switch (result.destination.droppableId) {
-            case TYPES.FIGTHER:
+            case DROPPABLE_ARES.FIGHTER:
                 handleFighterDragEnd(result)
+                break;
+            case DROPPABLE_ARES.RESERVE:
+                handleReserveDragEnd(result)
+                break;
+            case DROPPABLE_ARES.RESERVE_FIGTHER:
+                handleReserveFighterDragEnd(result)
                 break;
             default:
                 break;
         }
-        //     result.source.index,
-        //   result.destination.droppableId
         console.log("RESULT", result)
     }
 
@@ -136,48 +206,8 @@ export default function Ring() {
                 <div className={styles.deck}>
                     DECk
                 </div>
-                <div className={styles.reserve}>
-                    <Droppable droppableId="reserve">
-                        {(provided, ) => (
-                            <div style={{ background: "red", height: "100%", width: "100%" }}
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </div>
-                <div className={styles.hand}>
-                    <Droppable droppableId="hand">
-                        {(provided) => (
-                            <div
-                                style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center" }}
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                {
-                                    CARDS.map((card, index) => (
-                                        <Draggable key={`card-${card.id}`} draggableId={`card-${card.id}`} index={index}>
-                                            {
-                                                (provided) => (
-                                                    <div
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                    >
-                                                        <Card className={styles.cardInHand} card={card} />
-                                                    </div>
-                                                )
-                                            }
-                                        </Draggable>
-                                    ))
-                                }
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </div>
+                <Reserve reserveCards={reserveCards}/>
+                <Hand hand={hand} />
             </div>
         </DragDropContext>
     );

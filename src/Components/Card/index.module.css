@@ -151,6 +151,13 @@
     text-align: center;
 }
 
+.dragCard img {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #ffe166;
+    border-radius: 50%;
+}
+
 /* ------------------- ANIMATIONS -------------------- */
 
 /* ----------------------------------------------

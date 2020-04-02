@@ -1,8 +1,7 @@
 
 import CARDS from '../data/CARDS'
 
-export const findCardById = (id) => {
-    return JSON.parse(JSON.stringify(CARDS.find(card => card.id === id)))
-    // return CARDS.find(card => card.id === id)
-}
+export const findCardById = (id) => JSON.parse(JSON.stringify(CARDS.find(card => card.id === id)))
+
+export const removeFromHand = (id, hand) => JSON.parse(JSON.stringify(hand.filter(card => card.id !== id)))
 

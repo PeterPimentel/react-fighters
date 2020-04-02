@@ -4,12 +4,12 @@ import styles from './index.module.css';
 
 const FigtherInfo = ({skills, onAttack}) => {
     const handleAttack = (skill) => {
-        onAttack(skill.damage)
+        if(typeof onAttack === "function")
+            onAttack(skill.damage)
     }
 
     return (
         <div className={styles.info}>
-            {/* energia | Nome attack | dano */}
             {
                 skills.map(skill => 
                     <div onClick={()=>handleAttack(skill)} key={skill.id} className={styles.attackInfo}>

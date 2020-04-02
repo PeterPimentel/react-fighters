@@ -4,7 +4,15 @@ import CardInfo from './cardInfo'
 
 import styles from './index.module.css';
 
-export default function Card({card, showAttr, className, onAttack}) {
+const DragCard = ({card, className}) => {
+    return (
+        <div className={`${className} ${styles.dragCard}`}>
+            <img alt="lutador" src={card.image} />
+        </div>
+    )
+}
+
+const DefaultCard = ({card, showAttr, className, onAttack}) => {
     return (
         <div className={`${className}`}>
             {
@@ -39,5 +47,24 @@ export default function Card({card, showAttr, className, onAttack}) {
                 </div>
             }
         </div>
-    );
+    )
+}
+
+export default function Card({card, showAttr, className, onAttack, isDragging}) {
+    return isDragging ?
+        (
+            <DragCard
+                card={card}
+                className={className}
+            />
+        )
+    :
+        (
+            <DefaultCard
+                card={card}
+                showAttr={showAttr}
+                className={className}
+                onAttack={onAttack}
+            />
+        )
 }
