@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Joe Higashi",
+        "image": "http://localhost:8080/static/fighters/joe_card.png",
+        "avatar":"http://localhost:8080/static/fighters/joe_avatar.png"
+    },
+    {
+        "id": 2,
+        "name": "Balrog",
+        "image": "http://localhost:8080/static/fighters/balrog_card.png",
+        "avatar":"http://localhost:8080/static/fighters/balrog_avatar.png"
+    },
+    {
+        "id": 3,
+        "name": "Terry Bogard",
+        "image": "http://localhost:8080/static/fighters/terry_card.png",
+        "avatar":"http://localhost:8080/static/fighters/terry_avatar.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Paul Phoenix",
+        "image": "http://localhost:8080/static/fighters/paul_card.png",
+        "avatar":"http://localhost:8080/static/fighters/paul_avatar.jpg"
+    }
+]

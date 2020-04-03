@@ -1,12 +1,17 @@
 
 import CARDS from '../data/CARDS'
 
+import {findCard} from './cardService'
+
 const getRandom = (ids) => ids[Math.floor(Math.random() * ids.length)]
 
 const generateKey = () => Math.random().toString(36).substr(2, 9)+'_'
 
 export const findCardById = (id) =>{
-    const card = JSON.parse(JSON.stringify(CARDS.find(card => card.id === id)))
+    const c = CARDS.find(card => card.id === id)
+    // console.log("CARD - ", c)
+    let card = JSON.parse(JSON.stringify(CARDS.find(card => card.id === id)))
+    // console.log("Stringed - ", card)
     return {
         ...card,
         key:generateKey()
@@ -22,6 +27,7 @@ export const drawHand = (deck) => {
     for (let index = 0; index < 5; index++) {
         const id = getRandom(ids)
         hand.push(findCardById(Number(id)))
+        // hand.push(findCardById(Number(id)))
     }
 
     return hand

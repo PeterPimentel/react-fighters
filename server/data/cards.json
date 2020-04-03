@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "name": "Joe Higashi",
+        "image": "http://localhost:8080/static/fighters/joe_card.png",
+        "life": 50,
+        "skills": [
+            {
+                "id": 1,
+                "name": "Low Kick",
+                "cost": 1,
+                "damage": 10
+            },
+            {
+                "id": 2,
+                "name": "Hurricame Upper",
+                "cost": 3,
+                "damage": 40
+            }
+        ],
+        "type": "fighter"
+    },
+    {
+        "id": 2,
+        "name": "Balrog",
+        "image": "http://localhost:8080/static/fighters/balrog_card.png",
+        "life": 60,
+        "skills": [
+            {
+                "id": 3,
+                "name": "Jab",
+                "cost": 1,
+                "damage": 10
+            },
+            {
+                "id": 4,
+                "name": "Upper",
+                "cost": 3,
+                "damage": 40
+            }
+        ],
+        "type": "fighter"
+    },
+    {
+        "id": 3,
+        "name": "Terry Bogard",
+        "image": "http://localhost:8080/static/fighters/terry_card.png",
+        "life": 60,
+        "skills": [
+            {
+                "id": 5,
+                "name": "Crack Shot",
+                "cost": 2,
+                "damage": 20
+            },
+            {
+                "id": 6,
+                "name": "Rising Tackle",
+                "cost": 5,
+                "damage": 40
+            }
+        ],
+        "type": "fighter"
+    },
+    {
+        "id": 4,
+        "name": "Paul Phoenix",
+        "image": "http://localhost:8080/static/fighters/paul_card.png",
+        "life": 80,
+        "skills": [
+            {
+                "id": 7,
+                "name": "Jab",
+                "cost": 1,
+                "damage": 5
+            },
+            {
+                "id": 8,
+                "name": "Mortar Punch",
+                "cost": 6,
+                "damage": 200
+            }
+        ],
+        "type": "fighter"
+    }
+]

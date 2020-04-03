@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import { OpponentContext } from "../../context/opponentContext"
 import { UserContext } from "../../context/userContext"
 import { TurnContext } from "../../context/gameContext"
-import { Row, Column } from '../RFCentralized'
+import { Row } from '../RFCentralized'
 import FigtherBox from './figtherBox'
 import Footer from './footer'
 
-import { FIGTHERS } from '../../data/CARDS'
 import styles from './index.module.css'
 
 import {
@@ -20,14 +19,26 @@ import {
   onReady
 } from '../../service/events'
 
-export default function Room() {
+import {
+  index as fightersIndex
+} from '../../service/fighterService'
 
+export default function Room() {
   const { opponent, setOpponent } = useContext(OpponentContext)
   const { user, setUser } = useContext(UserContext)
   const { setTurn } = useContext(TurnContext)
-
+  
   const [selectedFigther, setSelected] = useState(user)
   const [selectedOpponent, setSelectedOpponent] = useState(opponent)
+  const [fighters, setFighters] = useState([])
+  
+  useEffect(() => {
+    async function fectData() {
+      const data = await fightersIndex()
+      setFighters(data)
+    }
+    fectData()
+  }, [])
 
   const handleReady = () => {
     if (opponent.ready === false) {
@@ -96,7 +107,7 @@ export default function Room() {
       </div>
       <Row className={styles.characters}>
         {
-          FIGTHERS.map(fighter =>
+          fighters.map(fighter =>
             <FigtherBox
               onSelect={handleSelect}
               key={fighter.id}

@@ -14,14 +14,16 @@
     height: 230px;
     background-image: url("../../assets/bg2.png");
     display: grid;
-    grid-template-columns: 160px 40px; /*MODEL 1*/
-    grid-template-rows: 25px 150px 100px 25px; /*MODEL 1*/
     grid-template-columns: 130px 40px;
     grid-template-rows: 25px 110px 80px 15px;
-    grid-template-areas: "name life"
+    grid-template-rows: 25px 110px 95px;
+    /* grid-template-areas: "name life"
                         "image image"
                         "info info"
-                        "desc desc";
+                        "desc desc"; */
+    grid-template-areas: "name life"
+                        "image image"
+                        "info info";
     
 }
 
@@ -65,7 +67,7 @@
     grid-area: info;
     padding: 6px;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .attackInfo {
@@ -82,13 +84,6 @@
     margin-bottom: 3px;
     background: rgb(130,130,130);
     background: linear-gradient(0deg, rgba(0,0,0,0.2) 50%, rgb(130,130,130, 1) 100%);
-}
-
-.description {
-    grid-area: desc;
-    font-size: x-small;
-    padding-left: 6px;
-    align-self: center;
 }
 
 .energy {

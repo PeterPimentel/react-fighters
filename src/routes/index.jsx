@@ -4,8 +4,6 @@ import { UserContext } from '../context/userContext'
 import { OpponentContext } from '../context/opponentContext'
 import { TurnContext } from '../context/gameContext'
 
-import {FIGTHERS} from '../data/CARDS'
-
 import Ring from '../Components/Ring'
 import Room from '../Components/Room'
 import Loading from '../Components/Loading'
@@ -15,13 +13,13 @@ import Modal from '../Components/modal'
 export default function App() {
   const [user, setUser] = useState({
     username: `GUEST-${Math.floor(Math.random() * 10)}`,
-    fighter: { ...FIGTHERS[0] },
+    fighter: {},
     ready: false
   })
 
   const [opponent, setOpponent] = useState({
     username: '',
-    fighter: { ...FIGTHERS[0] },
+    fighter: {},
     ready: false
   })
 

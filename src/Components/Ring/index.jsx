@@ -30,6 +30,10 @@ import {
     drawHand
 } from '../../service/game'
 
+import {
+    findCard
+} from '../../service/cardService'
+
 import styles from './index.module.css'
 
 const ACTIONS_INITIAL_STATE = {
@@ -52,12 +56,9 @@ export default function Ring() {
     const { opponent } = useContext(OpponentContext)
     const { turn } = useContext(TurnContext)
 
-    const [fighter, setFighter] = useState(
-        JSON.parse(JSON.stringify(findCardById(user.fighter.id)))
-    )
-    const [opponentFigther, setOpponentFighter] = useState(
-        JSON.parse(JSON.stringify(findCardById(opponent.fighter.id)))
-    )
+    const [fighter, setFighter] = useState(findCard(user.fighter.id))
+    
+    const [opponentFigther, setOpponentFighter] = useState(findCard(opponent.fighter.id))
 
     //Deck
     const [deck, setDeck] = useState(DECK)
@@ -96,19 +97,20 @@ export default function Ring() {
     const handleAttack = (skill) => {
         if (turnActions.attack === false) {
             if (skill.cost <= fighter.energy) {
-                eventAction({
-                    type: 'attack',
-                    value: skill.damage
-                })
-                setOpponentFighter({
-                    ...opponentFigther,
-                    damageReceived: opponentFigther.damageReceived + skill.damage
-                })
-                setTurnActions({
-                    ...turnActions,
-                    attack: true
-                })
-                setTurn(false)
+                console.log("SKILL - ",skill)
+                // eventAction({
+                //     type: 'attack',
+                //     value: skill.trigger()
+                // })
+                // setOpponentFighter({
+                //     ...opponentFigther,
+                //     damageReceived: opponentFigther.damageReceived + skill.damage
+                // })
+                // setTurnActions({
+                //     ...turnActions,
+                //     attack: true
+                // })
+                // setTurn(false)
             } else {
                 setModal({ show: true, message: "Insufficient energy on this fighter" })
             }
@@ -144,7 +146,7 @@ export default function Ring() {
     const handleReserveFighterDragEnd = (result) => {
         const idx = result.draggableId.indexOf("_")
         const id = result.draggableId.substring(idx+1)
-        const card = findCardById(Number(id))
+        const card = findCard(Number(id))
         switch (card.type) {
             // case TYPES.ENERGY:
             //     receiveEnergy()
@@ -160,7 +162,7 @@ export default function Ring() {
     const handleFighterDragEnd = (result) => {
         const idx = result.draggableId.indexOf("_")
         const id = Number(result.draggableId.substring(idx+1))
-        const card = findCardById(id)
+        const card = findCard(id)
         if (card.type === TYPES.ENERGY) {
             receiveEnergy()
             setHand(removeFromHand(id, hand))
@@ -170,7 +172,7 @@ export default function Ring() {
     const handleReserveDragEnd = (result) => {
         const idx = result.draggableId.indexOf("_")
         const id = result.draggableId.substring(idx+1)
-        const card = findCardById(Number(id))
+        const card = findCard(Number(id))
         switch (card.type) {
             case TYPES.ENERGY:
                 receiveEnergy()

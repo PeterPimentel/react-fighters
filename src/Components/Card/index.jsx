@@ -35,7 +35,6 @@ const DefaultCard = ({card, showAttr, className, onAttack}) => {
                         <img alt="card" src={card.image} />
                     </div>
                     <CardInfo card={card} onAttack={onAttack}/>
-                    <div className={styles.description}>{card.description}</div>
                 </div>
             </div>
             {/* FIM Card container */}

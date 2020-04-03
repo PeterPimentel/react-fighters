@@ -13,18 +13,18 @@ import paulAvatar from '../assets/fighters/paul/avatar.jpg'
 const CARDS = [
     {
 		"id": 1,
-		"name": "Joe Higashi",
-		"description":"Fatal Fury",
+		"name": "Joe Higashii",
 		"image":joeHigashi,
         "life": 50,
 		"damageReceived":0,
 		"energy":0,
+		"factory":"joe",
 		"skills": [
 			{
 				"id":1,
 				"name": "Low Kick",
 				"cost": 1,
-				"damage": 10
+				"damage": 10,
 			},
             {
                 "id": 3,
@@ -38,11 +38,11 @@ const CARDS = [
     {
 		"id": 2,
 		"name": "Balrog",
-		"description":"Street Fighter",
 		"image":balrog,
         "life": 60,
 		"damageReceived":0,
 		"energy":0,
+		"factory":"default",
 		"skills": [
 			{
 				"id":1,
@@ -62,7 +62,6 @@ const CARDS = [
     {
 		"id": 3,
 		"name": "Terry Bogard",
-		"description":"Fatal Fury",
 		"image":terryBogard,
         "life": 50,
 		"damageReceived":0,
@@ -105,7 +104,6 @@ const CARDS = [
 	{
 		"id": 6,
 		"name": "Eddy Gordo",
-		"description":"Tekken",
 		"image":terryBogard,
         "life": 50,
 		"damageReceived":0,
@@ -129,7 +127,6 @@ const CARDS = [
 	{
 		"id": 7,
 		"name": "Paul Phoenix",
-		"description":"Tekken",
 		"image":paul,
         "life": 80,
 		"damageReceived":0,
