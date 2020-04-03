@@ -50,9 +50,7 @@ export default function Room() {
       ...user,
       fighter: {
         id: fighter.id,
-        name: fighter.name,
-        image: fighter.image,
-        avatar: fighter.avatar
+        name: fighter.name
       }
     }
     setSelected(userData)
@@ -79,22 +77,17 @@ export default function Room() {
   }, [handleEnemyReady])
 
   return (
-    <div className={styles.container}>
+    <Column className={styles.container}>
       <div className={styles.titleBox}>
         <hr />
         <hr />
         <h3 className={`${styles.title}`}>CHOOSE YOUR FIGTHER</h3>
         <hr />
       </div>
-      <div className={styles.fighter}>
+      <div>
         <span>{selectedFigther.fighter.name}</span>
-        <img src={selectedFigther.fighter.image} alt="fighter selecionado" />
       </div>
-      <div className={styles.opponent}>
-        <span>{selectedOpponent.fighter.name}</span>
-        <img src={selectedOpponent.fighter.image} alt="fighter selecionado" />
-      </div>
-      <Row className={styles.characters}>
+      <Row>
         {
           FIGTHERS.map(fighter =>
             <FigtherBox
@@ -106,10 +99,10 @@ export default function Room() {
           )
         }
       </Row>
-      <div className={styles.footer}>
+      <div>
         <Link className={`${styles.button} ${styles.flashit}`} to="/loading" onClick={handleReady}>READY </Link>
-        <Footer selectedOpponent={selectedOpponent} opponent={opponent} />
       </div>
-    </div>
+      <Footer selectedOpponent={selectedOpponent} opponent={opponent} />
+    </Column>
   );
 }

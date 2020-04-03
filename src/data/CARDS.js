@@ -1,11 +1,21 @@
-import cinderaImage from '../assets/cinderace.png'
+import joeHigashi from '../assets/fighters/joeHigashi/card.png'
+import joeHigashiAvatar from '../assets/fighters/joeHigashi/avatar.png'
+
+import balrog from '../assets/fighters/balrog/card.png'
+import balrogAvatar from '../assets/fighters/balrog/avatar.png'
+
+import terryBogard from '../assets/fighters/terryBogard/card.png'
+import terryBogardAvatar from '../assets/fighters/terryBogard/avatar.jpg'
+
+import paul from '../assets/fighters/paul/card.png'
+import paulAvatar from '../assets/fighters/paul/avatar.jpg'
 
 const CARDS = [
     {
 		"id": 1,
 		"name": "Joe Higashi",
-		"description":"Muay Thai Fighter",
-		"image":"https://i.pinimg.com/236x/43/e1/c7/43e1c792601aa8630f32a7ba1ca49ed4.jpg",
+		"description":"Fatal Fury",
+		"image":joeHigashi,
         "life": 50,
 		"damageReceived":0,
 		"energy":0,
@@ -19,7 +29,7 @@ const CARDS = [
             {
                 "id": 3,
 				"name": "Hurricame Upper",
-				"cost": 5,
+				"cost": 3,
 				"damage": 40
             }
 		],
@@ -28,8 +38,8 @@ const CARDS = [
     {
 		"id": 2,
 		"name": "Balrog",
-		"description":"Boxe Fighter",
-		"image":"https://i.pinimg.com/236x/ab/a6/a1/aba6a1d053dcee0372940c6afff5aca2.jpg",
+		"description":"Street Fighter",
+		"image":balrog,
         "life": 60,
 		"damageReceived":0,
 		"energy":0,
@@ -51,24 +61,24 @@ const CARDS = [
     },
     {
 		"id": 3,
-		"name": "Eddy Gordo",
-		"description":"Capoeira Fighter",
-		"image":"https://i.pinimg.com/236x/e0/4a/5f/e04a5f1bc92b85c8429b1cd93dcaaa94.jpg",
+		"name": "Terry Bogard",
+		"description":"Fatal Fury",
+		"image":terryBogard,
         "life": 50,
 		"damageReceived":0,
 		"energy":0,
 		"skills": [
 			{
 				"id":1,
-				"name": "Benção",
+				"name": "Crack Shot",
 				"cost": 2,
-				"damage": 10
+				"damage": 20
 			},
 			{
 				"id": 2,
-				"name": "Armada",
-				"cost": 2,
-				"damage": 30
+				"name": "Rising Tackle",
+				"cost": 5,
+				"damage": 40
 			}
 		],
 		"type":"fighter"
@@ -91,10 +101,75 @@ const CARDS = [
 		"name":"Punch Energy",
 		"image":"https://i.pinimg.com/236x/f2/97/af/f297af1da7041035736a13782bd7b596.jpg",
 		"type":"energy"
-	}
+	},
+	{
+		"id": 6,
+		"name": "Eddy Gordo",
+		"description":"Tekken",
+		"image":terryBogard,
+        "life": 50,
+		"damageReceived":0,
+		"energy":0,
+		"skills": [
+			{
+				"id":1,
+				"name": "Benção",
+				"cost": 2,
+				"damage": 10
+			},
+			{
+				"id": 2,
+				"name": "Armada",
+				"cost": 2,
+				"damage": 30
+			}
+		],
+		"type":"fighter"
+    },
+	{
+		"id": 7,
+		"name": "Paul Phoenix",
+		"description":"Tekken",
+		"image":paul,
+        "life": 80,
+		"damageReceived":0,
+		"energy":0,
+		"skills": [
+			{
+				"id":1,
+				"name": "Jab",
+				"cost": 1,
+				"damage": 5
+			},
+			{
+				"id": 2,
+				"name": "Mortar Punch",
+				"cost": 6,
+				"damage": 200
+			}
+		],
+		"type":"fighter"
+    },
 ]
 
-export const FIGTHERS = [CARDS[0], CARDS[1], CARDS[2]]
+export const FIGTHERS = [
+	{
+		...CARDS[0],
+		avatar:joeHigashiAvatar
+	},
+	{
+		...CARDS[1],
+		avatar:balrogAvatar
+	},
+	{
+		...CARDS[2],
+		avatar:terryBogardAvatar
+	},
+	{
+		...CARDS[6],
+		avatar:paulAvatar
+	},
+]
 
 export const TYPES = {
 	ITEM:'item',
