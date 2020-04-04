@@ -84,9 +84,11 @@
             {
                 "id": 8,
                 "name": "Mortar Punch",
-                "cost": 6,
+                "cost": 2,
                 "damage": 200,
-                "effect":"regular"
+                "effect":"discardEnergy",
+                "value":6,
+                "info":"Discard 2 energy attached to Paul"
             }
         ],
         "type": "fighter"

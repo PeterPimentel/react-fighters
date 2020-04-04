@@ -1,4 +1,5 @@
 const effectService = require('./effectService')
+const attackService = require('./attackService')
 
 const handle = (action, origin, target) => {
     switch (origin.type) {
@@ -13,7 +14,7 @@ const handle = (action, origin, target) => {
             }
         case 'fighter':
             const {skill} = action
-            const attackResult = effectService[skill.effect](origin, target, skill)
+            const attackResult = attackService[skill.effect](origin, target, skill)
             return {
                 result:{
                     ...attackResult,
