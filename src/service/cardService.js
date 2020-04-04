@@ -1,15 +1,21 @@
-import CardFactory from '../models/CardFactory'
+export const index = async () => {
+    let response = await fetch("/api/card");
 
-import CARDS from '../data/CARDS'
+    if (response.ok) {
+        let json = await response.json();
+        return json
+    } else {
+        alert("HTTP-Error: " + response.status);
+    }
+}
 
-export const findCard = (id) =>{
-    const card = CARDS.find(card => card.id === id)
-    return CardFactory(card)
-    // console.log("CARD - ", c)
-    // let card = JSON.parse(JSON.stringify(CARDS.find(card => card.id === id)))
-    // console.log("Stringed - ", card)
-    // return {
-    //     ...card,
-    //     key:generateKey()
-    // }
+export const show = async (id) => {
+    let response = await fetch(`/api/card/${id}`);
+
+    if (response.ok) {
+        let json = await response.json();
+        return json
+    } else {
+        alert("HTTP-Error: " + response.status);
+    }
 }

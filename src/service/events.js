@@ -6,7 +6,7 @@ export const connect = () => socket = io.connect()
 
 export const removeAllListeners = () => socket.removeAllListeners()
 
-export const join = (username) => {
+export const emitJoin = (username) => {
     socket.emit('joinInGame', username);
 }
 
@@ -33,7 +33,7 @@ export const onEnemySelected = (callback) => {
     });
 }
 
-export const ready = () => {
+export const emitReady = () => {
     socket.emit('ready', true)
 }
 

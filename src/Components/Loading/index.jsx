@@ -1,37 +1,69 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom'
-import { UserContext } from '../../context/userContext'
-import { OpponentContext } from '../../context/opponentContext'
 
 import Loader from '../Loader'
+
+//Actions
+import { opponentSelectFighter, opponentReady } from '../../redux/reducers/opponentReducer'
+import { setFighter, setOpponentFighter } from '../../redux/reducers/gameReducer'
+import { setDeck, drawCard } from '../../redux/reducers/deckReducer'
 
 import styles from './index.module.css'
 
 import { onReady, onEnemySelected, removeAllListeners } from '../../service/events'
+import { index as deckIndex } from '../../service/deckService'
+import { show as cardShow } from '../../service/cardService'
 
 export default function Loading() {
-    const { user } = useContext(UserContext)
-    const { opponent, setOpponent } = useContext(OpponentContext)
+
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.user)
+    const opponent = useSelector(state => state.opponent)
+    const { deck } = useSelector(state => state.deck)
+    const { fighter, opponentFighter } = useSelector(state => state.game)
 
     useEffect(() => {
-        onEnemySelected((data) => setOpponent({...data}))
-    }, [setOpponent])
-
-    useEffect(() => {
-        onReady(() => setOpponent({ ...opponent, ready: true }))
-        return () => {
-            removeAllListeners()
+        async function fectData() {
+            const champ = await cardShow(user.fighter.id)
+            const data = await deckIndex()
+            dispatch(setFighter(champ))
+            dispatch(setDeck(data))
+            dispatch(drawCard(5))
         }
-    }, [opponent, setOpponent])
+        fectData()
+    }, [dispatch, user.fighter.id])
 
-    if (user.ready && opponent.ready) {
+    const handleEnemyReady = useCallback(
+        async () => {
+            const champ = await cardShow(opponent.fighter.id)
+            dispatch(setOpponentFighter(champ))
+            dispatch(opponentReady(true))
+        },
+        [dispatch, opponent.fighter.id]
+    )
+
+    useEffect(() => {
+        onReady(handleEnemyReady)
+        onEnemySelected(data => dispatch(opponentSelectFighter(data)))
+        return () => removeAllListeners()
+    }, [dispatch, handleEnemyReady, opponent])
+
+    if (user.ready && opponent.ready && deck.length > 0 && opponentFighter.id) {
         return <Redirect to={{ pathname: "/game" }} />
     }
 
     return (
         <div className={styles.root}>
             <Loader />
-            <div className={styles.label}>Loading data...</div>
+            <div className={styles.label}>Loading ...</div>
+            {
+                deck.length < 0 && <div className={styles.dataFetch}>Fetching deck...</div>
+            }
+            {
+                !fighter.id && <div className={styles.dataFetch}>Fetching data...</div>
+            }
         </div>
     )
 }

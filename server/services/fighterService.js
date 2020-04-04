@@ -7,7 +7,7 @@ const index = (req, res) => {
 const show = (req, res) => {
     const fighter = FIGHTERS.filter(fig => fig.id === Number(req.params.id))
 
-    res.json(fighter)
+    res.json(fighter[0])
 }
 
 module.exports = {

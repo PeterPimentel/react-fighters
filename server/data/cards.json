@@ -82,5 +82,13 @@
             }
         ],
         "type": "fighter"
+    },
+    {
+        "id": 10,
+        "name": "Energy",
+        "image": "https://www.pngkit.com/png/detail/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png",
+        "type": "energy",
+        "effect":"addEnergy",
+		"value": 1
     }
 ]

@@ -1,161 +1,299 @@
-import React, { useState, useContext } from 'react';
+// import React, { useState, useContext, useEffect, useCallback } from 'react'
+// import { useDispatch, useSelector } from 'react-redux'
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+// import { DragDropContext, Droppable } from "react-beautiful-dnd"
 
-import { OpponentContext } from "../../context/opponentContext"
-import { UserContext } from "../../context/userContext"
+// import { TurnContext } from "../../context/gameContext"
 
-import Card from '../Card'
+// import { setFighter } from '../../redux/reducers/gameReducer'
+// import { setDeck, drawCard } from '../../redux/reducers/deckReducer'
 
-import CARDS from '../../data/CARDS'
+// import Card from '../Card'
 
-import {
-    action as eventAction
-} from '../../service/events'
+// import { TYPES } from '../../data/CARDS'
+// import { DECK } from '../../data/DECK'
 
-import styles from './index.module.css'
+// import Reserve from './reserve'
+// import Hand from './hand'
+// import Header from './header'
 
-const ACTIONS_INITIAL_STATE = {
-    energy: false,
-    attack: false,
-    equipment: false,
-    itens: 0
-}
+// import Modal from '../modal'
 
-export default function Ring() {
-    const findFigther = (id) => CARDS.find(card => card.id === id)
+// import {
+//     action as eventAction,
+//     onAction,
+//     removeAllListeners
+// } from '../../service/events'
 
-    const { user } = useContext(UserContext)
-    const { opponent, setOpponent } = useContext(OpponentContext)
+// import {
+//     findCardById,
+//     removeFromHand,
+//     drawCard,
+//     drawHand
+// } from '../../service/gameService'
 
-    const [fighter, setFighter] = useState(findFigther(user.fighter.id))
-    const [opponentFigther, setOpponentFighter] = useState(findFigther(opponent.fighter.id))
+// import {
+//     index as cardIndex
+// } from '../../service/cardService'
 
-    const [myTurn, setTurn] = useState(true)
-    const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
+// import {
+//     index as deckIndex
+// } from '../../service/deckService'
 
-    const endTurn = () => {
-        setTurn(!myTurn)
-        setTurnActions(ACTIONS_INITIAL_STATE)
-    }
+// import styles from './index.module.css'
 
-    const handleAttack = (damage) => {
-        if (turnActions.attack === false) {
-            setOpponent({
-                ...opponent,
-                damageReceived: opponent.damageReceived + damage
-            })
-            setTurnActions({
-                ...turnActions,
-                attack: true
-            })
-            endTurn()
-            eventAction({
-                'name': 'attack',
-                'damage': damage
-            })
-        } else {
-            console.log("You already have attacked this Turn")
-        }
-    }
+// const ACTIONS_INITIAL_STATE = {
+//     energy: false,
+//     attack: false,
+//     equipment: false,
+//     reserve: false
+// }
 
-    const receiveEnergy = () => {
-        if (turnActions.energy === false) {
-            setFighter({
-                ...fighter,
-                energy: ++fighter.energy
-            })
-            setTurnActions({
-                ...turnActions,
-                energy: true
-            })
-        } else {
-            console.log("You already have used a energy on this Turn")
-        }
-    }
+// const DROPPABLE_ARES = {
+//     FIGHTER: 'fighter',
+//     RESERVE: 'reserve',
+//     RESERVE_FIGTHER: 'reserveFigther',
+//     HAND: 'hand'
+// }
 
-    const onDragEnd = (result) => {
-        // dropped outside the list
-        // if (!result.destination) {
-        //     return;
-        // }
-        //     result.source.index,
-        //   result.destination.index
-        console.log("RESULT", result)
-    }
+// export default function Ring() {
 
-    return (
-        <DragDropContext onDragEnd={onDragEnd}>
+//     const dispatch = useDispatch()
 
-            <div className={styles.gameBoard}>
-                <div className={styles.matchInfo}>
-                    matchInfo
-                </div>
-                {/* Arena */}
-                <div className={styles.ring}>
-                    <div className={styles.figthersContainer}>
-                        <Card className={styles.figtherOnRing} card={fighter} showAttr={true} />
-                    </div>
+//     const user = useSelector(state => state.user)
+//     const opponent = useSelector(state => state.opponent)
+//     const { deck, hand } = useSelector(state => state.deck)
+//     const { fighter } = useSelector(state => state.game)
 
-                    <div className={styles.figthersContainer}>
-                        <Card className={styles.figtherOnRing} card={opponentFigther} showAttr={true} />
-                    </div>
-                </div>
-                {/* FIM Arena */}
-                <div className={styles.deck}>
-                    DECk
-                </div>
-                <div className={styles.reserve}>
-                    <Droppable droppableId="reserve">
-                        {(provided, ) => (
-                            <div style={{ background: "red", height: "100%", width: "100%" }}
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </div>
-                {/* <div className={styles.hand}> */}
-                <Droppable droppableId="hand">
-                    {(provided, ) => (
-                        <div className={styles.hand}
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                        >
-                            {
-                                CARDS.map((card, index) => (
-                                    <Draggable key={card.id} draggableId={`ID-${fighter.id + 5}`} index={index}>
+//     const { turn } = useContext(TurnContext)
 
-                                        {
-                                            (provided) => (
-                                                <div
-                                                    className={styles.figthersContainer}
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}
-                                                >
-                                                    <Card className={styles.cardInHand} card={card} />
-                                                </div>
-                                            )
-                                        }
+//     const [fighter, setFighter] = useState(findCardById(user.fighter.id))
 
-                                    </Draggable>
-                                ))
-                            }
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </div>
-            {/* <div>
-                    <button onClick={receiveEnergy}>Give Energy</button>
-                </div>
-                <div>
-                    <button onClick={endTurn}>Pass</button>
-                </div> */}
-            {/* </div> */}
-        </DragDropContext>
-    );
-}
+//     const [opponentFigther, setOpponentFighter] = useState(findCardById(opponent.fighter.id))
+
+//     //Deck
+//     const [deck, setDeck] = useState([])
+
+//     //Cards in hand
+//     const [hand, setHand] = useState([])
+
+//     //cards que tenho no banco de reservas
+//     const [reserveCards, setReserveCards] = useState([])
+
+//     //modal controll
+//     const [modal, setModal] = useState({ show: false, message: '' })
+
+//     //Turn Controll
+//     const [myTurn, setTurn] = useState(turn)
+
+//     //Actions Controll
+//     const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
+
+//     useEffect(() => {
+//         async function fectData() {
+//             const data = await deckIndex()
+//             setDeck(data)
+//             setHand(drawHand(data))
+//         }
+//         fectData()
+//     }, [])
+
+//     const handleSkipTurn = () => {
+//         setTurn(false)
+//         eventAction({ type: 'endTurn' })
+//     }
+
+//     const handleNewTurn = useCallback(
+//         () => {
+//             const result = drawCard(deck)
+//             setHand([...hand, result.card])
+//             setDeck(result.deck)
+//             setTurn(true)
+//             setTurnActions(ACTIONS_INITIAL_STATE)
+//         },
+//         [deck, hand],
+//     )
+
+//     const handleAttack = (skill) => {
+//         if (turnActions.attack === false) {
+//             if (skill.cost <= fighter.energy) {
+//                 console.log("SKILL - ", skill)
+//                 eventAction({
+//                     type: 'attack',
+//                     value: skill.trigger()
+//                 })
+//                 setOpponentFighter({
+//                     ...opponentFigther,
+//                     damageReceived: opponentFigther.damageReceived + skill.damage
+//                 })
+//                 setTurnActions({
+//                     ...turnActions,
+//                     attack: true
+//                 })
+//                 setTurn(false)
+//             } else {
+//                 setModal({ show: true, message: "Insufficient energy on this fighter" })
+//             }
+//         } else {
+//             setModal({ show: true, message: "Only one attack per turn" })
+//         }
+//     }
+
+//     const receiveEnergy = () => {
+//         if (turnActions.energy === false) {
+//             const newEnergyCount = fighter.energy
+//             eventAction({
+//                 type: 'addEnergy',
+//                 value: newEnergyCount + 1
+//             })
+//             setFighter({ ...fighter, energy: ++fighter.energy })
+//             setTurnActions({ ...turnActions, energy: true })
+//         } else {
+//             setModal({ show: true, message: "You already have set a energy on this Turn" })
+//         }
+//     }
+
+//     const setFigtherOnReserver = (fighter) => {
+//         if (reserveCards.length <= 6 && turnActions.reserve === false) {
+//             setReserveCards([...reserveCards, fighter])
+//             setHand(removeFromHand(fighter.id, hand))
+//             setTurnActions({ ...turnActions, reserve: true })
+//         } else {
+//             setModal({ show: true, message: "You already did that" })
+//         }
+//     }
+
+//     const handleReserveFighterDragEnd = (result) => {
+//         const idx = result.draggableId.indexOf("_")
+//         const id = result.draggableId.substring(idx + 1)
+//         const card = findCardById(Number(id))
+//         switch (card.type) {
+//             // case TYPES.ENERGY:
+//             //     receiveEnergy()
+//             //     break;
+//             case TYPES.FIGTHER:
+//                 setFigtherOnReserver(card)
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }
+
+//     const handleFighterDragEnd = (result) => {
+//         const idx = result.draggableId.indexOf("_")
+//         const id = Number(result.draggableId.substring(idx + 1))
+//         const card = findCardById(id)
+//         if (card.type === TYPES.ENERGY) {
+//             receiveEnergy()
+//             setHand(removeFromHand(id, hand))
+//         }
+//     }
+
+//     const handleReserveDragEnd = (result) => {
+//         const idx = result.draggableId.indexOf("_")
+//         const id = result.draggableId.substring(idx + 1)
+//         const card = findCardById(Number(id))
+//         switch (card.type) {
+//             case TYPES.ENERGY:
+//                 receiveEnergy()
+//                 break;
+//             case TYPES.FIGTHER:
+//                 setFigtherOnReserver(card)
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }
+
+//     const memorizedHandleActions = useCallback(
+//         (action) => {
+//             switch (action.type) {
+//                 case 'addEnergy':
+//                     setOpponentFighter({ ...opponentFigther, energy: action.value })
+//                     break;
+//                 case 'attack':
+//                     setFighter({
+//                         ...fighter,
+//                         damageReceived: fighter.damageReceived + action.value
+//                     })
+//                     handleNewTurn()
+//                     break;
+//                 case 'endTurn':
+//                     handleNewTurn()
+//                     break;
+//                 default:
+//                     break;
+//             }
+//         },
+//         [fighter, handleNewTurn, opponentFigther],
+//     );
+
+//     useEffect(() => {
+//         onAction(memorizedHandleActions)
+//         return function cleanup() {
+//             removeAllListeners()
+//         }
+//     }, [memorizedHandleActions])
+
+//     const onDragEnd = (result) => {
+//         // dropped outside the list
+//         if (!result.destination) {
+//             return;
+//         }
+//         switch (result.destination.droppableId) {
+//             case DROPPABLE_ARES.FIGHTER:
+//                 handleFighterDragEnd(result)
+//                 break;
+//             case DROPPABLE_ARES.RESERVE:
+//                 handleReserveDragEnd(result)
+//                 break;
+//             case DROPPABLE_ARES.RESERVE_FIGTHER:
+//                 handleReserveFighterDragEnd(result)
+//                 break;
+//             default:
+//                 break;
+//         }
+//         console.log("RESULT", result)
+//     }
+
+//     return (
+//         <DragDropContext onDragEnd={onDragEnd}>
+//             <Modal
+//                 show={modal.show} message={modal.message}
+//                 handleClose={() => setModal({ ...modal, show: false })}
+//             />
+//             <div className={styles.gameBoard}>
+//                 <Header turn={myTurn} skipTurn={handleSkipTurn} />
+//                 {/* Arena */}
+//                 <div className={styles.ring}>
+//                     <Droppable droppableId="fighter">
+//                         {(provided, ) => (
+//                             <div className={styles.figthersContainer}
+//                                 {...provided.droppableProps}
+//                                 ref={provided.innerRef}
+//                             >
+//                                 <Card
+//                                     className={styles.figtherOnRing}
+//                                     onAttack={handleAttack}
+//                                     card={fighter}
+//                                     showAttr={true}
+//                                 />
+//                                 {provided.placeholder}
+//                             </div>
+//                         )}
+//                     </Droppable>
+
+//                     <div className={styles.figthersContainer}>
+//                         <Card className={styles.figtherOnRing} card={opponentFigther} showAttr={true} />
+//                     </div>
+//                 </div>
+//                 {/* FIM Arena */}
+//                 <div className={styles.deck}>
+//                     DECk
+//                 </div>
+//                 <Reserve reserveCards={reserveCards} />
+//                 <Hand hand={hand} />
+//             </div>
+//         </DragDropContext>
+//     );
+// }

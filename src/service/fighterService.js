@@ -1,5 +1,5 @@
 export const index = async () => {
-    let response = await fetch("/api/fighters");
+    let response = await fetch("/api/fighter");
 
     if (response.ok) {
         let json = await response.json();
@@ -10,7 +10,7 @@ export const index = async () => {
 }
 
 export const show = async (id) => {
-    let response = await fetch(`/api/fighters/${id}`);
+    let response = await fetch(`/api/fighter/${id}`);
 
     if (response.ok) {
         let json = await response.json();

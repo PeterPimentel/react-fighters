@@ -1,93 +1,77 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useCallback, useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { OpponentContext } from "../../context/opponentContext"
-import { UserContext } from "../../context/userContext"
-import { TurnContext } from "../../context/gameContext"
+import { Link } from "react-router-dom"
+
 import { Row } from '../RFCentralized'
 import FigtherBox from './figtherBox'
 import Footer from './footer'
 
+import { TurnContext } from "../../context/gameContext"
+
+import { userReady, userSelectFighter } from '../../redux/reducers/userReducer'
+import { opponentSelectFighter, opponentReady } from '../../redux/reducers/opponentReducer'
+import { setOpponentFighter } from '../../redux/reducers/gameReducer'
+
+import {
+  emitJoin, emitFigtherSelected, emitReady,
+  onEnemySelected, onReady,
+  removeAllListeners
+} from '../../service/events'
+import { show as cardShow } from '../../service/cardService'
+import { index as fightersIndex } from '../../service/fighterService'
+
 import styles from './index.module.css'
 
-import {
-  join,
-  onEnemySelected,
-  emitFigtherSelected,
-  removeAllListeners,
-  ready,
-  onReady
-} from '../../service/events'
+const Room = () => {
 
-import {
-  index as fightersIndex
-} from '../../service/fighterService'
+  const dispatch = useDispatch()
 
-export default function Room() {
-  const { opponent, setOpponent } = useContext(OpponentContext)
-  const { user, setUser } = useContext(UserContext)
+  const user = useSelector(state => state.user)
+  const opponent = useSelector(state => state.opponent)
   const { setTurn } = useContext(TurnContext)
-  
-  const [selectedFigther, setSelected] = useState(user)
-  const [selectedOpponent, setSelectedOpponent] = useState(opponent)
+
   const [fighters, setFighters] = useState([])
-  
+
   useEffect(() => {
+    emitJoin({ username: user.username })
     async function fectData() {
       const data = await fightersIndex()
       setFighters(data)
     }
     fectData()
-  }, [])
+  }, [user.username])
 
   const handleReady = () => {
     if (opponent.ready === false) {
       setTurn(true)
     }
-    setUser({ ...selectedFigther, ready: true })
-    ready(true)
+    dispatch(userReady(true))
+    emitReady(true)
   }
 
   const handleEnemyReady = useCallback(
-    () => {
+    async () => {
       setTurn(false)
-      setOpponent({ ...selectedOpponent, ready: true })
+      const champ = await cardShow(opponent.fighter.id)
+      dispatch(setOpponentFighter(champ))
+      dispatch(opponentReady(true))
     },
-    [selectedOpponent, setOpponent, setTurn]
-  );
+    [dispatch, opponent.fighter.id, setTurn]
+  )
 
   const handleSelect = (fighter) => {
-    const userData = {
-      ...user,
-      fighter: {
-        id: fighter.id,
-        name: fighter.name,
-        image: fighter.image,
-        avatar: fighter.avatar
-      }
-    }
-    setSelected(userData)
-    emitFigtherSelected(userData)
+    dispatch(userSelectFighter(fighter))
+    emitFigtherSelected({ ...user, fighter })
   }
 
-  const handleOpponentSelect = (data) => {
-    setSelectedOpponent(data)
-  }
-
-  useEffect(() => {
-    join({ username: user.username })
-    return function cleanup() {
-      removeAllListeners()
-    }
-  }, [user.username])
+  const handleOpponentSelect = useCallback(data => dispatch(opponentSelectFighter(data)), [dispatch])
 
   useEffect(() => {
     onEnemySelected(handleOpponentSelect)
     onReady(handleEnemyReady)
-    return function cleanup() {
-      removeAllListeners()
-    }
-  }, [handleEnemyReady])
+    return () => removeAllListeners()
+  }, [handleEnemyReady, handleOpponentSelect])
 
   return (
     <div className={styles.container}>
@@ -98,29 +82,36 @@ export default function Room() {
         <hr />
       </div>
       <div className={styles.fighter}>
-        <span>{selectedFigther.fighter.name}</span>
-        <img src={selectedFigther.fighter.image} alt="fighter selecionado" />
+        <span>{user.fighter.name}</span>
+        <img src={user.fighter.image} alt="fighter selecionado" />
       </div>
       <div className={styles.opponent}>
-        <span>{selectedOpponent.fighter.name}</span>
-        <img src={selectedOpponent.fighter.image} alt="fighter selecionado" />
+        <span>{opponent.fighter.name}</span>
+        <img src={opponent.fighter.image} alt="fighter selecionado" />
       </div>
       <Row className={styles.characters}>
         {
           fighters.map(fighter =>
             <FigtherBox
-              onSelect={handleSelect}
               key={fighter.id}
+              onSelect={handleSelect}
               fighter={fighter}
-              selected={selectedFigther.fighter.id === fighter.id}
+              selected={user.fighter.id === fighter.id}
             />
           )
         }
       </Row>
       <div className={styles.footer}>
-        <Link className={`${styles.button} ${styles.flashit}`} to="/loading" onClick={handleReady}>READY </Link>
-        <Footer selectedOpponent={selectedOpponent} opponent={opponent} />
+        <Link
+          className={`${styles.button} ${styles.flashit}`}
+          to="/loading"
+          onClick={handleReady}>
+          READY
+        </Link>
+        <Footer opponent={opponent} />
       </div>
     </div>
-  );
+  )
 }
+
+export default Room

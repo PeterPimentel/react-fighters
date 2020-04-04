@@ -28,13 +28,6 @@ const handleReady = (socket, io) => (status) => {
     })
 }
 
-const flipCoin = (socket, io) => () => {
-    io.of('/').in('battle').clients(function (error, clients) {
-        const coin = Math.random() < 0.5 ? 0 : 1
-        socket.to('battle').emit('coinResult', clients[coin])
-    })
-}
-
 module.exports = {
     handleJoin,
     handleFigtherSelected,
