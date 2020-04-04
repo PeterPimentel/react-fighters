@@ -1,3 +1,5 @@
 body {
-    font-family: 'Roboto', sans-serif
+    font-family: 'Roboto', sans-serif;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }

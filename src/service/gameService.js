@@ -1,4 +1,4 @@
-
+import {post} from './apiService'
 import {findCard} from './cardService'
 
 const getRandom = (deck) => deck[Math.floor(Math.random() * deck.length)]
@@ -51,26 +51,7 @@ export const drawCard = (deck) => {
     }
 }
 
-const addEnergy = (value, key, fighter, reserve) => {
-    if(fighter.key === key){
-        return {
-            
-        }
-    }
-}
-
 export const triggerAction = async (action, origin, target) => {
-    const config = {
-        method: 'POST',
-        body:{action, origin, target}
-    }
-    let response = await fetch("/api/game/action", config);
-
-    if (response.ok) {
-        let json = await response.json();
-        return json
-    } else {
-        alert("HTTP-Error: " + response.status);
-    }
+    return post('/game/action',{action, origin, target})
 }
 

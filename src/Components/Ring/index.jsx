@@ -11,16 +11,11 @@ import Modal from '../modal'
 
 import { TurnContext } from "../../context/gameContext"
 
-import { setFighter, setOpponentFighter } from '../../redux/reducers/gameReducer'
+import { setFighter, setOpponentFighter, handleUserAction } from '../../redux/reducers/gameReducer'
 import { drawCard } from '../../redux/reducers/deckReducer'
 
 
 import { action as eventAction, onAction, removeAllListeners } from '../../service/events'
-
-import {
-    findCardById, removeFromHand,
-    triggerAction
-} from '../../service/gameService'
 
 import { index as cardIndex } from '../../service/cardService'
 
@@ -76,27 +71,8 @@ export default function Ring() {
     )
 
     const handleAttack = (skill) => {
-        if (turnActions.attack === false) {
-            if (skill.cost <= fighter.energy) {
-                console.log("SKILL - ", skill)
-                eventAction({
-                    type: 'attack',
-                    value: skill.trigger()
-                })
-                setOpponentFighter({
-                    ...opponentFighter,
-                    damageReceived: opponentFighter.damageReceived + skill.damage
-                })
-                setTurnActions({
-                    ...turnActions,
-                    attack: true
-                })
-                setTurn(false)
-            } else {
-                setModal({ show: true, message: "Insufficient energy on this fighter" })
-            }
-        } else {
-            setModal({ show: true, message: "Only one attack per turn" })
+        if(fighter.energy >= skill.cost){
+            dispatch(handleUserAction({skill},fighter, opponentFighter))
         }
     }
 

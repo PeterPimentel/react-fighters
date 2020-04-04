@@ -9,13 +9,15 @@
                 "id": 1,
                 "name": "Low Kick",
                 "cost": 1,
-                "damage": 10
+                "damage": 10,
+                "effect":"regular"
             },
             {
                 "id": 2,
                 "name": "Hurricame Upper",
                 "cost": 3,
-                "damage": 40
+                "damage": 40,
+                "effect":"flipCoin"
             }
         ],
         "type": "fighter"
@@ -30,13 +32,15 @@
                 "id": 3,
                 "name": "Jab",
                 "cost": 1,
-                "damage": 10
+                "damage": 10,
+                "effect":"regular"
             },
             {
                 "id": 4,
                 "name": "Upper",
                 "cost": 3,
-                "damage": 40
+                "damage": 40,
+                "effect":"regular"
             }
         ],
         "type": "fighter"
@@ -51,13 +55,15 @@
                 "id": 5,
                 "name": "Crack Shot",
                 "cost": 2,
-                "damage": 20
+                "damage": 20,
+                "effect":"regular"
             },
             {
                 "id": 6,
                 "name": "Rising Tackle",
                 "cost": 5,
-                "damage": 40
+                "damage": 40,
+                "effect":"regular"
             }
         ],
         "type": "fighter"
@@ -72,13 +78,15 @@
                 "id": 7,
                 "name": "Jab",
                 "cost": 1,
-                "damage": 5
+                "damage": 5,
+                "effect":"regular"
             },
             {
                 "id": 8,
                 "name": "Mortar Punch",
                 "cost": 6,
-                "damage": 200
+                "damage": 200,
+                "effect":"regular"
             }
         ],
         "type": "fighter"

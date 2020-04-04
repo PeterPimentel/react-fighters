@@ -1,4 +1,5 @@
 .container {
+    cursor: grab;
     width:170px;
     height: 230px;
     display: flex;
@@ -15,12 +16,7 @@
     background-image: url("../../assets/bg2.png");
     display: grid;
     grid-template-columns: 130px 40px;
-    grid-template-rows: 25px 110px 80px 15px;
     grid-template-rows: 25px 110px 95px;
-    /* grid-template-areas: "name life"
-                        "image image"
-                        "info info"
-                        "desc desc"; */
     grid-template-areas: "name life"
                         "image image"
                         "info info";
@@ -133,11 +129,14 @@
     text-align: center;
 }
 
-.dragCard img {
-    width: 80px;
-    height: 80px;
-    border: 4px solid #ffe166;
-    border-radius: 50%;
+.dragging {
+    border: 8px dashed gray;
+    cursor: grabbing;
+    transform: scale(0.5);
+}
+
+.dragging div.box{
+    opacity: 0.1;
 }
 
 /* ------------------- ANIMATIONS -------------------- */

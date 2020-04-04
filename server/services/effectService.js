@@ -2,6 +2,18 @@ const flipCoin = (times) => {
     
 }
 
+const regular = (origin, target, skill) => {
+    let damageReceived = target.damageReceived || 0
+    damageReceived= skill.damage + damageReceived
+    return {
+        target:{
+            ...target,
+            damageReceived: damageReceived
+        },
+        origin
+    }
+}
+
 const addEnergy = (origin, target) => {
     const newEnergy = target.energy + origin.value
 
@@ -13,5 +25,6 @@ const addEnergy = (origin, target) => {
 
 module.exports = {
     flipCoin,
-    addEnergy
+    addEnergy,
+    regular
 }

@@ -1,4 +1,4 @@
-const _generateKey = () => Math.random().toString(36).substr(2, 9)+'_'
+const _generateKey = () => Math.random().toString(36).substr(2, 9)
 
 export const index = async () => {
     let response = await fetch("/api/deck");

@@ -1,3 +1,6 @@
+import {triggerAction} from '../../service/gameService'
+import { removeCardFromHand } from './deckReducer'
+
 // Action Types
 export const Types = {
     SET_FIGHTER: 'SET_FIGHTER',
@@ -76,5 +79,36 @@ export function addEnergy(value, key){
     return {
         type: Types.SET_ENERGY_FIGHTER,
         payload: value
+    }
+}
+
+export function handleDrop(action, origin, target) {
+    return async dispatch => {
+        try {
+            const data = await triggerAction(action, origin, target)
+            if(target.type === 'fighter'){
+                dispatch(setFighter(data.result))
+                dispatch(removeCardFromHand(origin.key))
+            }
+        } catch (err) {
+            console.log("ERRO - ", err)
+        }
+    }
+}
+
+export function handleUserAction(action, origin, target) {
+    return async dispatch => {
+        try {
+            const data = await triggerAction(action, origin, target)
+            if(origin.type === 'fighter'){
+                dispatch(setFighter(data.result.origin))
+
+            }
+            if(target.type === 'fighter'){
+                dispatch(setOpponentFighter(data.result.target))
+            }
+        } catch (err) {
+            console.log("ERRO - ", err)
+        }
     }
 }
