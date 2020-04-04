@@ -7,6 +7,7 @@ const footer = ({ opponent }) => {
     <div className={styles.opponentInfo}>
       <p>Opponent</p>
       <p>{opponent.username}</p>
+      <p>{`Socket - ${opponent.socketId}`}</p>
       <p>{`Ready - ${opponent.ready}`}</p>
       <div>
         <span>Fighter:</span>

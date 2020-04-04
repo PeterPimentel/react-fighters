@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Link } from "react-router-dom"
@@ -7,11 +7,9 @@ import { Row } from '../RFCentralized'
 import FigtherBox from './figtherBox'
 import Footer from './footer'
 
-import { TurnContext } from "../../context/gameContext"
-
 import { userReady, userSelectFighter } from '../../redux/reducers/userReducer'
 import { opponentSelectFighter, opponentReady } from '../../redux/reducers/opponentReducer'
-import { setOpponentFighter } from '../../redux/reducers/gameReducer'
+import { setOpponentFighter, handleTurn } from '../../redux/reducers/gameReducer'
 
 import {
   emitJoin, emitFigtherSelected, emitReady,
@@ -29,7 +27,6 @@ const Room = () => {
 
   const user = useSelector(state => state.user)
   const opponent = useSelector(state => state.opponent)
-  const { setTurn } = useContext(TurnContext)
 
   const [fighters, setFighters] = useState([])
 
@@ -44,7 +41,7 @@ const Room = () => {
 
   const handleReady = () => {
     if (opponent.ready === false) {
-      setTurn(true)
+      dispatch(handleTurn({my:true}))
     }
     dispatch(userReady(true))
     emitReady(true)
@@ -52,12 +49,12 @@ const Room = () => {
 
   const handleEnemyReady = useCallback(
     async () => {
-      setTurn(false)
+      dispatch(handleTurn({my:false}))
       const champ = await cardShow(opponent.fighter.id)
       dispatch(setOpponentFighter(champ))
       dispatch(opponentReady(true))
     },
-    [dispatch, opponent.fighter.id, setTurn]
+    [dispatch, opponent.fighter.id]
   )
 
   const handleSelect = (fighter) => {

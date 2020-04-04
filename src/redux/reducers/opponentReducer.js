@@ -10,6 +10,7 @@ const initialState = {
     fighter: {
         id:1
     },
+    socketId:"",
     ready:false
 };
 
@@ -24,7 +25,8 @@ export default function opponentReducer(state = initialState, action) {
             return {
                 ...state,
                 fighter: action.payload.fighter,
-                username: action.payload.username
+                username: action.payload.username,
+                socketId: action.payload.socketId
             }
         default:
             return state;

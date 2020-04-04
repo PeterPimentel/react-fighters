@@ -1,5 +1,6 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 // import { DragDropContext, Droppable } from "react-beautiful-dnd"
 
@@ -8,8 +9,6 @@ import Reserve from './reserve'
 import Hand from './hand'
 import Header from './header'
 import Modal from '../modal'
-
-import { TurnContext } from "../../context/gameContext"
 
 import { setFighter, setOpponentFighter, handleUserAction } from '../../redux/reducers/gameReducer'
 import { drawCard } from '../../redux/reducers/deckReducer'
@@ -28,28 +27,20 @@ const ACTIONS_INITIAL_STATE = {
     reserve: false
 }
 
-const DROPPABLE_ARES = {
-    FIGHTER: 'fighter',
-    RESERVE: 'reserve',
-    RESERVE_FIGTHER: 'reserveFigther',
-    HAND: 'hand'
-}
 
 export default function Ring() {
 
     const dispatch = useDispatch()
 
-    const user = useSelector(state => state.user)
     const opponent = useSelector(state => state.opponent)
+    const user = useSelector(state => state.user)
     const { hand } = useSelector(state => state.deck)
-    const { fighter, opponentFighter, reserve, opponentReserve } = useSelector(state => state.game)
-
-    const { turn } = useContext(TurnContext)
+    const { fighter, opponentFighter, reserve, turn } = useSelector(state => state.game)
 
     //modal controll
     const [modal, setModal] = useState({ show: false, message: '' })
     //Turn Controll
-    const [myTurn, setTurn] = useState(turn)
+    const [myTurn, setTurn] = useState(turn.my)
     //Actions Controll
     const [turnActions, setTurnActions] = useState(ACTIONS_INITIAL_STATE)
 
@@ -71,32 +62,40 @@ export default function Ring() {
     )
 
     const handleAttack = (skill) => {
-        if(fighter.energy >= skill.cost){
-            dispatch(handleUserAction({skill},fighter, opponentFighter))
+        if (fighter.energy >= skill.cost) {
+            dispatch(handleUserAction({
+                skill,
+                type: 'attack',
+                to: opponent.socketId
+            }, fighter, opponentFighter))
         }
     }
 
     const memorizedHandleActions = useCallback(
-        (action) => {
-            switch (action.type) {
-                case 'addEnergy':
-                    setOpponentFighter({ ...opponentFighter, energy: action.value })
-                    break;
+        (data) => {
+            console.log("Ação", data)
+            switch (data.action.type) {
+                case 'energy':
+                    dispatch(setOpponentFighter(data.result))
+                    break
                 case 'attack':
-                    setFighter({
-                        ...fighter,
-                        damageReceived: fighter.damageReceived + action.value
-                    })
-                    handleNewTurn()
+                    dispatch(setOpponentFighter(data.result.origin))
+                    dispatch(setFighter(data.result.target))
+                    // handleNewTurn()
+                    break
+                case 'item':
+                    // dispatch(setOpponentFighter(data.result.origin))
+                    // dispatch(setFighter(data.result.target))
+                    // handleNewTurn()
                     break;
-                case 'endTurn':
+                case 'skip':
                     handleNewTurn()
                     break;
                 default:
                     break;
             }
         },
-        [fighter, handleNewTurn, opponentFighter],
+        [dispatch, handleNewTurn],
     );
 
     useEffect(() => {
@@ -106,6 +105,11 @@ export default function Ring() {
         }
     }, [memorizedHandleActions])
 
+    if (opponent.ready === false && user.ready === false) {
+        return <Redirect to={{ pathname: "/room" }} />
+    }
+
+
     return (
         <div>
             <Modal
@@ -113,7 +117,7 @@ export default function Ring() {
                 handleClose={() => setModal({ ...modal, show: false })}
             />
             <div className={styles.gameBoard}>
-                <Header turn={myTurn} skipTurn={handleSkipTurn} />
+                <Header turn={turn.my} skipTurn={handleSkipTurn} />
                 {/* Arena */}
                 <div className={styles.ring}>
                     <Card

@@ -1,7 +1,7 @@
 const handleJoin = (socket, io) => (data) => {
     console.log(`User - ${data.username} joining in room BATTLE`)
     socket.username = data.username
-    socket.join('battle');
+    socket.join('battle')
 }
 
 const handleFigtherSelected = (socket, io) => (data) => {
@@ -9,8 +9,12 @@ const handleFigtherSelected = (socket, io) => (data) => {
     io.of('/').in('battle').clients(function (error, clients) {
         for (let i in clients) {
             if (socket.id !== clients[i]) {
-                console.log("Sending data for opponent...")
-                socket.to(clients[i]).emit('enemySelected', data);
+                const response = {
+                    ...data,
+                    socketId:socket.id
+                }
+                console.log("Sending data for opponent...", response)
+                socket.to(clients[i]).emit('enemySelected', response);
             }
         }
     })

@@ -1,23 +1,31 @@
-import {triggerAction} from '../../service/gameService'
+import { triggerAction } from '../../service/gameService'
 import { removeCardFromHand } from './deckReducer'
 
 // Action Types
 export const Types = {
     SET_FIGHTER: 'SET_FIGHTER',
     SET_RESERVE: 'SET_RESERVE',
-    SET_ENERGY_FIGHTER:'SET_ENERGY_FIGHTER',
+    SET_ENERGY_FIGHTER: 'SET_ENERGY_FIGHTER',
     SET_OPP_FIGHTER: 'SET_OPP_FIGHTER',
     SET_OPP_RESERVE: 'SET_OPP_RESERVE',
-    SET_OPP_ENERGY_FIGHTER: 'SET_OPP_ENERGY_FIGHTER'
+    SET_OPP_ENERGY_FIGHTER: 'SET_OPP_ENERGY_FIGHTER',
+    SET_TURN: 'SET_TURN',
 
 }
 
 // Reducer
 const initialState = {
     fighter: {},
-    reserve:[],
-    opponentFighter:{},
-    opponentReserve:[]
+    reserve: [],
+    opponentFighter: {},
+    opponentReserve: [],
+    turn: {
+        my: false,
+        energy: false,
+        attack: false,
+        equipment: false,
+        reserve: false
+    }
 }
 
 export default function gameReducer(state = initialState, action) {
@@ -55,6 +63,14 @@ export default function gameReducer(state = initialState, action) {
                 ...state,
                 opponentReserve: action.payload
             }
+        case Types.SET_TURN:
+            return {
+                ...state,
+                turn: {
+                    ...state.turn,
+                    ...action.payload
+                }
+            }
         default:
             return state
     }
@@ -75,9 +91,16 @@ export function setOpponentFighter(fighter) {
     }
 }
 
-export function addEnergy(value, key){
+export function addEnergy(value, key) {
     return {
         type: Types.SET_ENERGY_FIGHTER,
+        payload: value
+    }
+}
+
+export function handleTurn(value) {
+    return {
+        type: Types.SET_TURN,
         payload: value
     }
 }
@@ -86,7 +109,7 @@ export function handleDrop(action, origin, target) {
     return async dispatch => {
         try {
             const data = await triggerAction(action, origin, target)
-            if(target.type === 'fighter'){
+            if (target.type === 'fighter') {
                 dispatch(setFighter(data.result))
                 dispatch(removeCardFromHand(origin.key))
             }
@@ -100,11 +123,11 @@ export function handleUserAction(action, origin, target) {
     return async dispatch => {
         try {
             const data = await triggerAction(action, origin, target)
-            if(origin.type === 'fighter'){
+            if (origin.type === 'fighter') {
                 dispatch(setFighter(data.result.origin))
 
             }
-            if(target.type === 'fighter'){
+            if (target.type === 'fighter') {
                 dispatch(setOpponentFighter(data.result.target))
             }
         } catch (err) {

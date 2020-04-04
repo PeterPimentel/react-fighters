@@ -32,6 +32,7 @@ const handleAction = (req, res) => {
     const {action, origin, target} = req.body
     console.log(req.body)
     const result = handle(action, origin, target)
+    req.io.to(action.to).emit('actionReceived',result)
     res.json(result)
 }
 
