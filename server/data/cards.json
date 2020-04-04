@@ -84,10 +84,10 @@
             {
                 "id": 8,
                 "name": "Mortar Punch",
-                "cost": 2,
+                "cost": 6,
                 "damage": 200,
                 "effect":"discardEnergy",
-                "value":6,
+                "value":2,
                 "info":"Discard 2 energy attached to Paul"
             }
         ],
