@@ -1,9 +1,10 @@
 import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import Ring from '../Components/Ring'
+import Game from '../Components/Game'
 import Room from '../Components/Room'
 import Loading from '../Components/Loading'
+import Lab from '../Components/Lab'
 
 export default function App() {
 
@@ -17,10 +18,13 @@ export default function App() {
           <Loading />
         </Route>
         <Route path="/game">
-          <Ring />
+          <Game />
         </Route>
         <Route path="/" exact>
           <Home />
+        </Route>
+        <Route path="/lab" exact>
+          <Lab />
         </Route>
       </Switch>
     </Router>

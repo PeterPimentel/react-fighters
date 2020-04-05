@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import styles from './index.module.css';
 
+import {Skill, SkillDetail} from './styles'
+
 const FigtherInfo = ({ skills, onAttack }) => {
 
     const [show, setShow] = useState(false)
@@ -21,20 +23,33 @@ const FigtherInfo = ({ skills, onAttack }) => {
         <div className={styles.info}>
             {
                 skills.map(skill =>
-                    <div
+                    <Skill
+                        onClick={() => handleAttack(skill)}
                         onMouseEnter={() => hanndleMouse(skill, true)}
                         onMouseLeave={() => hanndleMouse(skill, false)}
-                        onClick={() => handleAttack(skill)}
-                        key={skill.id} className={styles.attackInfo}>
-                        <div className={styles.attackEnergy}>{skill.cost}</div>
-                        <div className={styles.attackName}>{skill.name}</div>
-                        <div className={styles.attackDamage}>{skill.damage}</div>
-                    </div>
+                        key={skill.id}>
+                        <div>
+                            <div>{skill.cost}</div>
+                            <div>{skill.name}</div>
+                            <div>{skill.damage}</div>
+                        </div>
+                        {/* <span>{skill.info}</span> */}
+                        <SkillDetail>{skill.info}</SkillDetail>
+                    </Skill>
+                    // <div
+                    //     onMouseEnter={() => hanndleMouse(skill, true)}
+                    //     onMouseLeave={() => hanndleMouse(skill, false)}
+                    //     onClick={() => handleAttack(skill)}
+                    //     key={skill.id} className={styles.attackInfo}>
+                    //     <div className={styles.attackEnergy}>{skill.cost}</div>
+                    //     <div className={styles.attackName}>{skill.name}</div>
+                    //     <div className={styles.attackDamage}>{skill.damage}</div>
+                    // </div>
                 )
             }
-            {
+            {/* {
                 show && <span>{selectedSkill.info}</span>
-            }
+            } */}
         </div>
     )
 }

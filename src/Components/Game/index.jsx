@@ -9,6 +9,7 @@ import Reserve from './reserve'
 import Hand from './hand'
 import Header from './header'
 import Modal from '../modal'
+import Arena from './arena'
 
 import { setFighter, setOpponentFighter, handleUserAction } from '../../redux/reducers/gameReducer'
 import { drawCard } from '../../redux/reducers/deckReducer'
@@ -119,7 +120,7 @@ export default function Ring() {
             <div className={styles.gameBoard}>
                 <Header turn={turn.my} skipTurn={handleSkipTurn} />
                 {/* Arena */}
-                <div className={styles.ring}>
+                {/* <div className={styles.ring}>
                     <Card
                         className={styles.figtherOnRing}
                         onAttack={handleAttack}
@@ -130,7 +131,8 @@ export default function Ring() {
                     <div className={styles.figthersContainer}>
                         <Card className={styles.figtherOnRing} card={opponentFighter} showAttr={true} />
                     </div>
-                </div>
+                </div> */}
+                <Arena />
                 {/* FIM Arena */}
                 <div className={styles.deck}>
                     DECk
