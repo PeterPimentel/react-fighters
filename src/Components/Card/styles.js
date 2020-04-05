@@ -17,6 +17,14 @@ export const Container = styled.div`
         transform: scale(0.5);
     `}
 
+    ${props =>
+        props.hovered &&
+        css`
+        -webkit-box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
+        -moz-box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
+        box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
+    `}
+
 `;
 
 export const Box =  styled.div`

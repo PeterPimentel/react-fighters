@@ -13,8 +13,6 @@ export default function Arena() {
     const opponent = useSelector(state => state.opponent)
     const { fighter, opponentFighter, turn } = useSelector(state => state.game)
 
-    const [show, setShow] = useState(false)
-
     const handleAttack = (skill) => {
         if (fighter.energy >= skill.cost && turn.my) {
             dispatch(handleUserAction({
