@@ -25,6 +25,8 @@
     display: grid;
     grid-template-columns: 2fr 5fr 2fr;
     grid-template-rows: 2fr 4fr 2fr;
+    grid-template-columns: 20vw 60vw 20vw;
+    grid-template-rows: 20vh 60vh 20vh;
     grid-template-areas: "title title title"
                         "fighter characters opponent"
                         "fighter footer opponent";
@@ -90,8 +92,12 @@
     text-decoration: none;
 
     background-color: black;
-    width: 90px;
-    height: 210px;
+    /* width: 90px;
+    height: 210px; */
+    width: 20%;
+    height: 63%;
+    max-width: 110px;
+    max-height: 260px;
     clip-path: polygon(25% 4%, 100% 0%, 75% 93%, 0 100%);
 }
 
@@ -101,6 +107,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+}
+
+.fighter img{
+    height: 45vw;
+    max-height: 72vh;
 }
 
 .fighter span {
@@ -124,6 +135,8 @@
 }
 
 .opponent img{
+    height: 45vw;
+    max-height: 72vh;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
@@ -141,8 +154,8 @@
 }
 
 .figtherBox img {
-    width: 80px;
-    height: 200px;
+    width: 90%;
+    height: 95%;
     clip-path: polygon(25% 4%, 100% 0%, 75% 93%, 0 100%);
 }
 
