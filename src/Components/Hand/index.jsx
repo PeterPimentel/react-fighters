@@ -1,60 +1,32 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Card from '../Ca'
 
-import {Container} from './styles'
+import { Container } from './styles'
 
-const FighterA = {
-    "id": 3,
-    "name": "Terry Bogard",
-    "image": "http://localhost:8080/static/fighters/joe_card.png",
-    "life": 60,
-    "energy":0,
-    "damageReceived":0,
-    "skills": [
-        {
-            "id": 5,
-            "name": "Crack Shot",
-            "cost": 2,
-            "damage": 20,
-            "effect":"regular",
-            "info":"Discard 2 energys attached to Terry Bogard and jump one turn on the next attack turn"
-        },
-        {
-            "id": 6,
-            "name": "Rising Tackle",
-            "cost": 5,
-            "damage": 40,
-            "effect":"regular",
-            "info":"Discard 2 energys attached to Terry Bogard and jump one turn on the next attack turn."
-        }
-    ],
-    "type": "fighter"
-}
+import { setHighlight, hideHighlighted } from '../../redux/reducers/highlightReducer'
 
-const cardB = {
-    "id": 10,
-    "name": "Energy",
-    "image": "https://www.pngkit.com/png/detail/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png",
-    "type": "energy",
-    "effect":"addEnergy",
-    "info":"Give 1 energy to target fighter",
-    "value": 1
-}
+export default function Hand() {
+    const dispatch = useDispatch()
+    const { hand } = useSelector(state => state.deck)
 
-export default function Hand({handleMouseEnter, handleMouseLeave}) {
     const handleMouse = (e, card) => {
-        if(typeof handleMouseEnter === "function"){
-            handleMouseEnter(e, card)
-        }
+        dispatch(setHighlight(card,e.nativeEvent.screenX,window.innerWidth ))
+    }
+
+    const handleMouseLeave = (e) => {
+        dispatch(hideHighlighted())
     }
 
     return (
         <Container>
             {
-                [1,2,3,4,5,6,7].map(el=>
-                    <div key={el} onMouseEnter={(e)=>handleMouse(e, cardB)} onMouseLeave={handleMouseLeave}>
-                        <Card card={cardB}/>
+                hand.map(card =>
+                    <div key={card.key}
+                        onMouseEnter={(e) => handleMouse(e, card)}
+                        onMouseLeave={(e)=>handleMouseLeave(e)}>
+                        <Card card={card} />
                     </div>
                 )
             }

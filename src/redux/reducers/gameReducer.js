@@ -15,9 +15,11 @@ export const Types = {
 
 // Reducer
 const initialState = {
-    fighter: {},
+    fighter: {skills:[]},
     reserve: [],
-    opponentFighter: {},
+    opponentFighter: {
+        skills:[]
+    },
     opponentReserve: [],
     turn: {
         my: false,
@@ -132,6 +134,24 @@ export function handleUserAction(action, origin, target) {
             }
         } catch (err) {
             console.log("ERRO - ", err)
+        }
+    }
+}
+
+
+export function handleOpponentAction(data){
+    return async dispatch => {
+        console.log("Chegou - ", data)
+        switch (data.action.type) {
+            case 'energy':
+                dispatch(setOpponentFighter(data.result))
+                break
+            case 'attack':
+                dispatch(setOpponentFighter(data.result.origin))
+                dispatch(setFighter(data.result.target))
+                break
+            default:
+                break;
         }
     }
 }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useDrag, useDrop } from "react-dnd"
 
 import { handleDrop } from '../../redux/reducers/gameReducer'
+import { hideHighlighted } from '../../redux/reducers/highlightReducer'
 
 import CardInfo from './cardInfo'
 
@@ -22,6 +23,10 @@ export default function Card({ card, className, onAttack }) {
 
     const [{ isDragging }, dragRef] = useDrag({
         item: { type: card.type || "default", card: card },
+        begin:()=>{
+            console.log("Here")
+            dispatch(hideHighlighted())
+        },
         collect: monitor => ({
             isDragging: monitor.isDragging()
         }),

@@ -51,7 +51,7 @@ export default function Loading() {
     }, [dispatch, handleEnemyReady, opponent])
 
     if (user.ready && opponent.ready && deck.length > 0 && opponentFighter.id) {
-        return <Redirect to={{ pathname: "/game" }} />
+        return <Redirect to={{ pathname: "/arena" }} />
     }
 
     return (

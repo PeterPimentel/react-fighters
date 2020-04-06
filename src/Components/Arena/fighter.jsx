@@ -31,7 +31,7 @@ export default function Fighter({ fighter, flip }) {
 
     const handleClick = (skill) => {
         if (true) {
-        // if (fighter.energy >= skill.cost) {
+        // if (fighter.energy >= skill.cost && flip===false) {
             dispatch(handleUserAction({
                 skill,
                 type: 'attack',
