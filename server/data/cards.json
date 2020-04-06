@@ -99,6 +99,7 @@
         "image": "https://www.pngkit.com/png/detail/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png",
         "type": "energy",
         "effect":"addEnergy",
+        "info":"Give 1 energy to target fighter",
 		"value": 1
     }
 ]

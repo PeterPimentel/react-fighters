@@ -5,6 +5,7 @@ import Game from '../Components/Game'
 import Room from '../Components/Room'
 import Loading from '../Components/Loading'
 import Lab from '../Components/Lab'
+import Arena from '../Components/Arena'
 
 export default function App() {
 
@@ -25,6 +26,9 @@ export default function App() {
         </Route>
         <Route path="/lab" exact>
           <Lab />
+        </Route>
+        <Route path="/arena" exact>
+          <Arena />
         </Route>
       </Switch>
     </Router>

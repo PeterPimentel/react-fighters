@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import cardBg from '../../assets/bg2.png'
+import card_bg from '../../assets/card_bg.jpg'
 
 export const Container = styled.div`
     cursor: grab;
@@ -30,7 +31,7 @@ export const Container = styled.div`
 export const Box =  styled.div`
     width: 100%;
     height: 100%;
-    background-image: url(${cardBg});
+    background-image: url(${card_bg});
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 11% 48% 41%;
