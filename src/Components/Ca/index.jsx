@@ -1,8 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useDrag, useDrop } from "react-dnd"
+import React, { useRef } from 'react'
 
-import { handleDrop } from '../../redux/reducers/gameReducer'
+import { useDrag } from "react-dnd"
 
 import { Container, Header, Image, Info } from './styles'
 
@@ -41,13 +39,7 @@ export default function Card({ card }) {
         item: { type: card.type || "default", card: card },
         collect: monitor => ({
             isDragging: monitor.isDragging()
-        }),
-        end(item, monitor){
-            // setHovered(false)
-            // if(monitor.didDrop()){
-            //     setDropped(true)
-            // }
-        }
+        })
     })
 
     dragRef(ref)

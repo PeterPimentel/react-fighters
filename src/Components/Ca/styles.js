@@ -21,6 +21,12 @@ export const Container = styled.div`
             transform: scale(0.5);
             opacity:0.5;
     `}
+
+    &:hover {
+        -webkit-box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+        -moz-box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+        box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+    }
 `;
 
 export const Header = styled.div`
@@ -42,7 +48,7 @@ export const Image = styled.div`
     background-color: #c7c7c7;
     background-image: ${ ({image}) => `url(${image})`};
     background-size: cover;
-    margin: 2px;
+    margin: 6px;
     display: flex;
     align-items: center;
     justify-content: center;

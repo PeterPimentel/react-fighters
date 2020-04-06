@@ -1,14 +1,13 @@
 import React from 'react'
 
-import Ca from '../Ca'
-import Card from '../Card'
+import Card from '../Ca'
 
 import {Container} from './styles'
 
 const FighterA = {
     "id": 3,
     "name": "Terry Bogard",
-    "image": "http://localhost:8080/static/fighters/balrog_card.png",
+    "image": "http://localhost:8080/static/fighters/joe_card.png",
     "life": 60,
     "energy":0,
     "damageReceived":0,
@@ -43,13 +42,19 @@ const cardB = {
     "value": 1
 }
 
-export default function Hand() {
+export default function Hand({handleMouseEnter, handleMouseLeave}) {
+    const handleMouse = (e, card) => {
+        if(typeof handleMouseEnter === "function"){
+            handleMouseEnter(e, card)
+        }
+    }
+
     return (
         <Container>
             {
                 [1,2,3,4,5,6,7].map(el=>
-                    <div key={el}>
-                        <Ca card={FighterA}/>
+                    <div key={el} onMouseEnter={(e)=>handleMouse(e, cardB)} onMouseLeave={handleMouseLeave}>
+                        <Card card={cardB}/>
                     </div>
                 )
             }

@@ -18,13 +18,20 @@ export const Container = styled.div`
         transform: scale(0.5);
     `}
 
-    ${props =>
+    &:hover {
+        border-color:#027ebe;
+        -webkit-box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+        -moz-box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+        box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+    }
+
+    /* ${props =>
         props.hovered &&
         css`
         -webkit-box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
         -moz-box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
         box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
-    `}
+    `} */
 
 `;
 
@@ -53,8 +60,6 @@ export const Header = styled.div`
     }
 `;
 
-
-
 export const Skill = styled.div`
     padding: 4px;
     div:first-child {
@@ -76,21 +81,6 @@ export const Skill = styled.div`
         background: rgb(130,130,130);
         background: linear-gradient(0deg, rgba(0,0,0,0.2) 50%, rgb(130,130,130, 1) 100%);
     }
-
 `;
 
-export const SkillDetail = styled.div`
-    display:none;
-
-    /* ${Skill}:hover &{
-        position: relative;
-        left: 150px;
-        bottom: 10px;
-        background: rgba(0,0,0,0.7);
-        padding: 4px;
-        display: block;
-        color: white;
-        border: 2px solid white;
-    } */
-`;
-
+export const SkillDetail = styled.div``;

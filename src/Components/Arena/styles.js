@@ -1,4 +1,5 @@
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
+import card_bg from '../../assets/card_bg.jpg'
 
 export const Container = styled.div`
     height: 80vh;
@@ -11,12 +12,14 @@ export const Container = styled.div`
     grid-template-rows: 10vh 70vh;
 `;
 
-export const GridArea =  styled.div`
-    grid-area:${({area}) => area};
+export const GridArea = styled.div`
+    grid-area:${({ area }) => area};
 `;
 
 export const FighterBox = styled.div`
     height: 100%;
+    padding: 4px;
+    /* background-image:url(${card_bg}); */
 
     & .status {
         background-color:hotpink;
@@ -46,8 +49,8 @@ export const FighterBox = styled.div`
         background-color:grey;
         height:80%;
         width: 100%;
-        /* background-image:${ ({bg}) => `url(${bg})`}; */
-        /* background-repeat:no-repeat; */
+        background-image:${ ({ bg }) => `url(${bg})`};
+        background-repeat:no-repeat;
         padding:4px;
         display: flex;
         flex-direction: column;
@@ -57,20 +60,9 @@ export const FighterBox = styled.div`
             /* transform: scaleX(-1); */
         `}
     }
-    & .skill:before {
-        content:"";
-        height:100%;
-        width: 100%;
-        background-image:${ ({bg}) => `url(${bg})`};
-        background-repeat:no-repeat;
-        ${props => props.flip &&
-        css`
-            transform: scaleX(-1);
-        `}
-    }
 `;
 
-export const SkillPanel =  styled.div`
+export const SkillPanel = styled.div`
     display:flex;
     flex-direction: column;
     background-color: rgba(0,0,0,0.8);
@@ -80,6 +72,13 @@ export const SkillPanel =  styled.div`
     color: white;
     margin-bottom: 8px;
     cursor: pointer;
+    
+    &:hover {
+        border-color:#027ebe;
+        -webkit-box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+        -moz-box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+        box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
+    }
 
     & .skillName {
         display: flex;
@@ -103,4 +102,13 @@ export const SkillPanel =  styled.div`
         align-items:center;
         font-size:small;
     }
+`;
+
+export const FloattingCard = styled.div`
+    transform: scale(1.2);
+    display: ${({position}) => position > 0 ? `inital` : `none`};
+    position: fixed;
+    bottom: 200px;
+    left:${({position}) => `${position}px`};
+
 `;

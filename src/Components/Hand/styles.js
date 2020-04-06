@@ -8,12 +8,11 @@ export const Container = styled.div`
     position: absolute;
     bottom: 0;
     margin-left: 8px;
-    /* transform: translateY(20vh); */
+    transform: translateY(20vh);
 
     & > div {
         margin-right: 8px;
         &:hover {
-            /* background-color: red; */
             /* transform: translateY(-20vh); */
         }
     }
