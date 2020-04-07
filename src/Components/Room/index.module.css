@@ -17,7 +17,7 @@
 }
 
 .container {
-    background-image: url("../../assets/street.png");
+    background-image: url("../../assets/street_bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;

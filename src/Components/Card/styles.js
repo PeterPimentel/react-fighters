@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import cardBg from '../../assets/bg2.png'
 import card_bg from '../../assets/card_bg.jpg'
 
 export const Container = styled.div`
@@ -24,14 +23,6 @@ export const Container = styled.div`
         -moz-box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
         box-shadow: 0px 0px 8px 2px rgba(2,126,190,1);
     }
-
-    /* ${props =>
-        props.hovered &&
-        css`
-        -webkit-box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
-        -moz-box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
-        box-shadow: 0px 0px 20px 10px rgba(165,207,222,1);
-    `} */
 
 `;
 

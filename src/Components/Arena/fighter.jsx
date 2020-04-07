@@ -15,17 +15,12 @@ export default function Fighter({ fighter, flip = false }) {
 
     const ref = useRef(null)
     const [, dropRef] = useDrop({
-        accept: ['item', 'energy'],
+        accept: ['supporter', 'energy'],
         drop(item) {
-            const type = item.type
-            if (turn.my === true
-                && ((type === 'energy' && turn.energy === false) || type === 'item')) {
-                dispatch(handleDrop({ type: type, to: opponent.socketId }, item.card, fighter))
-                return {
-                    id: fighter.id
-                }
+            dispatch(handleDrop({ type: item.type, to: opponent.socketId }, item.card, fighter))
+            return {
+                id: fighter.id
             }
-            return {}
         }
     })
 

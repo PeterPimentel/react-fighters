@@ -101,5 +101,14 @@
         "effect":"addEnergy",
         "info":"Give 1 energy to target fighter",
 		"value": 1
+    },
+    {
+        "id": 11,
+        "name": "Round 2",
+        "image": "http://localhost:8080/static/supporter/bell_glove.png",
+        "type": "supporter",
+        "effects":["heal","addEnergy"],
+        "info":"Remove 30 of damage from your Fighters. Then discard 3 Energys attached to it, if any.",
+		"values": [30,-3]
     }
 ]

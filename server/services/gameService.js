@@ -1,6 +1,7 @@
 const effectService = require('./effectService')
 const attackService = require('./attackService')
 const reserveService = require('./reserveService')
+const supporterService = require('./supporterService')
 
 const _log = (level, { action, origin, target, result }) => {
     console.log(`${level}...`)
@@ -12,13 +13,20 @@ const _log = (level, { action, origin, target, result }) => {
 }
 
 const handle = (action, origin, target) => {
-    if(action.type === "skip"){
+    if (action.type === "skip") {
         return { action }
     }
     if (action.type === "reserve") {
         const reserve = reserveService[action.action](origin, target)
         return {
             result: reserve,
+            action
+        }
+    }
+
+    if (action.type === "supporter") {
+        return {
+            result: supporterService.trigger(origin, target),
             action
         }
     }
@@ -34,7 +42,7 @@ const handle = (action, origin, target) => {
         }
     }
 
-    if(origin.type === "fighter"){
+    if (origin.type === "fighter") {
         const { skill } = action
         const attackResult = attackService[skill.effect](origin, target, skill)
         return {

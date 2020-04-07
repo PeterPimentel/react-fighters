@@ -1,5 +1,11 @@
 import styled, { css } from 'styled-components'
-import card_bg from '../../assets/card_bg.jpg'
+import arena_bg from '../../assets/arena_bg.jpg'
+
+export const Background = styled.div`
+    background-image: url(${arena_bg});
+    width: 100vw;
+    height: 100vh;
+`;
 
 export const Container = styled.div`
     height: 80vh;
@@ -19,10 +25,9 @@ export const GridArea = styled.div`
 export const FighterBox = styled.div`
     height: 100%;
     padding: 4px;
-    /* background-image:url(${card_bg}); */
 
     & .status {
-        background-color:hotpink;
+        background-color: rgb(255, 255, 255,0.2);
         height:20%;
         width: 100%;
         display: flex;
@@ -43,7 +48,7 @@ export const FighterBox = styled.div`
     }
 
     & .skill {
-        background-color:grey;
+        background-color: rgb(255, 255, 255,0.2);
         height:80%;
         width: 100%;
         background-image:${ ({ bg }) => `url(${bg})`};
@@ -143,6 +148,7 @@ export const UserInfo = styled.div`
 export const ReserveArea = styled.div`
     grid-area:${({ area }) => area};
     border: ${({ color }) => `2px solid ${color}`};
+    background-color: rgb(255, 255, 255,0.2);
     padding: 4px;
     display:flex;
     flex-direction:column;

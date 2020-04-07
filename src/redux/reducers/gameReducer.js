@@ -19,7 +19,7 @@ const _turnInitalState = {
     my: false,
     energy: false,
     attack: false,
-    equipment: false,
+    supporter: false,
     reserve: false
 }
 
@@ -128,7 +128,6 @@ export function setTurn(value) {
 }
 
 
-
 export function setReserve(reserve) {
     return {
         type: Types.SET_RESERVE,
@@ -160,18 +159,31 @@ export function skipTurn(action) {
 
 //Ações executadas ao dropar cards no lutador
 export function handleDrop(action, origin, target) {
-    return async dispatch => {
-        try {
-            const data = await triggerAction(action, origin, target)
-            if (target.type === 'fighter') {
-                dispatch(setFighter(data.result))
-                dispatch(removeCardFromHand(origin.key))
-                if (origin.type === 'energy') {
-                    dispatch(setTurn({ energy: true }))
+    return async (dispatch, getState) => {
+        const { turn, fighter } = getState().game
+        if (turn.my === true){
+            if(
+                (action.type === 'energy' && turn.energy === false) ||
+                (action.type === 'supporter' && turn.supporter === false)
+            ){
+                if(target.id === fighter.id){
+                    try {
+                        const data = await triggerAction(action, origin, target)
+                        if (target.type === 'fighter') {
+                            dispatch(setFighter(data.result))
+                            dispatch(removeCardFromHand(origin.key))
+                            if (origin.type === 'energy') {
+                                dispatch(setTurn({ energy: true }))
+                            }
+                            if (origin.type === 'supporter') {
+                                dispatch(setTurn({ supporter: true }))
+                            }
+                        }
+                    } catch (err) {
+                        console.log("ERRO - ", err)
+                    }
                 }
             }
-        } catch (err) {
-            console.log("ERRO - ", err)
         }
     }
 }
@@ -220,6 +232,7 @@ export function handleOpponentAction(data) {
                 dispatch(setOpponentReserve(data.result))
                 break
             case 'energy':
+            case 'supporter':
                 dispatch(setOpponentFighter(data.result))
                 break
             case 'attack':
@@ -229,7 +242,6 @@ export function handleOpponentAction(data) {
                 dispatch(drawCard(1))
                 break
             case 'skip':
-                console.log("Aqui")
                 dispatch(setTurn({ ..._turnInitalState, my: true }))
                 dispatch(drawCard(1))
                 break
