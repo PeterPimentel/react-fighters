@@ -1,7 +1,8 @@
 const effectService = require('./effectService')
 const attackService = require('./attackService')
+const reserveService = require('./reserveService')
 
-const _log = (level, {action, origin, target, result}) => {
+const _log = (level, { action, origin, target, result }) => {
     console.log(`${level}...`)
     console.log(`\n ${level} - action ${action.type}`)
     console.log(`\n ${level} - Origin ${JSON.stringify(origin)}`)
@@ -11,36 +12,43 @@ const _log = (level, {action, origin, target, result}) => {
 }
 
 const handle = (action, origin, target) => {
-    switch (origin.type) {
-        case 'energy':
-            const {effect} = origin
-            const energyResult = effectService[effect](origin, target)
-            return {
-                result:{
-                    ...energyResult,
-                },
-                action
-            }
-        case 'fighter':
-            const {skill} = action
-            const attackResult = attackService[skill.effect](origin, target, skill)
-            return {
-                result:{
-                    ...attackResult,
-                },
-                action
-            }
-        default:
-            break;
+    if (action.type === "reserve") {
+        const reserve = reserveService[action.action](origin, target)
+        return {
+            result: reserve,
+            action
+        }
+    }
+
+    if (origin.type === "energy") {
+        const { effect } = origin
+        const energyResult = effectService[effect](origin, target)
+        return {
+            result: {
+                ...energyResult,
+            },
+            action
+        }
+    }
+
+    if(origin.type === "fighter"){
+        const { skill } = action
+        const attackResult = attackService[skill.effect](origin, target, skill)
+        return {
+            result: {
+                ...attackResult,
+            },
+            action
+        }
     }
 }
 
 const handleAction = (req, res) => {
-    const {action, origin, target} = req.body
-    _log("INPUT",req.body)
+    const { action, origin, target } = req.body
+    _log("INPUT", req.body)
     const result = handle(action, origin, target)
-    _log("INPUT",result)
-    req.io.to(action.to).emit('actionReceived',result)
+    _log("INPUT", result)
+    req.io.to(action.to).emit('actionReceived', result)
     res.json(result)
 }
 

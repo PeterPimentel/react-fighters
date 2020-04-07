@@ -7,7 +7,7 @@ export const Container = styled.div`
     display: grid;
     grid-template-areas:
     "arenaHeaderUserInfo arenaHeaderUserTurn arenaHeaderOpponentTurn arenaHeaderOpponentInfo"
-    ". arenaFighter arenaOpponent .";
+    "reserveUser arenaUser arenaOpponent reserverOpponent";
     grid-template-columns: 25vw 25vw 25vw 25vw;
     grid-template-rows: 10vh 70vh;
 `;
@@ -137,5 +137,71 @@ export const UserInfo = styled.div`
         &:hover {
             color: red;
         }
+    }
+`;
+
+export const ReserveArea = styled.div`
+    grid-area:${({ area }) => area};
+    border: ${({color}) => `2px solid ${color}`};
+    padding: 4px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    ${props => props.flip === false &&
+        css`
+            align-items: flex-end;
+        `
+    }
+`;
+
+export const ReserveBox = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    background-color: black;
+    width: 60%;
+    height: 20%;
+    ${props => props.flip === false &&
+        css`
+            clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%);
+        `
+    }
+
+    & > div {
+        clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        background-color: #c7c7c7;
+        width: 97%;
+        height: 95%;
+        background-image:${ ({ bg }) => `url(${bg})`};
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        ${props => props.flip === false &&
+            css`
+                clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%);
+            `
+        }
+    }
+`;
+
+export const OpponentReserveBox = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%);
+    background-color: black;
+    width: 60%;
+    height: 20%;
+
+    & > div {
+        clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%);
+        background-color: #c7c7c7;
+        width: 97%;
+        height: 95%;
+        background-image:${ ({ bg }) => `url(${bg})`};
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position-x: center;
     }
 `;

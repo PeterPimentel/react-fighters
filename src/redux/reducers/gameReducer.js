@@ -10,6 +10,8 @@ export const Types = {
     SET_OPP_RESERVE: 'SET_OPP_RESERVE',
     SET_OPP_ENERGY_FIGHTER: 'SET_OPP_ENERGY_FIGHTER',
     SET_TURN: 'SET_TURN',
+    UPDATE_RESERVE:'UPDATE_RESERVE',
+    UPDATE_OPP_RESERVE:'UPDATE_OPP_RESERVE',
 
 }
 
@@ -20,6 +22,21 @@ const _turnInitalState = {
     equipment: false,
     reserve: false
 }
+
+const mockRe = [
+    {
+        "id": 1,
+        "name": "Joe Higashi",
+        "image": "http://localhost:8080/static/fighters/joe_card.png",
+        "avatar": "http://localhost:8080/static/fighters/joe_avatar.png"
+    },
+    {
+        "id": 2,
+        "name": "Balrog",
+        "image": "http://localhost:8080/static/fighters/balrog_card.png",
+        "avatar": "http://localhost:8080/static/fighters/balrog_avatar.png"
+    }
+] 
 
 // Reducer
 const initialState = {
@@ -58,6 +75,7 @@ export default function gameReducer(state = initialState, action) {
                 reserve: action.payload
             }
         case Types.SET_OPP_RESERVE:
+            console.log("Aqui")
             return {
                 ...state,
                 opponentReserve: action.payload
@@ -116,6 +134,22 @@ export function skipTurn() {
     }
 }
 
+export function setReserve(reserve) {
+    return {
+        type: Types.SET_RESERVE,
+        payload: reserve
+    }
+}
+
+export function setOpponentReserve(reserve) {
+    return {
+        type: Types.SET_OPP_RESERVE,
+        payload: reserve
+    }
+}
+
+
+//Ações executadas ao dropar cards no lutador
 export function handleDrop(action, origin, target) {
     return async dispatch => {
         try {
@@ -133,6 +167,22 @@ export function handleDrop(action, origin, target) {
     }
 }
 
+//Ações executadas ao dropar cards na reserva
+export function handleReseverAction (action, origin, target){
+    return async dispatch => {
+        try {
+            const data = await triggerAction(action, origin, target)
+            if(action.action === "addFighter"){
+                dispatch(setReserve(data.result))
+                dispatch(removeCardFromHand(origin.key))
+            }
+        } catch (err) {
+            console.log("ERRO - ", err)
+        }
+    }
+}
+
+//Ações executadas pelo lutador
 export function handleUserAction(action, origin, target) {
     return async dispatch => {
         try {
@@ -152,9 +202,14 @@ export function handleUserAction(action, origin, target) {
 }
 
 
+//Ações executadas pelo opponent que chegara via socket
 export function handleOpponentAction(data) {
     return async dispatch => {
         switch (data.action.type) {
+            case 'reserve':
+                console.log("Aqui")
+                dispatch(setOpponentReserve(data.result))
+                break
             case 'energy':
                 dispatch(setOpponentFighter(data.result))
                 break
