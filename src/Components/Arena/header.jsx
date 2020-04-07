@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { GridArea, UserInfo } from './styles'
 import { Title, Row } from '../../styles/common'
 
-import { handleOpponentAction, skipTurn } from '../../redux/reducers/gameReducer'
-
-import { onAction, removeAllListeners } from '../../service/events'
+import { skipTurn } from '../../redux/reducers/gameReducer'
 
 export default function Header() {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const opponent = useSelector(state => state.opponent)
     const { turn } = useSelector(state => state.game)
+
+    const handleSkip = () => {
+        if(turn.my){
+            dispatch(skipTurn({ type: "skip", to:opponent.socketId}))
+        }
+    }
 
     return (
         <>
@@ -23,7 +27,7 @@ export default function Header() {
                         <p>{`Victorys: ${user.victorys}`}</p>
                     </div>
                     <div>
-                        <button onClick={()=> dispatch(skipTurn())}>&#11246;</button>
+                        <button onClick={handleSkip}>&#11246;</button>
                     </div>
                 </UserInfo>
             </GridArea>

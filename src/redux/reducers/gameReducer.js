@@ -10,8 +10,8 @@ export const Types = {
     SET_OPP_RESERVE: 'SET_OPP_RESERVE',
     SET_OPP_ENERGY_FIGHTER: 'SET_OPP_ENERGY_FIGHTER',
     SET_TURN: 'SET_TURN',
-    UPDATE_RESERVE:'UPDATE_RESERVE',
-    UPDATE_OPP_RESERVE:'UPDATE_OPP_RESERVE',
+    UPDATE_RESERVE: 'UPDATE_RESERVE',
+    UPDATE_OPP_RESERVE: 'UPDATE_OPP_RESERVE',
 
 }
 
@@ -36,7 +36,7 @@ const mockRe = [
         "image": "http://localhost:8080/static/fighters/balrog_card.png",
         "avatar": "http://localhost:8080/static/fighters/balrog_avatar.png"
     }
-] 
+]
 
 // Reducer
 const initialState = {
@@ -127,12 +127,7 @@ export function setTurn(value) {
     }
 }
 
-export function skipTurn() {
-    return {
-        type: Types.SET_TURN,
-        payload: _turnInitalState
-    }
-}
+
 
 export function setReserve(reserve) {
     return {
@@ -145,6 +140,20 @@ export function setOpponentReserve(reserve) {
     return {
         type: Types.SET_OPP_RESERVE,
         payload: reserve
+    }
+}
+
+export function skipTurn(action) {
+    return async dispatch => {
+        try {
+            await triggerAction(action)
+            dispatch({
+                type: Types.SET_TURN,
+                payload: _turnInitalState
+            })
+        } catch (error) {
+            console.log("ERR - ", error)
+        }
     }
 }
 
@@ -168,13 +177,14 @@ export function handleDrop(action, origin, target) {
 }
 
 //Ações executadas ao dropar cards na reserva
-export function handleReseverAction (action, origin, target){
+export function handleReseverAction(action, origin, target) {
     return async dispatch => {
         try {
             const data = await triggerAction(action, origin, target)
-            if(action.action === "addFighter"){
+            if (action.action === "addFighter") {
                 dispatch(setReserve(data.result))
                 dispatch(removeCardFromHand(origin.key))
+                dispatch(setTurn({ reserve: true }))
             }
         } catch (err) {
             console.log("ERRO - ", err)
@@ -207,7 +217,6 @@ export function handleOpponentAction(data) {
     return async dispatch => {
         switch (data.action.type) {
             case 'reserve':
-                console.log("Aqui")
                 dispatch(setOpponentReserve(data.result))
                 break
             case 'energy':
@@ -216,7 +225,12 @@ export function handleOpponentAction(data) {
             case 'attack':
                 dispatch(setOpponentFighter(data.result.origin))
                 dispatch(setFighter(data.result.target))
-                dispatch(setTurn({..._turnInitalState, my:true}))
+                dispatch(setTurn({ ..._turnInitalState, my: true }))
+                dispatch(drawCard(1))
+                break
+            case 'skip':
+                console.log("Aqui")
+                dispatch(setTurn({ ..._turnInitalState, my: true }))
                 dispatch(drawCard(1))
                 break
             default:

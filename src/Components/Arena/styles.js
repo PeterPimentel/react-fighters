@@ -104,10 +104,10 @@ export const SkillPanel = styled.div`
 
 export const FloattingCard = styled.div`
     transform: scale(1.2);
-    display: ${({position}) => position > 0 ? `inital` : `none`};
+    display: ${({ position }) => position > 0 ? `inital` : `none`};
     position: fixed;
     bottom: 200px;
-    left:${({position}) => `${position}px`};
+    left:${({ position }) => `${position}px`};
 
 `;
 
@@ -142,7 +142,7 @@ export const UserInfo = styled.div`
 
 export const ReserveArea = styled.div`
     grid-area:${({ area }) => area};
-    border: ${({color}) => `2px solid ${color}`};
+    border: ${({ color }) => `2px solid ${color}`};
     padding: 4px;
     display:flex;
     flex-direction:column;
@@ -178,30 +178,9 @@ export const ReserveBox = styled.div`
         background-repeat: no-repeat;
         background-position-x: center;
         ${props => props.flip === false &&
-            css`
+        css`
                 clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%);
             `
         }
-    }
-`;
-
-export const OpponentReserveBox = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content: center;
-    clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%);
-    background-color: black;
-    width: 60%;
-    height: 20%;
-
-    & > div {
-        clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%);
-        background-color: #c7c7c7;
-        width: 97%;
-        height: 95%;
-        background-image:${ ({ bg }) => `url(${bg})`};
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position-x: center;
     }
 `;

@@ -20,7 +20,7 @@ export default function Arena() {
     const { position, highlighted } = useSelector(state => state.highlight)
 
     useEffect(() => {
-        onAction((data)=>dispatch(handleOpponentAction(data)))
+        onAction((data) => dispatch(handleOpponentAction(data)))
         return () => removeAllListeners()
     }, [dispatch])
 
@@ -28,14 +28,14 @@ export default function Arena() {
         <div>
             <Container>
                 <Header />
-                <Reserve area="reserveUser" reserve={reserve} canDrop={true}/>
+                <Reserve area="reserveUser" reserve={reserve} canDrop={true} />
                 <GridArea area="arenaUser">
                     <Fighter fighter={fighter} />
                 </GridArea>
                 <GridArea area="arenaOpponent">
                     <Fighter fighter={opponentFighter} flip={true} />
                 </GridArea>
-                <Reserve area="reserverOpponent" reserve={opponentReserve}/>
+                <Reserve area="reserverOpponent" reserve={opponentReserve} />
             </Container>
             <FloattingCard position={position}>
                 <Card card={highlighted} />

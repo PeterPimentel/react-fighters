@@ -12,6 +12,9 @@ const _log = (level, { action, origin, target, result }) => {
 }
 
 const handle = (action, origin, target) => {
+    if(action.type === "skip"){
+        return { action }
+    }
     if (action.type === "reserve") {
         const reserve = reserveService[action.action](origin, target)
         return {
@@ -47,7 +50,7 @@ const handleAction = (req, res) => {
     const { action, origin, target } = req.body
     _log("INPUT", req.body)
     const result = handle(action, origin, target)
-    _log("INPUT", result)
+    _log("OUTPUT", result)
     req.io.to(action.to).emit('actionReceived', result)
     res.json(result)
 }

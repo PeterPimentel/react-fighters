@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDrop } from 'react-dnd'
 
-import { ReserveArea, ReserveBox, OpponentReserveBox } from './styles'
+import { ReserveArea, ReserveBox } from './styles'
 
 import { handleReseverAction } from '../../redux/reducers/gameReducer'
 
@@ -10,16 +10,19 @@ export default function Reserve({ area, reserve, canDrop=false }) {
 
     const dispatch = useDispatch()
     const opponent = useSelector(state => state.opponent)
+    const { turn } = useSelector(state => state.game)
 
     const ref = useRef(null)
     const [, dropRef] = useDrop({
         accept: ['fighter'],
         drop(item) {
-            dispatch(handleReseverAction(
-                { type: 'reserve', action: 'addFighter', to: opponent.socketId },
-                item.card,
-                reserve
-            ))
+            if(turn.my && turn.reserve === false){
+                dispatch(handleReseverAction(
+                    { type: 'reserve', action: 'addFighter', to: opponent.socketId },
+                    item.card,
+                    reserve
+                ))
+            }
             return {}
         }
     })
