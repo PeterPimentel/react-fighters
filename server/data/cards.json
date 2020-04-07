@@ -77,8 +77,8 @@
             {
                 "id": 7,
                 "name": "Jab",
-                "cost": 1,
-                "damage": 5,
+                "cost": 2,
+                "damage": 10,
                 "effect":"regular"
             },
             {
@@ -87,8 +87,8 @@
                 "cost": 6,
                 "damage": 200,
                 "effect":"discardEnergy",
-                "value":2,
-                "info":"Discard 2 energy attached to Paul"
+                "value":4,
+                "info":"Discard 4 energy attached to Paul"
             }
         ],
         "type": "fighter"

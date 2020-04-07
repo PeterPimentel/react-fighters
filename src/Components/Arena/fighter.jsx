@@ -2,16 +2,16 @@ import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDrop } from "react-dnd"
 
-import { handleDrop, handleUserAction } from '../../redux/reducers/gameReducer'
+import { handleDrop, handleUserAction, handleTurn } from '../../redux/reducers/gameReducer'
 
 import { FighterBox, SkillPanel } from './styles'
 
-export default function Fighter({ fighter, flip }) {
+export default function Fighter({ fighter, flip=false }) {
 
     const dispatch = useDispatch()
 
     const opponent = useSelector(state => state.opponent)
-    const { opponentFighter } = useSelector(state => state.game)
+    const { opponentFighter, turn } = useSelector(state => state.game)
 
     const ref = useRef(null)
     const [, dropRef] = useDrop({
@@ -30,8 +30,7 @@ export default function Fighter({ fighter, flip }) {
     const hp = fighter.life - (fighter.damageReceived || 0)
 
     const handleClick = (skill) => {
-        if (true) {
-        // if (fighter.energy >= skill.cost && flip===false) {
+        if (fighter.energy >= skill.cost && flip===false && turn.my === true) {
             dispatch(handleUserAction({
                 skill,
                 type: 'attack',

@@ -9,7 +9,7 @@ import Footer from './footer'
 
 import { userReady, userSelectFighter } from '../../redux/reducers/userReducer'
 import { opponentSelectFighter, opponentReady } from '../../redux/reducers/opponentReducer'
-import { setOpponentFighter, handleTurn } from '../../redux/reducers/gameReducer'
+import { setOpponentFighter, setTurn } from '../../redux/reducers/gameReducer'
 
 import {
   emitJoin, emitFigtherSelected, emitReady,
@@ -41,7 +41,7 @@ const Room = () => {
 
   const handleReady = () => {
     if (opponent.ready === false) {
-      dispatch(handleTurn({my:true}))
+      dispatch(setTurn({my:true}))
     }
     dispatch(userReady(true))
     emitReady(true)
@@ -49,7 +49,7 @@ const Room = () => {
 
   const handleEnemyReady = useCallback(
     async () => {
-      dispatch(handleTurn({my:false}))
+      dispatch(setTurn({my:false}))
       const champ = await cardShow(opponent.fighter.id)
       dispatch(setOpponentFighter(champ))
       dispatch(opponentReady(true))

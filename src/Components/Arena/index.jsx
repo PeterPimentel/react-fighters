@@ -1,30 +1,32 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
+import Header from './header'
 import Fighter from './fighter'
 import Hand from '../Hand'
 import Card from '../Ca'
 
 import { Container, GridArea, FloattingCard } from './styles'
+import { Title, Row } from '../../styles/common'
 
 import { handleOpponentAction } from '../../redux/reducers/gameReducer'
 
 import { onAction, removeAllListeners } from '../../service/events'
 
 export default function Arena() {
-
-    const { fighter, opponentFighter } = useSelector(state => state.game)
+    const dispatch = useDispatch()
+    const { fighter, opponentFighter, turn } = useSelector(state => state.game)
     const { position, highlighted } = useSelector(state => state.highlight)
 
     useEffect(() => {
-        onAction(handleOpponentAction)
+        onAction((data)=>dispatch(handleOpponentAction(data)))
         return () => removeAllListeners()
-    }, [])
+    }, [dispatch])
 
     return (
         <div>
             <Container>
-                <GridArea area="arenaHeader">Header</GridArea>
+                <Header />
                 <GridArea area="arenaFighter">
                     <Fighter fighter={fighter} />
                 </GridArea>

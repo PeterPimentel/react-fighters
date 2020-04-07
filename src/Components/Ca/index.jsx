@@ -1,8 +1,11 @@
 import React, { useRef } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { useDrag } from "react-dnd"
 
 import { Container, Header, Image, Info } from './styles'
+
+import { hideHighlighted } from '../../redux/reducers/highlightReducer'
 
 const Skill = ({ data }) => (
     <div>
@@ -29,17 +32,21 @@ const Effect = ({ data }) => (
 
 
 export default function Card({ card }) {
+    const dispatch = useDispatch()
 
     const ref = useRef(null)
 
-    const infoData = card.type === "fighter" ? card.skills : [{id:1,info:card.info}]
+    const infoData = card.type === "fighter" ? card.skills : [{ id: 1, info: card.info }]
     const InfoComponent = card.type === "fighter" ? Skill : Effect
 
     const [{ isDragging }, dragRef] = useDrag({
         item: { type: card.type || "default", card: card },
         collect: monitor => ({
             isDragging: monitor.isDragging()
-        })
+        }),
+        begin() {
+            dispatch(hideHighlighted())
+        }
     })
 
     dragRef(ref)
@@ -56,7 +63,7 @@ export default function Card({ card }) {
             <Image image={card.image} />
             <Info>
                 {
-                    infoData.map(data => <InfoComponent key={data.id} data={data}/>)
+                    infoData.map(data => <InfoComponent key={data.id} data={data} />)
                 }
             </Info>
         </Container>

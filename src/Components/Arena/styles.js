@@ -6,7 +6,7 @@ export const Container = styled.div`
     width: 100vw;
     display: grid;
     grid-template-areas:
-    "arenaHeader arenaHeader arenaHeader arenaHeader"
+    "arenaHeaderUserInfo arenaHeaderUserTurn arenaHeaderOpponentTurn arenaHeaderOpponentInfo"
     ". arenaFighter arenaOpponent .";
     grid-template-columns: 25vw 25vw 25vw 25vw;
     grid-template-rows: 10vh 70vh;
@@ -30,9 +30,6 @@ export const FighterBox = styled.div`
         justify-content: space-evenly;
         padding: 8px;
         font-weight:500;
-        .status-life {
-            
-        }
         .status-energy {
             display: flex;
             align-items: center;
@@ -66,7 +63,8 @@ export const SkillPanel = styled.div`
     display:flex;
     flex-direction: column;
     background-color: rgba(0,0,0,0.8);
-    border: 2px solid #fcc010;
+    border: 2px solid #000000;
+    /* border: 2px solid #fcc010; */
     border-radius: 5px;
     padding: 8px;
     color: white;
@@ -111,4 +109,33 @@ export const FloattingCard = styled.div`
     bottom: 200px;
     left:${({position}) => `${position}px`};
 
+`;
+
+export const UserInfo = styled.div`
+    padding:4px;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    & div > p {
+        font-size:small;
+    }
+
+    & div > button {
+        background-color:#fcc010;
+        color: white;
+        border: 2px solid #f6984c;
+        padding: 2px;
+        border-radius: 18px;
+        font-size: 2em;
+        width: 1.5em;
+        line-height: 80%;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            color: red;
+        }
+    }
 `;

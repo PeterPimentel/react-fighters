@@ -1,5 +1,5 @@
 import { triggerAction } from '../../service/gameService'
-import { removeCardFromHand } from './deckReducer'
+import { removeCardFromHand, drawCard } from './deckReducer'
 
 // Action Types
 export const Types = {
@@ -13,21 +13,23 @@ export const Types = {
 
 }
 
+const _turnInitalState = {
+    my: false,
+    energy: false,
+    attack: false,
+    equipment: false,
+    reserve: false
+}
+
 // Reducer
 const initialState = {
-    fighter: {skills:[]},
+    fighter: { skills: [] },
     reserve: [],
     opponentFighter: {
-        skills:[]
+        skills: []
     },
     opponentReserve: [],
-    turn: {
-        my: false,
-        energy: false,
-        attack: false,
-        equipment: false,
-        reserve: false
-    }
+    turn: _turnInitalState
 }
 
 export default function gameReducer(state = initialState, action) {
@@ -100,10 +102,17 @@ export function addEnergy(value, key) {
     }
 }
 
-export function handleTurn(value) {
+export function setTurn(value) {
     return {
         type: Types.SET_TURN,
         payload: value
+    }
+}
+
+export function skipTurn() {
+    return {
+        type: Types.SET_TURN,
+        payload: _turnInitalState
     }
 }
 
@@ -114,6 +123,9 @@ export function handleDrop(action, origin, target) {
             if (target.type === 'fighter') {
                 dispatch(setFighter(data.result))
                 dispatch(removeCardFromHand(origin.key))
+                if (origin.type === 'energy') {
+                    dispatch(setTurn({ energy: true }))
+                }
             }
         } catch (err) {
             console.log("ERRO - ", err)
@@ -131,6 +143,7 @@ export function handleUserAction(action, origin, target) {
             }
             if (target.type === 'fighter') {
                 dispatch(setOpponentFighter(data.result.target))
+                dispatch(setTurn(_turnInitalState))
             }
         } catch (err) {
             console.log("ERRO - ", err)
@@ -139,9 +152,8 @@ export function handleUserAction(action, origin, target) {
 }
 
 
-export function handleOpponentAction(data){
+export function handleOpponentAction(data) {
     return async dispatch => {
-        console.log("Chegou - ", data)
         switch (data.action.type) {
             case 'energy':
                 dispatch(setOpponentFighter(data.result))
@@ -149,6 +161,8 @@ export function handleOpponentAction(data){
             case 'attack':
                 dispatch(setOpponentFighter(data.result.origin))
                 dispatch(setFighter(data.result.target))
+                dispatch(setTurn({..._turnInitalState, my:true}))
+                dispatch(drawCard(1))
                 break
             default:
                 break;

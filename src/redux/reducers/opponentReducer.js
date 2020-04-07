@@ -11,7 +11,8 @@ const initialState = {
         id:1
     },
     socketId:"",
-    ready:false
+    ready:false,
+    victorys:0
 };
 
 export default function opponentReducer(state = initialState, action) {

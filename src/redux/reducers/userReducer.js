@@ -10,7 +10,8 @@ const initialState = {
     fighter: {
         id:1
     },
-    ready: false
+    ready: false,
+    victorys:0
 };
 
 export default function userReducer(state = initialState, action) {
