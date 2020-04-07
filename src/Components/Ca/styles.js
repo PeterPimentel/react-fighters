@@ -64,7 +64,7 @@ export const Info = styled.div`
     padding: 4px;
 
     & > div.info-effect {
-        font-size: 14px;
+        font-size: 12px;
         text-align: justify;
         padding: 4px;
         font-weight: 500;

@@ -1,5 +1,7 @@
 import { triggerAction } from '../../service/gameService'
+import { show } from '../../service/cardService'
 import { removeCardFromHand, drawCard } from './deckReducer'
+import { setPlayed, hidePlayed } from './highlightReducer'
 
 // Action Types
 export const Types = {
@@ -12,7 +14,6 @@ export const Types = {
     SET_TURN: 'SET_TURN',
     UPDATE_RESERVE: 'UPDATE_RESERVE',
     UPDATE_OPP_RESERVE: 'UPDATE_OPP_RESERVE',
-
 }
 
 const _turnInitalState = {
@@ -22,21 +23,6 @@ const _turnInitalState = {
     supporter: false,
     reserve: false
 }
-
-const mockRe = [
-    {
-        "id": 1,
-        "name": "Joe Higashi",
-        "image": "http://localhost:8080/static/fighters/joe_card.png",
-        "avatar": "http://localhost:8080/static/fighters/joe_avatar.png"
-    },
-    {
-        "id": 2,
-        "name": "Balrog",
-        "image": "http://localhost:8080/static/fighters/balrog_card.png",
-        "avatar": "http://localhost:8080/static/fighters/balrog_avatar.png"
-    }
-]
 
 // Reducer
 const initialState = {
@@ -75,7 +61,6 @@ export default function gameReducer(state = initialState, action) {
                 reserve: action.payload
             }
         case Types.SET_OPP_RESERVE:
-            console.log("Aqui")
             return {
                 ...state,
                 opponentReserve: action.payload
@@ -227,26 +212,38 @@ export function handleUserAction(action, origin, target) {
 //Ações executadas pelo opponent que chegara via socket
 export function handleOpponentAction(data) {
     return async dispatch => {
-        switch (data.action.type) {
-            case 'reserve':
-                dispatch(setOpponentReserve(data.result))
-                break
-            case 'energy':
-            case 'supporter':
-                dispatch(setOpponentFighter(data.result))
-                break
-            case 'attack':
-                dispatch(setOpponentFighter(data.result.origin))
-                dispatch(setFighter(data.result.target))
-                dispatch(setTurn({ ..._turnInitalState, my: true }))
-                dispatch(drawCard(1))
-                break
-            case 'skip':
-                dispatch(setTurn({ ..._turnInitalState, my: true }))
-                dispatch(drawCard(1))
-                break
-            default:
-                break;
+        let cardPlayed
+
+        if(data.origin){
+            cardPlayed =  await show(data.origin.id)
+            dispatch(setPlayed(cardPlayed))
+        }        
+        const _handleActions = (dispatch, data) => () => {
+            switch (data.action.type) {
+                case 'reserve':
+                    dispatch(setOpponentReserve(data.result))
+                    break
+                case 'energy':
+                case 'supporter':
+                    dispatch(setOpponentFighter(data.result))
+                    break
+                case 'attack':
+                    dispatch(setOpponentFighter(data.result.origin))
+                    dispatch(setFighter(data.result.target))
+                    dispatch(setTurn({ ..._turnInitalState, my: true }))
+                    dispatch(drawCard(1))
+                    break
+                case 'skip':
+                    dispatch(setTurn({ ..._turnInitalState, my: true }))
+                    dispatch(drawCard(1))
+                    break
+                default:
+                    break;
+            }
+
+            dispatch(hidePlayed())
         }
+        
+        setTimeout(_handleActions(dispatch, data), 2000)
     }
 }

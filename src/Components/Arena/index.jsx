@@ -7,7 +7,7 @@ import Reserve from './reserve'
 import Hand from '../Hand'
 import Card from '../Ca'
 
-import { Container, GridArea, FloattingCard, Background } from './styles'
+import { Container, GridArea, FloattingCard, Background, OpponentCard } from './styles'
 
 import { handleOpponentAction } from '../../redux/reducers/gameReducer'
 
@@ -16,7 +16,7 @@ import { onAction, removeAllListeners } from '../../service/events'
 export default function Arena() {
     const dispatch = useDispatch()
     const { fighter, opponentFighter, reserve, opponentReserve } = useSelector(state => state.game)
-    const { position, highlighted } = useSelector(state => state.highlight)
+    const { position, highlighted, showPlayed, playedCard } = useSelector(state => state.highlight)
 
     useEffect(() => {
         onAction((data) => dispatch(handleOpponentAction(data)))
@@ -39,6 +39,9 @@ export default function Arena() {
             <FloattingCard position={position}>
                 <Card card={highlighted} />
             </FloattingCard>
+            <OpponentCard show={showPlayed}>
+                <Card card={playedCard} />
+            </OpponentCard>
             <Hand />
         </Background>
     )

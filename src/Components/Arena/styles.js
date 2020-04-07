@@ -108,12 +108,20 @@ export const SkillPanel = styled.div`
 `;
 
 export const FloattingCard = styled.div`
-    transform: scale(1.2);
+    transform: scale(1.1);
     display: ${({ position }) => position > 0 ? `inital` : `none`};
     position: fixed;
-    bottom: 200px;
+    bottom: 170px;
     left:${({ position }) => `${position}px`};
 
+`;
+
+export const OpponentCard = styled.div`
+    transform: scale(1);
+    display: ${({ show }) => show === true ? `inital` : `none`};
+    position: fixed;
+    bottom: 30vh;
+    right: 30px;
 `;
 
 export const UserInfo = styled.div`

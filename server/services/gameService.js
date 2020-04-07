@@ -20,14 +20,16 @@ const handle = (action, origin, target) => {
         const reserve = reserveService[action.action](origin, target)
         return {
             result: reserve,
-            action
+            action,
+            origin
         }
     }
 
     if (action.type === "supporter") {
         return {
             result: supporterService.trigger(origin, target),
-            action
+            action,
+            origin
         }
     }
 
@@ -38,7 +40,8 @@ const handle = (action, origin, target) => {
             result: {
                 ...energyResult,
             },
-            action
+            action,
+            origin
         }
     }
 
@@ -49,7 +52,8 @@ const handle = (action, origin, target) => {
             result: {
                 ...attackResult,
             },
-            action
+            action,
+            origin
         }
     }
 }

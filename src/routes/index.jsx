@@ -1,7 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import Game from '../Components/Game'
 import Room from '../Components/Room'
 import Loading from '../Components/Loading'
 import Lab from '../Components/Lab'
@@ -17,9 +16,6 @@ export default function App() {
         </Route>
         <Route path="/loading">
           <Loading />
-        </Route>
-        <Route path="/game">
-          <Game />
         </Route>
         <Route path="/" exact>
           <Home />
