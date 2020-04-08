@@ -25,13 +25,22 @@ export const GridArea = styled.div`
 
 export const EmptyFighterBox = styled.div`
     height: 100%;
-    padding: 4px;
-    background-image: url(${empty_bg});
+    /* background-image: url(${empty_bg}); */
     background-repeat:no-repeat;
+    border: 2px dashed white;
     & > div {
         background-color: rgb(255, 255, 255,0.2);
         width: 100%;
         height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px;
+        text-align: center;
+        font-size: 2em;
+        font-weight: 500;
+        color: #b7a980;
+        font-style: italic;
     }
 `;
 

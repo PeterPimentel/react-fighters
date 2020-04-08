@@ -22,7 +22,7 @@ const _turnInitalState = {
     attack: false,
     supporter: false,
     reserve: false,
-    arena:false
+    arena: true
 }
 
 // Reducer
@@ -126,6 +126,36 @@ export function setOpponentReserve(reserve) {
     }
 }
 
+function _handleActionsUpdate(dispatch, data) {
+    data.result.forEach(el => {
+        if (el.affected === "reserve") {
+            dispatch(setReserve(el.value))
+        }
+        if (el.affected === "fighter") {
+            dispatch(setFighter(el.value))
+        }
+        if (el.affected === "turnEnergy") {
+            dispatch(setTurn({ energy: el.value }))
+        }
+        if (el.affected === "turnReserve") {
+            dispatch(setTurn({ reserve: el.value }))
+        }
+        if (el.affected === "turnArena") {
+            dispatch(setTurn({ arena: el.value }))
+        }
+        if (el.affected === "opponentFighter") {
+            dispatch(setOpponentFighter(el.value))
+        }
+        if (el.affected === "endTurn") {
+            dispatch(setTurn(_turnInitalState))
+        }
+        if (el.affected === "handRemoveOne") {
+            dispatch(removeCardFromHand(el.value))
+        }
+    })
+
+}
+
 export function skipTurn(action) {
     return async dispatch => {
         try {
@@ -144,65 +174,26 @@ export function skipTurn(action) {
 //Ações executadas ao dropar cards no lutador
 export function handleDrop(action, origin, target) {
     return async (dispatch, getState) => {
-        const { turn, fighter } = getState().game
+        const { turn } = getState().game
         if (turn.my === true) {
             if (
                 (action.type === 'energy' && turn.energy === false) ||
-                (action.type === 'supporter' && turn.supporter === false)
+                (action.type === 'supporter' && turn.supporter === false) ||
+                (action.type === 'figtherFromReserve' && turn.arena === false) ||
+                (action.type === 'reserve' && turn.reserve === false) ||
+                (action.type === 'attack')
             ) {
-                if (target.id === fighter.id) {
-                    try {
-                        const data = await triggerAction(action, origin, target)
-                        if (target.type === 'fighter') {
-                            dispatch(setFighter(data.result))
-                            dispatch(removeCardFromHand(origin.key))
-                            if (origin.type === 'energy') {
-                                dispatch(setTurn({ energy: true }))
-                            }
-                            if (origin.type === 'supporter') {
-                                dispatch(setTurn({ supporter: true }))
-                            }
-                        }
-                    } catch (err) {
-                        console.log("ERRO - ", err)
+                try {
+                    if (action.type === 'figtherFromReserve') {
+                        target = getState().game.reserve
                     }
+                    const data = await triggerAction(action, origin, target)
+                    _handleActionsUpdate(dispatch, data)
+
+                } catch (err) {
+                    console.log("ERRO - ", err)
                 }
             }
-        }
-    }
-}
-
-//Ações executadas ao dropar cards na reserva
-export function handleReseverAction(action, origin, target) {
-    return async dispatch => {
-        try {
-            const data = await triggerAction(action, origin, target)
-            if (action.action === "addFighter") {
-                dispatch(setReserve(data.result))
-                dispatch(removeCardFromHand(origin.key))
-                dispatch(setTurn({ reserve: true }))
-            }
-        } catch (err) {
-            console.log("ERRO - ", err)
-        }
-    }
-}
-
-//Ações executadas pelo lutador
-export function handleUserAction(action, origin, target) {
-    return async dispatch => {
-        try {
-            const data = await triggerAction(action, origin, target)
-            if (origin.type === 'fighter') {
-                dispatch(setFighter(data.result.origin))
-
-            }
-            if (target.type === 'fighter') {
-                dispatch(setOpponentFighter(data.result.target))
-                dispatch(setTurn(_turnInitalState))
-            }
-        } catch (err) {
-            console.log("ERRO - ", err)
         }
     }
 }
@@ -218,33 +209,27 @@ export function handleOpponentAction(data) {
             dispatch(setPlayed(cardPlayed))
         }
         const _handleActions = (dispatch, data) => () => {
-            switch (data.action.type) {
-                case 'reserve':
-                    dispatch(setOpponentReserve(data.result))
-                    break
-                case 'energy':
-                case 'supporter':
-                    dispatch(setOpponentFighter(data.result))
-                    break
-                case 'attack':
-                    dispatch(setOpponentFighter(data.result.origin))
-                    dispatch(setFighter(data.result.target))
+            data.result.forEach(el => {
+                if (el.affected === "reserve") {
+                    dispatch(setOpponentReserve(el.value))
+                }
+                if (el.affected === "fighter") {
+                    dispatch(setOpponentFighter(el.value))
+                }
+                if (el.affected === "opponentFighter") {
+                    dispatch(setFighter(el.value))
+                }
+                if (el.affected === "endTurn") {
                     dispatch(setTurn({ ..._turnInitalState, my: true }))
                     dispatch(drawCard(1))
-                    if (data.result.target.damageReceived >= data.result.target.life) {
-                        console.log("K.O")
-                        console.log("Setar o fighter para vazio")
-                    }
-                    break
-                case 'skip':
-                    dispatch(setTurn({ ..._turnInitalState, my: true }))
-                    dispatch(drawCard(1))
-                    break
-                default:
-                    break;
-            }
+                }
+                //if (data.result.target.damageReceived >= data.result.target.life) {
+                //  console.log("K.O")
+                //  console.log("Setar o fighter para vazio")
+                //}
+            })
             dispatch(hidePlayed())
         }
-        setTimeout(_handleActions(dispatch, data), 2000)
+        setTimeout(_handleActions(dispatch, data), 1800)
     }
 }

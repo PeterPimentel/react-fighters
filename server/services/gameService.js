@@ -14,12 +14,31 @@ const _log = (level, { action, origin, target, result }) => {
 
 const handle = (action, origin, target) => {
     if (action.type === "skip") {
-        return { action }
-    }
-    if (action.type === "reserve") {
-        const reserve = reserveService[action.action](origin, target)
         return {
-            result: reserve,
+            result: [{ affected: "endTurn" }],
+            action
+        }
+    }
+
+    if (action.type === "figtherFromReserve") {
+        return {
+            result: reserveService.figtherFromReserve(origin, target),
+            action
+        }
+    }
+
+    if (action.type === "attack") {
+        const { skill } = action
+        return {
+            result: attackService[skill.effect](origin, target, skill),
+            action,
+            origin
+        }
+    }
+
+    if (action.type === "reserve") {
+        return {
+            result: reserveService[action.action](origin, target),
             action,
             origin
         }
@@ -35,23 +54,8 @@ const handle = (action, origin, target) => {
 
     if (origin.type === "energy") {
         const { effect } = origin
-        const energyResult = effectService[effect](origin, target)
         return {
-            result: {
-                ...energyResult,
-            },
-            action,
-            origin
-        }
-    }
-
-    if (origin.type === "fighter") {
-        const { skill } = action
-        const attackResult = attackService[skill.effect](origin, target, skill)
-        return {
-            result: {
-                ...attackResult,
-            },
+            result: effectService[effect](origin, target),
             action,
             origin
         }

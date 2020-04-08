@@ -1,18 +1,25 @@
-const flipCoin = (times) => {
-    
-}
-
-
 const addEnergy = (origin, target) => {
     const newEnergy = target.energy + origin.value
 
-    return {
-        ...target,
-        energy: newEnergy < 0 ? 0 : newEnergy
-    }
+    return [
+        {
+            affected: "fighter",
+            value: {
+                ...target,
+                energy: newEnergy < 0 ? 0 : newEnergy
+            }
+        },
+        {
+            affected: "handRemoveOne",
+            value: origin.key
+        },
+        {
+            affected: "turnEnergy",
+            value: true
+        }
+    ]
 }
 
 module.exports = {
-    flipCoin,
     addEnergy
 }

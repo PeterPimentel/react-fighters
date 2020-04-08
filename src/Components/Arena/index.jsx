@@ -7,13 +7,13 @@ import Reserve from './reserve'
 import Hand from '../Hand'
 import Card from '../Card'
 
-import { Container, GridArea, FloattingCard, Background, OpponentCard, EmptyFighterBox } from './styles'
+import { Container, GridArea, FloattingCard, Background, OpponentCard } from './styles'
 
 import { handleOpponentAction } from '../../redux/reducers/gameReducer'
 
 import { onAction, removeAllListeners } from '../../service/events'
 
-import  "../../styles/animation.css"
+import "../../styles/animation.css"
 
 export default function Arena() {
     const dispatch = useDispatch()
@@ -31,16 +31,10 @@ export default function Arena() {
                 <Header />
                 <Reserve area="reserveUser" reserve={reserve} canDrop={true} />
                 <GridArea area="arenaUser">
-                    {fighter.id ?
-                        <Fighter fighter={fighter} /> :
-                        <EmptyFighterBox><div></div></EmptyFighterBox>
-                    }
+                    <Fighter fighter={fighter} />
                 </GridArea>
                 <GridArea area="arenaOpponent">
-                    {opponentFighter.id ?
-                        <Fighter fighter={opponentFighter} flip={true} /> :
-                        <EmptyFighterBox><div></div></EmptyFighterBox>
-                    }
+                    <Fighter fighter={opponentFighter} flip={true} />
                 </GridArea>
                 <Reserve area="reserverOpponent" reserve={opponentReserve} />
             </Container>

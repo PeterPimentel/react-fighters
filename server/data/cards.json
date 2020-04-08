@@ -17,7 +17,9 @@
                 "name": "Hurricame Upper",
                 "cost": 3,
                 "damage": 40,
-                "effect":"flipCoin"
+                "effect":"flipCoin",
+                "value":5,
+                "info":"50% chance of do nothing."
             }
         ],
         "type": "fighter"
@@ -84,7 +86,7 @@
             {
                 "id": 42,
                 "name": "Mortar Punch",
-                "cost": 6,
+                "cost": 2,
                 "damage": 200,
                 "effect":"discardEnergy",
                 "value":4,
