@@ -11,7 +11,8 @@ const initialState = {
     position: 0,
     highlighted: {},
     playedCard: {},
-    showPlayed: false
+    showPlayed: false,
+    playedClass:""
 }
 
 export default function highlightReducer(state = initialState, action) {
@@ -31,12 +32,14 @@ export default function highlightReducer(state = initialState, action) {
             return {
                 ...state,
                 playedCard: action.payload,
-                showPlayed: true
+                showPlayed: true,
+                playedClass:"slideInFwdTop"
             }
         case Types.HIDE_PLAYED_CARD:
             return {
                 ...state,
-                showPlayed: false
+                showPlayed: false,
+                playedClass:"scaleOutCenter"
             }
         default:
             return state

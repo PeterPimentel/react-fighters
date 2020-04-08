@@ -22,5 +22,11 @@
         "name": "Paul Phoenix",
         "image": "http://localhost:8080/static/fighters/paul_card.png",
         "avatar": "http://localhost:8080/static/fighters/paul_avatar.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Dee Jay",
+        "image": "http://localhost:8080/static/fighters/deejay_card.jpg",
+        "avatar": "http://localhost:8080/static/fighters/deejay_card.jpg"
     }
 ]

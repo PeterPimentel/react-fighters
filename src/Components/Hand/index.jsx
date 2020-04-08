@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Card from '../Ca'
+import Card from '../Card'
 
 import { Container } from './styles'
 

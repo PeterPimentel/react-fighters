@@ -75,20 +75,50 @@
         "life": 80,
         "skills": [
             {
-                "id": 7,
+                "id": 41,
                 "name": "Jab",
                 "cost": 2,
                 "damage": 10,
                 "effect":"regular"
             },
             {
-                "id": 8,
+                "id": 42,
                 "name": "Mortar Punch",
                 "cost": 6,
                 "damage": 200,
                 "effect":"discardEnergy",
                 "value":4,
                 "info":"Discard 4 energy attached to Paul"
+            }
+        ],
+        "type": "fighter"
+    },
+    {
+        "id": 5,
+        "name": "Dee Jay",
+        "image": "http://localhost:8080/static/fighters/deejay_card.jpg",
+        "life": 60,
+        "skills": [
+            {
+                "id": 51,
+                "name": "Knee Shot",
+                "cost": 1,
+                "damage": 10,
+                "effect":"regular"
+            },
+            {
+                "id": 52,
+                "name": "Machinegun Upper",
+                "cost": 3,
+                "damage": 30,
+                "effect":"regular"
+            },
+            {
+                "id": 53,
+                "name": "Sobat Carnival",
+                "cost": 4,
+                "damage": 50,
+                "effect":"regular"
             }
         ],
         "type": "fighter"

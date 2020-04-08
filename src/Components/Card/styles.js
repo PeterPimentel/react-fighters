@@ -76,7 +76,7 @@ export const Info = styled.div`
         align-items: center;
         padding: 4px;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 13px;
 
         & div.cost {
             display: flex;

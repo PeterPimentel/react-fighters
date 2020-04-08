@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import arena_bg from '../../assets/arena_bg.jpg'
+import empty_bg from '../../assets/empty_figther.png'
 
 export const Background = styled.div`
     background-image: url(${arena_bg});
@@ -22,10 +23,24 @@ export const GridArea = styled.div`
     grid-area:${({ area }) => area};
 `;
 
+export const EmptyFighterBox = styled.div`
+    height: 100%;
+    padding: 4px;
+    background-image: url(${empty_bg});
+    background-repeat:no-repeat;
+    & > div {
+        background-color: rgb(255, 255, 255,0.2);
+        width: 100%;
+        height: 100%;
+    }
+`;
+
 export const FighterBox = styled.div`
     height: 100%;
     padding: 4px;
-
+    background-image:${ ({ bg }) => `url(${bg})`};
+    background-repeat:no-repeat;
+    
     & .status {
         background-color: rgb(255, 255, 255,0.2);
         height:20%;
@@ -35,7 +50,7 @@ export const FighterBox = styled.div`
         justify-content: space-evenly;
         padding: 8px;
         font-weight:500;
-        .status-energy {
+        & > div.status-energy {
             display: flex;
             align-items: center;
             img {
@@ -45,14 +60,28 @@ export const FighterBox = styled.div`
                 height: auto;
             }
         }
+
+        & > div.status-life {
+            border: 2px solid;
+            border-radius: 10px;
+
+            & > div {
+                width:${({width}) => `${width}%` };
+                border-radius: 10px;
+                background: rgb(169,255,151);
+                background: linear-gradient(0deg, rgba(155,233,139,1) 0%, rgba(78,198,61,1) 50%, rgba(155,233,139,1) 100%);
+
+                & > span {
+                    font-size: 0.8em;
+                }
+            }
+        } 
     }
 
     & .skill {
         background-color: rgb(255, 255, 255,0.2);
         height:80%;
         width: 100%;
-        background-image:${ ({ bg }) => `url(${bg})`};
-        background-repeat:no-repeat;
         padding:4px;
         display: flex;
         flex-direction: column;

@@ -1,7 +1,8 @@
 // Action Types
 export const Types = {
     USER_READY: 'USER_READY',
-    USER_SELECTED_FIGHTER: 'USER_SELECTED_FIGHTER'
+    USER_SELECTED_FIGHTER: 'USER_SELECTED_FIGHTER',
+    USER_ADD_VICTORY: 'USER_ADD_VICTORY',
 };
 
 // Reducer
@@ -26,6 +27,11 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 fighter: action.payload
             }
+        case Types.USER_ADD_VICTORY:
+            return {
+                ...state,
+                victorys: state.victorys + 1
+            }
         default:
             return state
     }
@@ -43,5 +49,11 @@ export function userSelectFighter(fighter) {
     return {
         type: Types.USER_SELECTED_FIGHTER,
         payload: fighter
+    }
+}
+
+export function userAddVictory() {
+    return {
+        type: Types.USER_ADD_VICTORY
     }
 }

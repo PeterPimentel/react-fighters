@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDrop } from "react-dnd"
 
@@ -6,12 +6,16 @@ import { handleDrop, handleUserAction } from '../../redux/reducers/gameReducer'
 
 import { FighterBox, SkillPanel } from './styles'
 
+import {onAction} from "../../service/events"
+
 export default function Fighter({ fighter, flip = false }) {
 
     const dispatch = useDispatch()
 
     const opponent = useSelector(state => state.opponent)
     const { opponentFighter, turn } = useSelector(state => state.game)
+
+    const [animation, setAnimation] = useState("")
 
     const ref = useRef(null)
     const [, dropRef] = useDrop({
@@ -27,6 +31,18 @@ export default function Fighter({ fighter, flip = false }) {
     dropRef(ref)
 
     const hp = fighter.life - (fighter.damageReceived || 0)
+    const barWidth = Math.ceil((hp/fighter.life) * 100)
+
+    useEffect(() => {
+        onAction((data) => {
+            if(data.action && data.action.type === "attack"){
+                if(flip === false){
+                    setTimeout(()=>{setAnimation("wobbleHorBottom")},2000)
+                    setTimeout(()=>{setAnimation("")},3000)
+                }
+            }
+        })
+    }, [flip])
 
     const handleClick = (skill) => {
         if (fighter.energy >= skill.cost && flip === false && turn.my === true) {
@@ -39,10 +55,12 @@ export default function Fighter({ fighter, flip = false }) {
     }
 
     return (
-        <FighterBox ref={ref} bg={fighter.image} flip={flip}>
+        <FighterBox ref={ref} bg={fighter.image} flip={flip} width={barWidth} className={animation}>
             <div className="status">
                 <div className="status-life">
-                    <span>{`HP- ${hp}/${fighter.life}`}</span>
+                    <div>
+                        <span>{`${hp}/${fighter.life}`}</span>
+                    </div>
                 </div>
                 <div className="status-energy">
                     <img

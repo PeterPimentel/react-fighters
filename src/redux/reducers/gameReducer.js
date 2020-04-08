@@ -21,16 +21,15 @@ const _turnInitalState = {
     energy: false,
     attack: false,
     supporter: false,
-    reserve: false
+    reserve: false,
+    arena:false
 }
 
 // Reducer
 const initialState = {
     fighter: { skills: [] },
     reserve: [],
-    opponentFighter: {
-        skills: []
-    },
+    opponentFighter: { skills: [] },
     opponentReserve: [],
     turn: _turnInitalState
 }
@@ -146,12 +145,12 @@ export function skipTurn(action) {
 export function handleDrop(action, origin, target) {
     return async (dispatch, getState) => {
         const { turn, fighter } = getState().game
-        if (turn.my === true){
-            if(
+        if (turn.my === true) {
+            if (
                 (action.type === 'energy' && turn.energy === false) ||
                 (action.type === 'supporter' && turn.supporter === false)
-            ){
-                if(target.id === fighter.id){
+            ) {
+                if (target.id === fighter.id) {
                     try {
                         const data = await triggerAction(action, origin, target)
                         if (target.type === 'fighter') {
@@ -214,10 +213,10 @@ export function handleOpponentAction(data) {
     return async dispatch => {
         let cardPlayed
 
-        if(data.origin){
-            cardPlayed =  await show(data.origin.id)
+        if (data.origin) {
+            cardPlayed = await show(data.origin.id)
             dispatch(setPlayed(cardPlayed))
-        }        
+        }
         const _handleActions = (dispatch, data) => () => {
             switch (data.action.type) {
                 case 'reserve':
@@ -232,6 +231,10 @@ export function handleOpponentAction(data) {
                     dispatch(setFighter(data.result.target))
                     dispatch(setTurn({ ..._turnInitalState, my: true }))
                     dispatch(drawCard(1))
+                    if (data.result.target.damageReceived >= data.result.target.life) {
+                        console.log("K.O")
+                        console.log("Setar o fighter para vazio")
+                    }
                     break
                 case 'skip':
                     dispatch(setTurn({ ..._turnInitalState, my: true }))
@@ -240,10 +243,8 @@ export function handleOpponentAction(data) {
                 default:
                     break;
             }
-
             dispatch(hidePlayed())
         }
-        
         setTimeout(_handleActions(dispatch, data), 2000)
     }
 }
