@@ -2,18 +2,18 @@ import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 
-import Loader from '../Loader'
-
 //Actions
 import { opponentSelectFighter, opponentReady } from '../../redux/reducers/opponentReducer'
 import { setFighter, setOpponentFighter } from '../../redux/reducers/gameReducer'
 import { setDeck, drawCard } from '../../redux/reducers/deckReducer'
 
-import styles from './index.module.css'
-
 import { onReady, onEnemySelected, removeAllListeners } from '../../service/events'
 import { index as deckIndex } from '../../service/deckService'
 import { show as cardShow } from '../../service/cardService'
+
+import { Loader } from '../../styles/common'
+
+import styles from './index.module.css'
 
 export default function Loading() {
 
@@ -56,7 +56,7 @@ export default function Loading() {
 
     return (
         <div className={styles.root}>
-            <Loader />
+            <Loader className="easyRotate"/>
             <div className={styles.label}>Loading ...</div>
             {
                 deck.length < 0 && <div className={styles.dataFetch}>Fetching deck...</div>

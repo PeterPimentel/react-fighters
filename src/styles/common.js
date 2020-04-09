@@ -1,8 +1,19 @@
 import styled from 'styled-components'
 
+export const Loader = styled.div`
+    color: #fcc010;
+    font-size: 20px;
+    margin: 100px auto;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: relative;
+    text-indent: -9999em;
+`;
+
 export const Title = styled.h3`
     font-size: 2.5em;
-    font-size: ${({fontSize}) => fontSize !== undefined ? fontSize : '2.5em'};
+    font-size: ${({ fontSize }) => fontSize !== undefined ? fontSize : '2.5em'};
     text-align: center;
     font-weight: 900;
     font-style: italic;
