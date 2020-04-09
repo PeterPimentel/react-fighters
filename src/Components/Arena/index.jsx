@@ -2,27 +2,26 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Header from './header'
-import Fighter from './fighter'
+import Ring from './ring'
 import Reserve from './reserve'
 import Hand from '../Hand'
 import Card from '../Card'
 
 import { Container, GridArea, FloattingCard, Background, OpponentCard } from './styles'
+import { Title } from '../../styles/common'
 
 import { handleOpponentAction } from '../../redux/reducers/gameReducer'
 
 import { onAction, removeAllListeners } from '../../service/events'
 
-import {useCardHighlight} from '../../hooks/useCardHighlight'
-
-import "../../styles/animation.css"
+import { useCardHighlight } from '../../hooks/useCardHighlight'
 
 export default function Arena() {
     const dispatch = useDispatch()
     const { fighter, opponentFighter, reserve, opponentReserve } = useSelector(state => state.game)
-    const {  showPlayed, playedCard, playedClass } = useSelector(state => state.highlight)
+    const { showPlayed, playedCard, playedClass } = useSelector(state => state.highlight)
 
-    const [highlighted, position, setHighlight, hide] = useCardHighlight(window.innerWidth)
+    const [highlighted, setHighlight, hide] = useCardHighlight(window.innerWidth)
 
     useEffect(() => {
         onAction((data) => dispatch(handleOpponentAction(data)))
@@ -36,24 +35,28 @@ export default function Arena() {
                 <Header />
                 <Reserve area="reserveUser" reserve={reserve} canDrop={true} />
                 <GridArea area="arenaUser">
-                    <Fighter fighter={fighter} />
+                    <Ring fighter={fighter} />
                 </GridArea>
                 <GridArea area="arenaOpponent">
-                    <Fighter fighter={opponentFighter} flip={true} />
+                    <Ring fighter={opponentFighter} opponentRing={true} />
                 </GridArea>
                 <Reserve area="reserverOpponent" reserve={opponentReserve} />
             </Container>
             {/* GRID End */}
 
-            <FloattingCard position={position}>
-                <Card card={highlighted} />
+            <FloattingCard position={highlighted.position}>
+                <Card card={highlighted.card} />
             </FloattingCard>
 
             <OpponentCard show={showPlayed} className={playedClass}>
                 <Card card={playedCard} />
             </OpponentCard>
 
-            <Hand handleMouseEnter={setHighlight} handleMouseLeave={hide}/>
+            <Hand handleMouseEnter={setHighlight} handleMouseLeave={hide} />
+
+            {/* <div>
+                <Title fontSize="15vw">Titulo</Title>
+            </div> */}
         </Background>
     )
 }

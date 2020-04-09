@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
 import arena_bg from '../../assets/arena_bg.jpg'
-import empty_bg from '../../assets/empty_figther.png'
 
 export const Background = styled.div`
     background-image: url(${arena_bg});
@@ -25,8 +24,7 @@ export const GridArea = styled.div`
 
 export const EmptyFighterBox = styled.div`
     height: 100%;
-    /* background-image: url(${empty_bg}); */
-    background-repeat:no-repeat;
+    width: 100%;
     border: 2px dashed white;
     & > div {
         background-color: rgb(255, 255, 255,0.2);
@@ -44,10 +42,16 @@ export const EmptyFighterBox = styled.div`
     }
 `;
 
+export const RingContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+`;
+
 export const FighterBox = styled.div`
     height: 100%;
-    padding: 4px;
-    background-image:${ ({ bg }) => `url(${bg})`};
+    /* padding: 4px; */
+    background-image:${ ({ bg }) => bg ? `url(${bg})`: `inherit`};
     background-repeat:no-repeat;
     
     & .status {

@@ -9,14 +9,14 @@ function getTruePosition(mouse, width) {
 }
 
 export function useCardHighlight(screen = window) {
-    const [highlight, setHighlight] = useState({})
+    const [card, setCard] = useState({})
     const [position, setPosition] = useState(0)
 
     const hide = () => setPosition(0)
 
     const setCardHighlight = (card, mouse) => {
-        setHighlight(card)
+        setCard(card)
         setPosition(getTruePosition(mouse, screen))
     }
-    return [highlight, position, setCardHighlight, hide];
+    return [{ card, position }, setCardHighlight, hide];
 }

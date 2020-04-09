@@ -2,8 +2,6 @@ import React from 'react'
 
 import Card from '../Card'
 
-import  "../../styles/animation.css"
-
 const style = { margin: "50px", display: "flex", justifyContent: "space-evenly" }
 
 export default function index() {

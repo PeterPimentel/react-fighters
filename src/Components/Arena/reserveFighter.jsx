@@ -10,16 +10,13 @@ export default function ReserveFighter({ figther, flip = false }) {
 
     const [, dragRef] = useDrag({
         item: { type: 'figtherFromReserve', card: figther },
-        // collect: monitor => ({
-        //     isDragging: monitor.isDragging()
-        // })
     })
 
     dragRef(ref)
 
     return (
         <ReserveBox bg={figther.image} flip={flip} ref={ref}>
-            <div/>
+            <div />
         </ReserveBox>
     )
 }

@@ -3,6 +3,7 @@ import { connect as socketConnect } from './service/events'
 import { DndProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import GlobalStyle from './styles/global'
+import './styles/animation.css'
 
 import Routes from './routes'
 

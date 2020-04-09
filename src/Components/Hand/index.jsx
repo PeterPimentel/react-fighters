@@ -16,7 +16,7 @@ export default function Hand({ handleMouseEnter, handleMouseLeave }) {
                     <div key={card.key}
                         onMouseEnter={({ nativeEvent: { screenX } }) => handleMouseEnter(card, screenX)}
                         onMouseLeave={handleMouseLeave}>
-                        <Card card={card} />
+                        <Card card={card} hideHighlight={handleMouseLeave}/>
                     </div>
                 )
             }

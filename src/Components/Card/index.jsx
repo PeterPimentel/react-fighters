@@ -1,11 +1,7 @@
 import React, { useRef } from 'react'
-import { useDispatch } from 'react-redux'
-
 import { useDrag } from "react-dnd"
 
 import { Container, Header, Image, Info } from './styles'
-
-import { hideHighlighted } from '../../redux/reducers/highlightReducer'
 
 const Skill = ({ data }) => (
     <div>
@@ -31,8 +27,7 @@ const Effect = ({ data }) => (
 )
 
 
-export default function Card({ card }) {
-    const dispatch = useDispatch()
+export default function Card({ card, hideHighlight }) {
 
     const ref = useRef(null)
 
@@ -45,7 +40,8 @@ export default function Card({ card }) {
             isDragging: monitor.isDragging()
         }),
         begin() {
-            dispatch(hideHighlighted())
+            if(typeof hideHighlight === "function")
+                hideHighlight()
         }
     })
 

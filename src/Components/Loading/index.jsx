@@ -56,7 +56,7 @@ export default function Loading() {
 
     return (
         <div className={styles.root}>
-            <Loader className="easyRotate"/>
+            <Loader className="easyRotate" />
             <div className={styles.label}>Loading ...</div>
             {
                 deck.length < 0 && <div className={styles.dataFetch}>Fetching deck...</div>

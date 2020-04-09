@@ -126,7 +126,7 @@ export function setOpponentReserve(reserve) {
     }
 }
 
-function _handleActionsUpdate(dispatch, data) {
+function _myActionsUpdate(dispatch, data) {
     data.result.forEach(el => {
         if (el.affected === "reserve") {
             dispatch(setReserve(el.value))
@@ -146,14 +146,15 @@ function _handleActionsUpdate(dispatch, data) {
         if (el.affected === "opponentFighter") {
             dispatch(setOpponentFighter(el.value))
         }
-        if (el.affected === "endTurn") {
-            dispatch(setTurn(_turnInitalState))
-        }
         if (el.affected === "handRemoveOne") {
             dispatch(removeCardFromHand(el.value))
         }
-    })
 
+        //Always the latest action
+        if (el.affected === "endTurn") {
+            dispatch(setTurn(_turnInitalState))
+        }
+    })
 }
 
 export function skipTurn(action) {
@@ -175,26 +176,31 @@ export function skipTurn(action) {
 export function handleDrop(action, origin, target) {
     return async (dispatch, getState) => {
         const { turn } = getState().game
-        if (turn.my === true) {
-            if (
-                (action.type === 'energy' && turn.energy === false) ||
-                (action.type === 'supporter' && turn.supporter === false) ||
-                (action.type === 'figtherFromReserve' && turn.arena === false) ||
-                (action.type === 'reserve' && turn.reserve === false) ||
-                (action.type === 'attack')
-            ) {
-                try {
-                    if (action.type === 'figtherFromReserve') {
-                        target = getState().game.reserve
-                    }
-                    const data = await triggerAction(action, origin, target)
-                    _handleActionsUpdate(dispatch, data)
+        console.log("Chamou")
+        try {
+            const data = await triggerAction(action, origin, target)
+            _myActionsUpdate(dispatch, data)
 
-                } catch (err) {
-                    console.log("ERRO - ", err)
-                }
-            }
+        } catch (err) {
+            console.log("ERRO - ", err)
         }
+        // if (turn.my === true) {
+        //     if (
+        //         (action.type === 'energy' && turn.energy === false) ||
+        //         (action.type === 'supporter' && turn.supporter === false) ||
+        //         (action.type === 'figtherFromReserve' && turn.arena === false) ||
+        //         (action.type === 'reserve' && turn.reserve === false) ||
+        //         (action.type === 'attack')
+        //     ) {
+        //         try {
+        //             const data = await triggerAction(action, origin, target)
+        //             _myActionsUpdate(dispatch, data)
+
+        //         } catch (err) {
+        //             console.log("ERRO - ", err)
+        //         }
+        //     }
+        // }
     }
 }
 
@@ -208,7 +214,8 @@ export function handleOpponentAction(data) {
             cardPlayed = await show(data.origin.id)
             dispatch(setPlayed(cardPlayed))
         }
-        const _handleActions = (dispatch, data) => () => {
+
+        const _opponentActionsUpdate = (dispatch, data) => () => {
             data.result.forEach(el => {
                 if (el.affected === "reserve") {
                     dispatch(setOpponentReserve(el.value))
@@ -218,6 +225,9 @@ export function handleOpponentAction(data) {
                 }
                 if (el.affected === "opponentFighter") {
                     dispatch(setFighter(el.value))
+                    if(el.value.damageReceived >= el.value.life){
+                        setTimeout(()=> dispatch(setFighter({})),1000)
+                    }
                 }
                 if (el.affected === "endTurn") {
                     dispatch(setTurn({ ..._turnInitalState, my: true }))
@@ -230,6 +240,7 @@ export function handleOpponentAction(data) {
             })
             dispatch(hidePlayed())
         }
-        setTimeout(_handleActions(dispatch, data), 1800)
+
+        setTimeout(_opponentActionsUpdate(dispatch, data), 1800)
     }
 }

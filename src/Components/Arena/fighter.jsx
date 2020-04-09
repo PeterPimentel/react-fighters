@@ -1,14 +1,13 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useDrop } from "react-dnd"
 
 import { handleDrop } from '../../redux/reducers/gameReducer'
 
-import { FighterBox, SkillPanel, EmptyFighterBox } from './styles'
+import { FighterBox, SkillPanel } from './styles'
 
 import { onAction } from "../../service/events"
 
-export default function Fighter({ fighter, flip = false }) {
+export default function Fighter({ fighter, opponentRing = false }) {
 
     const dispatch = useDispatch()
 
@@ -17,35 +16,23 @@ export default function Fighter({ fighter, flip = false }) {
 
     const [animation, setAnimation] = useState("")
 
-    const ref = useRef(null)
-    const [, dropRef] = useDrop({
-        accept: ['supporter', 'energy', 'figtherFromReserve'],
-        drop(item) {
-            dispatch(handleDrop({ type: item.type, to: opponent.socketId }, item.card, fighter))
-            return {
-                id: fighter.id
-            }
-        }
-    })
-
-    dropRef(ref)
-
-    const hp = fighter.life - (fighter.damageReceived || 0)
+    const life = fighter.life - (fighter.damageReceived || 0)
+    const hp = life < 0 ? 0 : life
     const barWidth = fighter.id ? Math.ceil((hp / fighter.life) * 100) : 100
 
     useEffect(() => {
         onAction((data) => {
             if (data.action && data.action.type === "attack") {
-                if (flip === false) {
+                if (opponentRing === false) {
                     setTimeout(() => { setAnimation("wobbleHorBottom") }, 1600)
                     setTimeout(() => { setAnimation("") }, 2400)
                 }
             }
         })
-    }, [flip])
+    }, [opponentRing])
 
     const handleClick = (skill) => {
-        if (fighter.energy >= skill.cost && flip === false && turn.my === true) {
+        if (fighter.energy >= skill.cost && opponentRing === false && turn.my === true) {
             dispatch(handleDrop({
                 skill,
                 type: 'attack',
@@ -55,47 +42,41 @@ export default function Fighter({ fighter, flip = false }) {
     }
 
     return (
-        <FighterBox ref={ref} bg={fighter.image} flip={flip} width={barWidth} className={animation}>
-            {
-                typeof fighter.id !== "undefined" ?
-                    <>
-                        <div className="status">
-                            <div className="status-life">
+        <FighterBox bg={fighter.image} flip={opponentRing} width={barWidth} className={animation}>
+            <div className="status">
+                <div className="status-life">
+                    <div>
+                        <span>{`${hp}/${fighter.life}`}</span>
+                    </div>
+                </div>
+                <div className="status-energy">
+                    <img
+                        alt="energy logo"
+                        src="https://www.pngkit.com/png/full/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png"
+                    />
+                    <span>{fighter.energy}</span>
+                </div>
+            </div>
+            <div className="skill">
+                {
+                    fighter.skills.map(skill =>
+                        <SkillPanel key={skill.id} onClick={() => handleClick(skill)}>
+                            <div className="skillName">
                                 <div>
-                                    <span>{`${hp}/${fighter.life}`}</span>
+                                    <img
+                                        alt="energy logo"
+                                        src="https://www.pngkit.com/png/full/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png"
+                                    />
+                                    <span>{skill.cost}</span>
                                 </div>
+                                <span>{skill.name}</span>
+                                <span>{skill.damage}</span>
                             </div>
-                            <div className="status-energy">
-                                <img
-                                    alt="energy logo"
-                                    src="https://www.pngkit.com/png/full/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png"
-                                />
-                                <span>{fighter.energy}</span>
-                            </div>
-                        </div>
-                        <div className="skill">
-                            {
-                                fighter.skills.map(skill =>
-                                    <SkillPanel key={skill.id} onClick={() => handleClick(skill)}>
-                                        <div className="skillName">
-                                            <div>
-                                                <img
-                                                    alt="energy logo"
-                                                    src="https://www.pngkit.com/png/full/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png"
-                                                />
-                                                <span>{skill.cost}</span>
-                                            </div>
-                                            <span>{skill.name}</span>
-                                            <span>{skill.damage}</span>
-                                        </div>
-                                        <div className="skillInfo">{skill.info}</div>
-                                    </SkillPanel>
-                                )
-                            }
-                        </div>
-                    </> :
-                    <EmptyFighterBox><div>Drop a Fighter from your reserve here!</div></EmptyFighterBox>
-            }
+                            <div className="skillInfo">{skill.info}</div>
+                        </SkillPanel>
+                    )
+                }
+            </div>
         </FighterBox>
     )
 }
