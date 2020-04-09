@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "Joe Higashi",
-        "image": "http://localhost:8080/static/fighters/joe_card.png",
+        "image": "http://localhost:8080/static/fighters/joe_splash.png",
         "avatar": "http://localhost:8080/static/fighters/joe_avatar.jpg"
     },
     {
@@ -24,9 +24,9 @@
         "avatar": "http://localhost:8080/static/fighters/paul_avatar.jpg"
     },
     {
-        "id": 5,
-        "name": "Dee Jay",
-        "image": "http://localhost:8080/static/fighters/deejay_splash.png",
-        "avatar": "http://localhost:8080/static/fighters/deejay_card.jpg"
+        "id": 6,
+        "name": "Akuma",
+        "image": "http://localhost:8080/static/fighters/akuma_splash.png",
+        "avatar": "http://localhost:8080/static/fighters/akuma_avatar.jpg"
     }
 ]

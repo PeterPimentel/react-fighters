@@ -15,7 +15,7 @@ export default function ReserveFighter({ figther, flip = false }) {
     dragRef(ref)
 
     return (
-        <ReserveBox bg={figther.image} flip={flip} ref={ref}>
+        <ReserveBox bg={figther.cardImage} flip={flip} ref={ref}>
             <div />
         </ReserveBox>
     )

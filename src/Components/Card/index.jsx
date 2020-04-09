@@ -56,7 +56,7 @@ export default function Card({ card, hideHighlight }) {
                     <span>{card.life}</span>
                 </div>
             </Header>
-            <Image image={card.image} />
+            <Image image={card.cardImage} />
             <Info>
                 {
                     infoData.map(data => <InfoComponent key={data.id} data={data} />)

@@ -14,12 +14,16 @@ export const Container = styled.div`
     grid-template-areas:
     "arenaHeaderUserInfo arenaHeaderUserTurn arenaHeaderOpponentTurn arenaHeaderOpponentInfo"
     "reserveUser arenaUser arenaOpponent reserverOpponent";
-    grid-template-columns: 25vw 25vw 25vw 25vw;
+    grid-template-columns: 20vw 25vw 25vw 20vw;
     grid-template-rows: 10vh 70vh;
+    grid-gap: 0 1vw;
+    justify-content: center;
 `;
 
 export const GridArea = styled.div`
     grid-area:${({ area }) => area};
+    width:100%;
+    height: 100%;
 `;
 
 export const EmptyFighterBox = styled.div`
@@ -50,9 +54,9 @@ export const RingContainer = styled.div`
 
 export const FighterBox = styled.div`
     height: 100%;
-    /* padding: 4px; */
     background-image:${ ({ bg }) => bg ? `url(${bg})`: `inherit`};
     background-repeat:no-repeat;
+    background-size:cover;
     
     & .status {
         background-color: rgb(255, 255, 255,0.2);

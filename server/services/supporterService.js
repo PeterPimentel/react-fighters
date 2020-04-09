@@ -1,18 +1,48 @@
+const { affectedTypes } = require('../contants')
+
+const _transformTarget = (fighter) => {
+    return [
+        {
+            affected: affectedTypes.FIGHTER,
+            value: fighter
+        }
+    ]
+}
+
+
 const heal = (fighter, value) => {
-    let damage = fighter.damageReceived - value
-    return {
-        ...fighter,
-        damageReceived: damage < 0 ? 0 : damage
-    }
+    const healResult = fighter.map(effect => {
+        if (effect.affected === affectedTypes.FIGHTER) {
+            const damage = effect.value.damageReceived - value
+            effect.value = {
+                ...effect.value,
+                damageReceived: damage < 0 ? 0 : damage
+            }
+            return effect
+        } else {
+            return effect
+        }
+    })
+
+    return healResult
 }
 
 const addEnergy = (fighter, value) => {
-    const newEnergy = fighter.energy + value
 
-    return {
-        ...fighter,
-        energy: newEnergy < 0 ? 0 : newEnergy
-    }
+    const energyResult = fighter.map(effect => {
+        if (effect.affected === affectedTypes.FIGHTER) {
+            const newEnergy = effect.value.energy + value
+            effect.value = {
+                ...effect.value,
+                energy: newEnergy < 0 ? 0 : newEnergy
+            }
+            return effect
+        } else {
+            return effect
+        }
+    })
+
+    return energyResult
 }
 
 const _effects = {
@@ -24,12 +54,24 @@ const _effects = {
 //Origin - Card dropped
 //Target - Fighter
 const trigger = (origin, target) => {
+    let fighter = _transformTarget(target)
 
     origin.effects.forEach((effect, index) => {
-        target = _effects[effect](target, origin.values[index])
+        fighter = _effects[effect](fighter, origin.values[index])
     })
 
-    return target
+    const requiredAffected = [
+        {
+            affected: affectedTypes.HAND_REMOVE_ONE,
+            value: origin.key
+        },
+        {
+            affected: affectedTypes.TURN_SUPPORTER,
+            value: true
+        }
+    ]
+
+    return [...fighter, ...requiredAffected]
 }
 
 module.exports = {

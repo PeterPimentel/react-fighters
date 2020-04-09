@@ -1,20 +1,22 @@
+const { affectedTypes } = require('../contants')
+
 const figtherFromReserve = (fighter, reserve) => {
     const newReserve = reserve.filter(fig => fig.key !== fighter.key)
     return [
         {
-            affected: "fighter",
+            affected: affectedTypes.FIGHTER,
             value: fighter
         },
         {
-            affected: "reserve",
+            affected: affectedTypes.RESERVE,
             value: newReserve
         },
         {
-            affected: "turnReserve",
+            affected: affectedTypes.TURN_RESERVE,
             value: true //Já foi usado a vez de colocar um lutador na reserva
         },
         {
-            affected: "turnArena",
+            affected: affectedTypes.TURN_ARENA,
             value: true //Lutador está sendo colocado agora
         }
     ]
@@ -24,15 +26,15 @@ const addFighter = (fighter, reserve) => {
 
     return [
         {
-            affected: "reserve",
+            affected: affectedTypes.RESERVE,
             value: reserve.concat(fighter)
         },
         {
-            affected: "handRemoveOne",
+            affected: affectedTypes.HAND_REMOVE_ONE,
             value: fighter.key
         },
         {
-            affected: "turnReserve",
+            affected: affectedTypes.TURN_RESERVE,
             value: true //Já foi usado a vez de colocar um lutador na reserva
         }
     ]

@@ -52,7 +52,7 @@ const handle = (action, origin, target) => {
         }
     }
 
-    if (origin.type === "energy") {
+    if (action.type === "energy") {
         const { effect } = origin
         return {
             result: effectService[effect](origin, target),

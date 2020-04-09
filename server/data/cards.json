@@ -2,7 +2,8 @@
     {
         "id": 1,
         "name": "Joe Higashi",
-        "image": "http://localhost:8080/static/fighters/joe_card.png",
+        "image": "http://localhost:8080/static/fighters/joe_splash.png",
+        "cardImage": "http://localhost:8080/static/fighters/joe_card.jpg",
         "life": 50,
         "skills": [
             {
@@ -10,16 +11,16 @@
                 "name": "Low Kick",
                 "cost": 1,
                 "damage": 10,
-                "effect":"regular"
+                "effect": "regular"
             },
             {
                 "id": 2,
                 "name": "Hurricame Upper",
                 "cost": 3,
                 "damage": 40,
-                "effect":"flipCoin",
-                "value":5,
-                "info":"50% chance of do nothing."
+                "effect": "flipCoin",
+                "value": 5,
+                "info": "50% chance of do nothing."
             }
         ],
         "type": "fighter"
@@ -27,7 +28,8 @@
     {
         "id": 2,
         "name": "Balrog",
-        "image": "http://localhost:8080/static/fighters/balrog_card.png",
+        "image": "http://localhost:8080/static/fighters/balrog_splash.png",
+        "cardImage": "http://localhost:8080/static/fighters/balrog_card.jpg",
         "life": 60,
         "skills": [
             {
@@ -35,14 +37,14 @@
                 "name": "Jab",
                 "cost": 1,
                 "damage": 10,
-                "effect":"regular"
+                "effect": "regular"
             },
             {
                 "id": 4,
                 "name": "Upper",
                 "cost": 3,
                 "damage": 40,
-                "effect":"regular"
+                "effect": "regular"
             }
         ],
         "type": "fighter"
@@ -50,7 +52,8 @@
     {
         "id": 3,
         "name": "Terry Bogard",
-        "image": "http://localhost:8080/static/fighters/terry_card.png",
+        "image": "http://localhost:8080/static/fighters/terry_splash.png",
+        "cardImage": "http://localhost:8080/static/fighters/terry_card.jpg",
         "life": 60,
         "skills": [
             {
@@ -58,14 +61,14 @@
                 "name": "Crack Shot",
                 "cost": 2,
                 "damage": 20,
-                "effect":"regular"
+                "effect": "regular"
             },
             {
                 "id": 6,
                 "name": "Rising Tackle",
                 "cost": 5,
                 "damage": 40,
-                "effect":"regular"
+                "effect": "regular"
             }
         ],
         "type": "fighter"
@@ -73,7 +76,8 @@
     {
         "id": 4,
         "name": "Paul Phoenix",
-        "image": "http://localhost:8080/static/fighters/paul_card.png",
+        "image": "http://localhost:8080/static/fighters/paul_splash.png",
+        "cardImage": "http://localhost:8080/static/fighters/paul_card.jpg",
         "life": 80,
         "skills": [
             {
@@ -81,46 +85,49 @@
                 "name": "Jab",
                 "cost": 2,
                 "damage": 10,
-                "effect":"regular"
+                "effect": "regular"
             },
             {
                 "id": 42,
                 "name": "Mortar Punch",
                 "cost": 2,
                 "damage": 200,
-                "effect":"discardEnergy",
-                "value":4,
-                "info":"Discard 4 energy attached to Paul"
+                "effect": "discardEnergy",
+                "value": 4,
+                "info": "Discard 4 energy attached to Paul"
             }
         ],
         "type": "fighter"
     },
     {
-        "id": 5,
-        "name": "Dee Jay",
-        "image": "http://localhost:8080/static/fighters/deejay_card.jpg",
-        "life": 60,
+        "id": 6,
+        "name": "Akuma",
+        "image": "http://localhost:8080/static/fighters/akuma_splash.png",
+        "cardImage": "http://localhost:8080/static/fighters/akuma_card.jpg",
+        "life": 70,
         "skills": [
             {
-                "id": 51,
-                "name": "Knee Shot",
-                "cost": 1,
+                "id": 61,
+                "name": "Goshoha",
+                "cost": 2,
                 "damage": 10,
-                "effect":"regular"
+                "effect": "regular"
             },
             {
-                "id": 52,
-                "name": "Machinegun Upper",
-                "cost": 3,
-                "damage": 30,
-                "effect":"regular"
+                "id": 62,
+                "name": "Kiai",
+                "cost": 2,
+                "damage": 10,
+                "effect": "heal",
+                "info": "Heal 10 of damage"
             },
             {
-                "id": 53,
-                "name": "Sobat Carnival",
-                "cost": 4,
-                "damage": 50,
-                "effect":"regular"
+                "id": 63,
+                "name": "Zanku Hadoken",
+                "cost": 1,
+                "damage": 5,
+                "effect": "regular",
+                "info": "It attack causes 5 of damage for energy attached to Akuma"
             }
         ],
         "type": "fighter"
@@ -128,19 +135,25 @@
     {
         "id": 10,
         "name": "Energy",
-        "image": "https://www.pngkit.com/png/detail/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png",
+        "cardImage": "https://www.pngkit.com/png/detail/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png",
         "type": "energy",
-        "effect":"addEnergy",
-        "info":"Give 1 energy to target fighter",
-		"value": 1
+        "effect": "addEnergy",
+        "info": "Give 1 energy to target fighter",
+        "value": 1
     },
     {
         "id": 11,
         "name": "Round 2",
-        "image": "http://localhost:8080/static/supporter/bell_glove.png",
+        "cardImage": "http://localhost:8080/static/supporter/bell_glove.png",
         "type": "supporter",
-        "effects":["heal","addEnergy"],
-        "info":"Remove 30 of damage from your Fighters. Then discard 3 Energys attached to it, if any.",
-		"values": [30,-3]
+        "effects": [
+            "heal",
+            "addEnergy"
+        ],
+        "info": "Remove 30 of damage from your Fighters. Then discard 3 Energys attached to it, if any.",
+        "values": [
+            30,
+            -3
+        ]
     }
 ]
