@@ -220,7 +220,6 @@ export function handleOpponentAction(data) {
                 }
 
                 if (el.affected === "turnArena") {
-                    console.log("Arena ira ficar vazia - ", el.value)
                     dispatch(setTurn({ arenaEmpty: el.value }))
                 }
                 if (el.affected === "KO") {

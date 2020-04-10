@@ -36,33 +36,6 @@ const flipCoin = (origin, target, skill) => {
 
 }
 
-const discardEnergy = (origin, target, skill) => {
-    let damageReceived = target.damageReceived || 0
-
-    damageReceived = skill.damage + damageReceived
-    let newEnergy = origin.energy - skill.value < 0 ? 0 : origin.energy - skill.value
-    return [
-        {
-            affected: affectedTypes.OPPONENT_FIGHTER,
-            value: {
-                ...target,
-                damageReceived: damageReceived
-            }
-        },
-        {
-            affected: affectedTypes.FIGHTER,
-            value: {
-                ...origin,
-                energy: newEnergy
-            }
-        },
-        {
-            affected: affectedTypes.TURN_END
-        }
-    ]
-
-}
-
 const regular = (origin, target, skill) => {
     let damageReceived = target.damageReceived || 0
     damageReceived = skill.damage + damageReceived
@@ -81,9 +54,27 @@ const regular = (origin, target, skill) => {
     ]
 }
 
+const charge = (origin, target, skill) => {
+    let damageReceived = target.damageReceived || 0
+    const damage = origin.energy * skill.value
+
+    return [
+        {
+            affected: affectedTypes.OPPONENT_FIGHTER,
+            value: {
+                ...target,
+                damageReceived: damage + damageReceived
+            }
+        },
+        {
+            affected: affectedTypes.TURN_END
+        }
+    ]
+}
+
 const heal = (origin, target, skill) => {
     let damage = target.damageReceived || 0
-    let damageReceived = damage - skill.damage
+    let damageReceived = damage - skill.value
 
     damageReceived = damageReceived < 0 ? 0 : damage
 
@@ -101,11 +92,42 @@ const heal = (origin, target, skill) => {
     ]
 }
 
+const addEnergy = (origin, target, skill) => {
+    
+    //Calc damage
+    let damageResult = skill.damage + target.damageReceived || 0
+    
+    //Calc energy
+    let energyResult = origin.energy + skill.value
+    let newEnergy = energyResult < 0 ? 0 : energyResult
+
+    return [
+        {
+            affected: affectedTypes.OPPONENT_FIGHTER,
+            value: {
+                ...target,
+                damageReceived: damageResult
+            }
+        },
+        {
+            affected: affectedTypes.FIGHTER,
+            value: {
+                ...origin,
+                energy: newEnergy
+            }
+        },
+        {
+            affected: affectedTypes.TURN_END
+        }
+    ]
+}
+
 const _skillTypes = {
     regular: regular,
-    discardEnergy: discardEnergy,
     flipCoin: flipCoin,
-    heal: heal
+    heal: heal,
+    addEnergy:addEnergy,
+    charge: charge
 }
 
 

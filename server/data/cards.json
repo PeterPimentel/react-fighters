@@ -92,8 +92,8 @@
                 "name": "Mortar Punch",
                 "cost": 6,
                 "damage": 200,
-                "effect": "discardEnergy",
-                "value": 4,
+                "effect": "addEnergy",
+                "value": -4,
                 "info": "Discard 4 energy attached to Paul"
             }
         ],
@@ -109,24 +109,28 @@
             {
                 "id": 61,
                 "name": "Goshoha",
-                "cost": 2,
+                "cost": 1,
                 "damage": 10,
-                "effect": "regular"
+                "effect": "addEnergy",
+                "value": -1,
+                "info": "Discard 1 energy attached to Akuma"
             },
             {
                 "id": 62,
                 "name": "Kiai",
-                "cost": 2,
-                "damage": 10,
-                "effect": "heal",
-                "info": "Heal 10 of damage"
+                "cost": 1,
+                "damage": 0,
+                "effect": "addEnergy",
+                "value": 1,
+                "info": "Attach 1 energy to Akuma"
             },
             {
                 "id": 63,
                 "name": "Zanku Hadoken",
                 "cost": 1,
                 "damage": 5,
-                "effect": "regular",
+                "effect": "charge",
+                "value":5,
                 "info": "It attack causes 5 of damage for energy attached to Akuma"
             }
         ],
