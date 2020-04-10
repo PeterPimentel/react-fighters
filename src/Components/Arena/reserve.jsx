@@ -12,20 +12,17 @@ export default function Reserve({ area, reserve, canDrop = false }) {
 
     const dispatch = useDispatch()
     const opponent = useSelector(state => state.opponent)
-    const { turn } = useSelector(state => state.game)
 
     const ref = useRef(null)
 
     const [, dropRef] = useDrop({
         accept: ['fighter'],
         drop(item) {
-            if (turn.my && turn.reserve === false) {
-                dispatch(handleDrop(
-                    { type: 'reserve', action: 'addFighter', to: opponent.socketId },
-                    item.card,
-                    reserve
-                ))
-            }
+            dispatch(handleDrop(
+                { type: 'reserve', action: 'addFighter', to: opponent.socketId },
+                item.card,
+                reserve
+            ))
             return {}
         }
     })

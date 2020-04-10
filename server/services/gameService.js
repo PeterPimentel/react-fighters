@@ -30,7 +30,7 @@ const handle = (action, origin, target) => {
     if (action.type === "attack") {
         const { skill } = action
         return {
-            result: attackService[skill.effect](origin, target, skill),
+            result: attackService.triggerAttack(origin, target, skill),
             action,
             origin
         }

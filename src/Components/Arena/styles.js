@@ -219,7 +219,7 @@ export const ReserveBox = styled.div`
     align-items:center;
     justify-content: center;
     clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-    background-color: black;
+    background-color: #ffe166;
     width: 60%;
     height: 20%;
     ${props => props.flip === false &&
@@ -230,7 +230,6 @@ export const ReserveBox = styled.div`
 
     & > div {
         clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-        background-color: #c7c7c7;
         width: 97%;
         height: 95%;
         background-image:${ ({ bg }) => `url(${bg})`};

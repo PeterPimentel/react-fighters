@@ -17,7 +17,7 @@ const figtherFromReserve = (fighter, reserve) => {
         },
         {
             affected: affectedTypes.TURN_ARENA,
-            value: true //Lutador está sendo colocado agora
+            value: false //Lutador está sendo colocado agora
         }
     ]
 }

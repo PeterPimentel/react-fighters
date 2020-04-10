@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Link } from "react-router-dom"
 
-import { Row } from '../RFCentralized'
 import FigtherBox from './figtherBox'
 import Footer from './footer'
+import { Row } from '../../styles/common'
 
 import { userReady, userSelectFighter } from '../../redux/reducers/userReducer'
 import { opponentSelectFighter, opponentReady } from '../../redux/reducers/opponentReducer'

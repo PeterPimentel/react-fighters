@@ -1,7 +1,8 @@
 // Action Types
 export const Types = {
     OPPONENT_READY: 'OPPONENT_READY',
-    OPPONENT_SELECTED_FIGHTER: 'OPPONENT_SELECTED_FIGHTER'
+    OPPONENT_SELECTED_FIGHTER: 'OPPONENT_SELECTED_FIGHTER',
+    OPPONENT_ADD_VICTORY: 'OPPONENT_ADD_VICTORY'
 };
 
 // Reducer
@@ -29,6 +30,11 @@ export default function opponentReducer(state = initialState, action) {
                 username: action.payload.username,
                 socketId: action.payload.socketId
             }
+        case Types.OPPONENT_ADD_VICTORY:
+            return {
+                ...state,
+                victorys: state.victorys + 1
+            }
         default:
             return state;
     }
@@ -46,5 +52,11 @@ export function opponentSelectFighter(data) {
     return {
         type: Types.OPPONENT_SELECTED_FIGHTER,
         payload: data
+    }
+}
+
+export function opponentAddVictory() {
+    return {
+        type: Types.OPPONENT_ADD_VICTORY
     }
 }

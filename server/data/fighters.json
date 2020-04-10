@@ -8,19 +8,19 @@
     {
         "id": 2,
         "name": "Balrog",
-        "image": "http://localhost:8080/static/fighters/balrog_card.png",
+        "image": "http://localhost:8080/static/fighters/balrog_splash.png",
         "avatar": "http://localhost:8080/static/fighters/balrog_avatar.jpg"
     },
     {
         "id": 3,
         "name": "Terry Bogard",
-        "image": "http://localhost:8080/static/fighters/terry_card.png",
+        "image": "http://localhost:8080/static/fighters/terry_splash.png",
         "avatar": "http://localhost:8080/static/fighters/terry_avatar.jpg"
     },
     {
         "id": 4,
         "name": "Paul Phoenix",
-        "image": "http://localhost:8080/static/fighters/paul_card.png",
+        "image": "http://localhost:8080/static/fighters/paul_splash.png",
         "avatar": "http://localhost:8080/static/fighters/paul_avatar.jpg"
     },
     {

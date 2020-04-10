@@ -7,7 +7,9 @@ const affectedTypes = {
     TURN_RESERVE:'turnReserve',
     TURN_SUPPORTER:'turnSupporter',
     TURN_END:'endTurn',
-    RESERVE:'reserve'
+    RESERVE:'reserve',
+    KO:'KO',
+    USER_ADD_VICTORY:'userAddVictory'
 }
 
 module.exports = {

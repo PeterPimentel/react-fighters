@@ -1,7 +1,9 @@
-import { triggerAction } from '../../service/gameService'
+import { triggerAction, validateTurnRules } from '../../service/gameService'
 import { show } from '../../service/cardService'
 import { removeCardFromHand, drawCard } from './deckReducer'
 import { setPlayed, hidePlayed } from './highlightReducer'
+import { userAddVictory } from './userReducer'
+import { opponentAddVictory } from './opponentReducer'
 
 // Action Types
 export const Types = {
@@ -22,7 +24,7 @@ const _turnInitalState = {
     attack: false,
     supporter: false,
     reserve: false,
-    arena: true
+    arenaEmpty: false
 }
 
 // Reducer
@@ -141,16 +143,17 @@ function _myActionsUpdate(dispatch, data) {
             dispatch(setTurn({ reserve: el.value }))
         }
         if (el.affected === "turnArena") {
-            dispatch(setTurn({ arena: el.value }))
+            dispatch(setTurn({ arenaEmpty: el.value }))
         }
         if (el.affected === "opponentFighter") {
             dispatch(setOpponentFighter(el.value))
-            if (el.value.damageReceived >= el.value.life) {
-                setTimeout(() => dispatch(setOpponentFighter({})), 500)
-            }
         }
         if (el.affected === "handRemoveOne") {
             dispatch(removeCardFromHand(el.value))
+        }
+        if (el.affected === "KO") {
+            dispatch(userAddVictory())
+            setTimeout(() => dispatch(setOpponentFighter({})), 500)
         }
 
         //Always the latest action
@@ -179,22 +182,17 @@ export function skipTurn(action) {
 export function handleDrop(action, origin, target) {
     return async (dispatch, getState) => {
         const { turn } = getState().game
-        if (turn.my === true) {
-            if (
-                (action.type === 'energy' && turn.energy === false) ||
-                (action.type === 'supporter' && turn.supporter === false) ||
-                (action.type === 'figtherFromReserve' && turn.arena === false) ||
-                (action.type === 'reserve' && turn.reserve === false) ||
-                (action.type === 'attack')
-            ) {
-                try {
-                    const data = await triggerAction(action, origin, target)
-                    _myActionsUpdate(dispatch, data)
+        const rule = validateTurnRules(turn, action)
+        if (rule.valid) {
+            try {
+                const data = await triggerAction(action, origin, target)
+                _myActionsUpdate(dispatch, data)
 
-                } catch (err) {
-                    console.log("ERRO - ", err)
-                }
+            } catch (err) {
+                console.log("ERRO - ", err)
             }
+        } else {
+            console.log("Infração - ", rule.message)
         }
     }
 }
@@ -209,7 +207,6 @@ export function handleOpponentAction(data) {
             cardPlayed = await show(data.origin.id)
             dispatch(setPlayed(cardPlayed))
         }
-
         const _opponentActionsUpdate = (dispatch, data) => () => {
             data.result.forEach(el => {
                 if (el.affected === "reserve") {
@@ -220,10 +217,17 @@ export function handleOpponentAction(data) {
                 }
                 if (el.affected === "opponentFighter") {
                     dispatch(setFighter(el.value))
-                    if (el.value.damageReceived >= el.value.life) {
-                        setTimeout(() => dispatch(setFighter({})), 500)
-                    }
                 }
+
+                if (el.affected === "turnArena") {
+                    console.log("Arena ira ficar vazia - ", el.value)
+                    dispatch(setTurn({ arenaEmpty: el.value }))
+                }
+                if (el.affected === "KO") {
+                    setTimeout(() => dispatch(setFighter({})), 500)
+                    dispatch(opponentAddVictory())
+                }
+
                 if (el.affected === "endTurn") {
                     dispatch(setTurn({ ..._turnInitalState, my: true }))
                     dispatch(drawCard(1))
