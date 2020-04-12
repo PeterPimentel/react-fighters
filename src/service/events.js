@@ -1,12 +1,17 @@
 import io from 'socket.io-client'
+import Log from '../util/Log'
 
 let socket
 
 export const connect = () => socket = io.connect()
 
-export const removeAllListeners = () => socket.removeAllListeners()
+export const removeAllListeners = () => {
+    Log.trace('removeAllListeners','enventService')
+    socket.removeAllListeners()
+}
 
 export const emitJoin = (username) => {
+    Log.trace('joinInGame','enventService')
     socket.emit('joinInGame', username)
 }
 

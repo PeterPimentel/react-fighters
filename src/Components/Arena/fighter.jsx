@@ -1,39 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { handleDrop } from '../../redux/reducers/gameReducer'
+import { handleUserAction } from '../../redux/reducers/gameReducer'
 
 import { FighterBox, SkillPanel } from './styles'
-
-import { onAction } from "../../service/events"
 
 export default function Fighter({ fighter, opponentRing = false }) {
 
     const dispatch = useDispatch()
 
     const opponent = useSelector(state => state.opponent)
-    const { opponentFighter, turn } = useSelector(state => state.game)
-
-    const [animation, setAnimation] = useState("")
+    const { opponentFighter } = useSelector(state => state.game)
+    const { opponentAnimation, userAnimation } = useSelector(state => state.animation)
 
     const life = fighter.life - (fighter.damageReceived || 0)
     const hp = life < 0 ? 0 : life
     const barWidth = fighter.id ? Math.ceil((hp / fighter.life) * 100) : 100
 
-    useEffect(() => {
-        onAction((data) => {
-            if (data.action && data.action.type === "attack") {
-                if (opponentRing === false) {
-                    setTimeout(() => { setAnimation("wobbleHorBottom") }, 1600)
-                    setTimeout(() => { setAnimation("") }, 2400)
-                }
-            }
-        })
-    }, [opponentRing])
 
     const handleClick = (skill) => {
-        if (fighter.energy >= skill.cost && opponentRing === false && turn.my === true) {
-            dispatch(handleDrop({
+        if (fighter.energy >= skill.cost && opponentRing === false) {
+            dispatch(handleUserAction({
                 skill,
                 type: 'attack',
                 to: opponent.socketId
@@ -41,6 +28,7 @@ export default function Fighter({ fighter, opponentRing = false }) {
         }
     }
 
+    const animation = opponentRing === false ? userAnimation.name : opponentAnimation.name
     return (
         <FighterBox bg={fighter.image} flip={opponentRing} width={barWidth} className={animation}>
             <div className="status">

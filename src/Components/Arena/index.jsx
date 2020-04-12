@@ -7,7 +7,7 @@ import Reserve from './reserve'
 import Hand from '../Hand'
 import Card from '../Card'
 
-import { Container, GridArea, FloattingCard, Background, OpponentCard } from './styles'
+import { Container, GridArea, FloattingCard, Background, OpponentCard, ArenaTitleBox } from './styles'
 import { Title } from '../../styles/common'
 
 import { handleOpponentAction } from '../../redux/reducers/gameReducer'
@@ -20,11 +20,14 @@ export default function Arena() {
     const dispatch = useDispatch()
     const { fighter, opponentFighter, reserve, opponentReserve } = useSelector(state => state.game)
     const { showPlayed, playedCard, playedClass } = useSelector(state => state.highlight)
+    const { title } = useSelector(state => state.animation)
 
     const [highlighted, setHighlight, hide] = useCardHighlight(window.innerWidth)
 
     useEffect(() => {
-        onAction((data) => dispatch(handleOpponentAction(data)))
+        onAction((data) => {
+            dispatch(handleOpponentAction(data))
+        })
         return () => removeAllListeners()
     }, [dispatch])
 
@@ -54,9 +57,11 @@ export default function Arena() {
 
             <Hand handleMouseEnter={setHighlight} handleMouseLeave={hide} />
 
-            {/* <div>
-                <Title fontSize="15vw">Titulo</Title>
-            </div> */}
+            { title.show &&
+                <ArenaTitleBox className={title.animation}>
+                    <Title fontSize="15vw">{title.message}</Title>
+                </ArenaTitleBox>
+            }
         </Background>
     )
 }

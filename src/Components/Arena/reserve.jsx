@@ -6,7 +6,7 @@ import ReserveFighter from './reserveFighter'
 
 import { ReserveArea } from './styles'
 
-import { handleDrop } from '../../redux/reducers/gameReducer'
+import { handleUserAction } from '../../redux/reducers/gameReducer'
 
 export default function Reserve({ area, reserve, canDrop = false }) {
 
@@ -18,7 +18,7 @@ export default function Reserve({ area, reserve, canDrop = false }) {
     const [, dropRef] = useDrop({
         accept: ['fighter'],
         drop(item) {
-            dispatch(handleDrop(
+            dispatch(handleUserAction(
                 { type: 'reserve', action: 'addFighter', to: opponent.socketId },
                 item.card,
                 reserve

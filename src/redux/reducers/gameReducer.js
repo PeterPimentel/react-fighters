@@ -4,6 +4,8 @@ import { removeCardFromHand, drawCard } from './deckReducer'
 import { setPlayed, hidePlayed } from './highlightReducer'
 import { userAddVictory } from './userReducer'
 import { opponentAddVictory } from './opponentReducer'
+import { setArenaTitle, setOpponentAnimation, setUserAnimation, hideArenaTitle } from './animationReducer'
+import Log from '../../util/Log'
 
 // Action Types
 export const Types = {
@@ -130,6 +132,7 @@ export function setOpponentReserve(reserve) {
 
 function _myActionsUpdate(dispatch, data) {
     data.result.forEach(el => {
+        Log.trace(el.affected, '_myActionsUpdate')
         if (el.affected === "reserve") {
             dispatch(setReserve(el.value))
         }
@@ -147,39 +150,41 @@ function _myActionsUpdate(dispatch, data) {
         }
         if (el.affected === "opponentFighter") {
             dispatch(setOpponentFighter(el.value))
+            dispatch(setOpponentAnimation("wobbleHorBottom"))
         }
         if (el.affected === "handRemoveOne") {
             dispatch(removeCardFromHand(el.value))
         }
         if (el.affected === "KO") {
             dispatch(userAddVictory())
-            setTimeout(() => dispatch(setOpponentFighter({})), 500)
+            dispatch(setArenaTitle({
+                show: true,
+                message: "K.O",
+                animation: "scaleInCenter"
+            }))
+
+            setTimeout(() => {
+                dispatch(setOpponentFighter({}))
+            }, 1500)
         }
 
         //Always the latest action
         if (el.affected === "endTurn") {
             dispatch(setTurn(_turnInitalState))
         }
-    })
-}
 
-export function skipTurn(action) {
-    return async dispatch => {
-        try {
-            await triggerAction(action)
-            dispatch({
-                type: Types.SET_TURN,
-                payload: _turnInitalState
-            })
-        } catch (error) {
-            console.log("ERR - ", error)
-        }
-    }
+        //Cleaning the animations
+        setTimeout(() => {
+            dispatch(setOpponentAnimation(""))
+            dispatch(setUserAnimation(""))
+            dispatch(hideArenaTitle())
+        }, 1500);
+    })
 }
 
 
 //Ações executadas ao dropar cards no lutador
-export function handleDrop(action, origin, target) {
+export function handleUserAction(action, origin, target) {
     return async (dispatch, getState) => {
         const { turn } = getState().game
         const rule = validateTurnRules(turn, action)
@@ -187,28 +192,26 @@ export function handleDrop(action, origin, target) {
             try {
                 const data = await triggerAction(action, origin, target)
                 _myActionsUpdate(dispatch, data)
-
             } catch (err) {
-                console.log("ERRO - ", err)
+                Log.error(err, 'handleUserAction')
             }
         } else {
-            console.log("Infração - ", rule.message)
+            Log.warn(rule.message, 'handleUserAction')
         }
     }
 }
 
 
-//Ações executadas pelo opponent que chegara via socket
+//Ações executadas pelo opponent que chegarão via socket
 export function handleOpponentAction(data) {
     return async dispatch => {
-        let cardPlayed
-
         if (data.origin) {
-            cardPlayed = await show(data.origin.id)
+            const cardPlayed = await show(data.origin.id)
             dispatch(setPlayed(cardPlayed))
         }
         const _opponentActionsUpdate = (dispatch, data) => () => {
             data.result.forEach(el => {
+                Log.trace(el.affected, '_opponentActionsUpdate')
                 if (el.affected === "reserve") {
                     dispatch(setOpponentReserve(el.value))
                 }
@@ -217,22 +220,32 @@ export function handleOpponentAction(data) {
                 }
                 if (el.affected === "opponentFighter") {
                     dispatch(setFighter(el.value))
+                    dispatch(setUserAnimation("wobbleHorBottom"))
                 }
 
                 if (el.affected === "turnArena") {
                     dispatch(setTurn({ arenaEmpty: el.value }))
                 }
                 if (el.affected === "KO") {
-                    setTimeout(() => dispatch(setFighter({})), 500)
                     dispatch(opponentAddVictory())
+                    dispatch(setArenaTitle({
+                        show: true,
+                        message: "K.O",
+                        animation: "scaleInCenter"
+                    }))
+
+                    setTimeout(() => {
+                        dispatch(setFighter({}))
+                        dispatch(hideArenaTitle())
+                    }, 1500)
                 }
 
                 if (el.affected === "endTurn") {
                     dispatch(setTurn({ ..._turnInitalState, my: true }))
                     dispatch(drawCard(1))
                 }
+                dispatch(hidePlayed())
             })
-            dispatch(hidePlayed())
         }
 
         setTimeout(_opponentActionsUpdate(dispatch, data), 1800)

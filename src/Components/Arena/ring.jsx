@@ -4,7 +4,7 @@ import { useDrop } from "react-dnd"
 
 import Fighter from './fighter'
 
-import { handleDrop } from '../../redux/reducers/gameReducer'
+import { handleUserAction } from '../../redux/reducers/gameReducer'
 
 import { RingContainer, EmptyFighterBox } from './styles'
 
@@ -20,7 +20,7 @@ export default function Ring({ fighter, opponentRing = false }) {
         accept: ['supporter', 'energy', 'figtherFromReserve'],
         drop(item) {
             const target = item.type === 'figtherFromReserve' ? reserve : fighter
-            dispatch(handleDrop({ type: item.type, to: opponent.socketId }, item.card, target))
+            dispatch(handleUserAction({ type: item.type, to: opponent.socketId }, item.card, target))
             return {
                 id: fighter.id
             }

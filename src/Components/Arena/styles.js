@@ -115,7 +115,6 @@ export const SkillPanel = styled.div`
     flex-direction: column;
     background-color: rgba(0,0,0,0.8);
     border: 2px solid #000000;
-    /* border: 2px solid #fcc010; */
     border-radius: 5px;
     padding: 8px;
     color: white;
@@ -180,28 +179,28 @@ export const UserInfo = styled.div`
     & div > p {
         font-size:small;
     }
-
-    & div > button {
-        background-color:#fcc010;
-        color: white;
-        border: 2px solid #f6984c;
-        padding: 2px;
-        border-radius: 18px;
-        font-size: 2em;
-        width: 1.5em;
-        line-height: 80%;
-        text-align: center;
-        cursor: pointer;
-
-        &:hover {
-            color: red;
-        }
-    }
 `;
+
+export const ButtonSkip = styled.button`
+    background-color:#fcc010;
+    color: white;
+    border: 2px solid #f6984c;
+    padding: 2px;
+    border-radius: 18px;
+    font-size: 1.5em;
+    width: 1.5em;
+    line-height: 80%;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 4px;
+    &:hover {
+        color: red;
+    }
+`
 
 export const ReserveArea = styled.div`
     grid-area:${({ area }) => area};
-    border: ${({ color }) => `2px solid ${color}`};
+    /* border: ${({ color }) => `2px solid ${color}`}; */
     background-color: rgb(255, 255, 255,0.2);
     padding: 4px;
     display:flex;
@@ -243,3 +242,9 @@ export const ReserveBox = styled.div`
         }
     }
 `;
+
+export const ArenaTitleBox = styled.div`
+    position:absolute;
+    left:40vw;
+    top: 30vh;
+`

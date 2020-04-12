@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { GridArea, UserInfo } from './styles'
+import { GridArea, UserInfo, ButtonSkip } from './styles'
 import { Title, Row } from '../../styles/common'
 
-import { skipTurn } from '../../redux/reducers/gameReducer'
+import { handleUserAction } from '../../redux/reducers/gameReducer'
 
 export default function Header() {
     const dispatch = useDispatch()
@@ -13,8 +13,8 @@ export default function Header() {
     const { turn } = useSelector(state => state.game)
 
     const handleSkip = () => {
-        if(turn.my){
-            dispatch(skipTurn({ type: "skip", to:opponent.socketId}))
+        if (turn.my) {
+            dispatch(handleUserAction({ type: "skip", to: opponent.socketId }))
         }
     }
 
@@ -26,23 +26,25 @@ export default function Header() {
                         <p>{`Username: ${user.username}`}</p>
                         <p>{`Victorys: ${user.victorys}`}</p>
                     </div>
-                    <div>
-                        <button onClick={handleSkip}>&#11246;</button>
-                    </div>
                 </UserInfo>
             </GridArea>
             <GridArea area="arenaHeaderUserTurn">
                 <Row>
-                    {turn.my && <Title fontSize="1.8em">Your turn</Title>}
+                    {turn.my &&
+                        <>
+                            <Title fontSize="1.5em">Your turn</Title>
+                            <ButtonSkip onClick={handleSkip}>&#11246;</ButtonSkip>
+                        </>
+                    }
                 </Row>
             </GridArea>
             <GridArea area="arenaHeaderOpponentTurn">
                 <Row>
-                    {!turn.my && <Title fontSize="1.8em">Playing</Title>}
+                    {!turn.my && <Title fontSize="1.5em">Playing</Title>}
                 </Row>
             </GridArea>
             <GridArea area="arenaHeaderOpponentInfo">
-            <UserInfo>
+                <UserInfo>
                     <div>
                         <p>{`Username: ${opponent.username}`}</p>
                         <p>{`Victorys: ${opponent.victorys}`}</p>

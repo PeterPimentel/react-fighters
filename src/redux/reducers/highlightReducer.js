@@ -18,7 +18,7 @@ export default function highlightReducer(state = initialState, action) {
                 ...state,
                 playedCard: action.payload,
                 showPlayed: true,
-                playedClass: "slideInFwdTop"
+                playedClass: "scaleInCenter"
             }
         case Types.HIDE_PLAYED_CARD:
             return {
