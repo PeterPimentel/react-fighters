@@ -44,3 +44,29 @@ export const onReady = (callback) => {
         callback(status)
     })
 }
+
+export const subscribeToUsersList = (cb) => {
+    Log.trace('subscribeToUsersList','enventService')
+    socket.on('userJoin',cb)
+}
+
+export const subscribeToMatchs = (cb) => {
+    Log.trace('subscribeToMatchs','enventService')
+    socket.on('challengeReceived',cb)
+}
+
+export const emitChallenge = (data) => {
+    Log.trace('emitChallenge','enventService')
+    socket.emit('challenge', {...data, user:{...data.user, socketId:socket.id}})
+}
+
+export const emitChallengeResponse = (response) => {
+    //set the socket ID
+    response.from.socketId = socket.id
+    
+    socket.emit('challengeResponse', response)
+}
+
+export const subscribeToChallengeResponse = (cb) => {
+    socket.on('challengeResponse', cb)
+}

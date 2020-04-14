@@ -2,6 +2,7 @@ const handleJoin = (socket, io) => (data) => {
     console.log(`User - ${data.username} joining in room BATTLE`)
     socket.username = data.username
     socket.join('battle')
+    socket.to('battle').emit('userJoin', {socketId:socket.id, username:data.username})
 }
 
 const handleFigtherSelected = (socket, io) => (data) => {
@@ -32,8 +33,22 @@ const handleReady = (socket, io) => (status) => {
     })
 }
 
+const handleChallenge = (socket, io) => (data) => {
+    console.log(`Challend Received from user - ${data.user.username}`)
+
+    socket.to(data.opponent.socketId).emit('challengeReceived', data)
+}
+
+const handleChallengeResponse = (socket, io) => (response) => {
+    console.log(`Challenge Accept - ${response.response}`)
+
+    socket.to(response.to.socketId).emit('challengeResponse', response)
+}
+
 module.exports = {
     handleJoin,
     handleFigtherSelected,
-    handleReady
+    handleReady,
+    handleChallenge,
+    handleChallengeResponse
 }

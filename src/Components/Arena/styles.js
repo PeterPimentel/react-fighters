@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import arena_bg from '../../assets/arena_bg.jpg'
+import shadow_assault_gif from '../../assets/animations/shadow-assault-effect-2.gif'
 
 export const Background = styled.div`
     background-image: url(${arena_bg});
@@ -70,10 +71,11 @@ export const FighterBox = styled.div`
         & > div.status-energy {
             display: flex;
             align-items: center;
+            flex-wrap:wrap;
             img {
                 margin-right: 4px;
                 width: 2.5vw;
-                max-width:32px;
+                max-width:16px;
                 height: auto;
             }
         }
@@ -175,6 +177,7 @@ export const UserInfo = styled.div`
     height: 100%;
     justify-content: space-between;
     align-items: center;
+    background-color: rgba(255,255,255,0.2);
 
     & div > p {
         font-size:small;
@@ -247,4 +250,11 @@ export const ArenaTitleBox = styled.div`
     position:absolute;
     left:40vw;
     top: 30vh;
+`
+export const PunchEffect = styled.div`
+    background-image:url(${shadow_assault_gif});
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 50%;
+    height: 60%;
 `

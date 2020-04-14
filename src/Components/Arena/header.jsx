@@ -6,6 +6,8 @@ import { Title, Row } from '../../styles/common'
 
 import { handleUserAction } from '../../redux/reducers/gameReducer'
 
+import victory_img from '../../assets/victory.png'
+
 export default function Header() {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
@@ -24,7 +26,13 @@ export default function Header() {
                 <UserInfo>
                     <div>
                         <p>{`Username: ${user.username}`}</p>
-                        <p>{`Victorys: ${user.victorys}`}</p>
+                        <div>
+                            {
+                                Array.from({length: user.victorys}).map((_, idx)=>
+                                    <img key={idx} src={victory_img} alt="victorys" />
+                                )
+                            }
+                        </div>
                     </div>
                 </UserInfo>
             </GridArea>
@@ -47,7 +55,13 @@ export default function Header() {
                 <UserInfo>
                     <div>
                         <p>{`Username: ${opponent.username}`}</p>
-                        <p>{`Victorys: ${opponent.victorys}`}</p>
+                        <div>
+                            {
+                                Array.from({length: opponent.victorys}).map((_, idx)=>
+                                    <img key={idx} src={victory_img} alt="victorys" />
+                                )
+                            }
+                        </div>
                     </div>
                 </UserInfo>
             </GridArea>

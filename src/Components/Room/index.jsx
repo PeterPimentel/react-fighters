@@ -19,6 +19,8 @@ import {
 import { show as cardShow } from '../../service/cardService'
 import { index as fightersIndex } from '../../service/fighterService'
 
+import shadow_splash from '../../assets/shadow_splash.png'
+
 import styles from './index.module.css'
 
 const Room = () => {
@@ -31,7 +33,7 @@ const Room = () => {
   const [fighters, setFighters] = useState([])
 
   useEffect(() => {
-    emitJoin({ username: user.username })
+    // emitJoin({ username: user.username })
     async function fectData() {
       const data = await fightersIndex()
       setFighters(data)
@@ -41,7 +43,7 @@ const Room = () => {
 
   const handleReady = () => {
     if (opponent.ready === false) {
-      dispatch(setTurn({my:true}))
+      dispatch(setTurn({ my: true }))
     }
     dispatch(userReady(true))
     emitReady(true)
@@ -49,7 +51,7 @@ const Room = () => {
 
   const handleEnemyReady = useCallback(
     async () => {
-      dispatch(setTurn({my:false}))
+      dispatch(setTurn({ my: false }))
       const champ = await cardShow(opponent.fighter.id)
       dispatch(setOpponentFighter(champ))
       dispatch(opponentReady(true))
@@ -80,11 +82,11 @@ const Room = () => {
       </div>
       <div className={styles.fighter}>
         <span>{user.fighter.name}</span>
-        <img src={user.fighter.image} alt="fighter selecionado" />
+        <img src={user.fighter.image || shadow_splash} alt="fighter selecionado" />
       </div>
       <div className={styles.opponent}>
         <span>{opponent.fighter.name}</span>
-        <img src={opponent.fighter.image} alt="fighter selecionado" />
+        <img src={opponent.fighter.image || shadow_splash} alt="fighter selecionado" />
       </div>
       <Row className={styles.characters}>
         {

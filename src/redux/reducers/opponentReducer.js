@@ -2,8 +2,9 @@
 export const Types = {
     OPPONENT_READY: 'OPPONENT_READY',
     OPPONENT_SELECTED_FIGHTER: 'OPPONENT_SELECTED_FIGHTER',
-    OPPONENT_ADD_VICTORY: 'OPPONENT_ADD_VICTORY'
-};
+    OPPONENT_ADD_VICTORY: 'OPPONENT_ADD_VICTORY',
+    SET_OPPONENT:'SET_OPPONENT'
+}
 
 // Reducer
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
     socketId:"",
     ready:false,
     victorys:0
-};
+}
 
 export default function opponentReducer(state = initialState, action) {
     switch (action.type) {
@@ -35,10 +36,16 @@ export default function opponentReducer(state = initialState, action) {
                 ...state,
                 victorys: state.victorys + 1
             }
+        case Types.SET_OPPONENT:
+            return {
+                ...state,
+                username: action.payload.username,
+                socketId: action.payload.socketId
+            }
         default:
-            return state;
+            return state
     }
-};
+}
 
 // Action Creators
 export function opponentReady(status) {
@@ -58,5 +65,12 @@ export function opponentSelectFighter(data) {
 export function opponentAddVictory() {
     return {
         type: Types.OPPONENT_ADD_VICTORY
+    }
+}
+
+export function setOpponent ({username, socketId}) {
+    return {
+        type: Types.SET_OPPONENT,
+        payload: {username, socketId}
     }
 }

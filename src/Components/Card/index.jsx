@@ -3,13 +3,15 @@ import { useDrag } from "react-dnd"
 
 import { Container, Header, Image, Info } from './styles'
 
+import punch_energy from '../../assets/punch_energy.png'
+
 const Skill = ({ data }) => (
     <div>
         <div className="info-skill" key={data.id}>
             <div className="cost">
                 <img
                     alt="energy logo"
-                    src="https://www.pngkit.com/png/full/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png"
+                    src={punch_energy}
                 />
                 <span>{data.cost}</span>
             </div>

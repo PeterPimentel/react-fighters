@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { handleUserAction } from '../../redux/reducers/gameReducer'
 
-import { FighterBox, SkillPanel } from './styles'
+import { FighterBox, SkillPanel, PunchEffect } from './styles'
+
+import punch_energy from '../../assets/punch_energy.png'
 
 export default function Fighter({ fighter, opponentRing = false }) {
 
@@ -38,14 +40,15 @@ export default function Fighter({ fighter, opponentRing = false }) {
                     </div>
                 </div>
                 <div className="status-energy">
-                    <img
-                        alt="energy logo"
-                        src="https://www.pngkit.com/png/full/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png"
-                    />
-                    <span>{fighter.energy}</span>
+                    {
+                        Array.from({length:fighter.energy}).map((_,idx) =>
+                            <img key={idx} alt="energy logo" src={punch_energy}/>
+                        )
+                    }
                 </div>
             </div>
             <div className="skill">
+                <PunchEffect/>
                 {
                     fighter.skills.map(skill =>
                         <SkillPanel key={skill.id} onClick={() => handleClick(skill)}>
@@ -53,7 +56,7 @@ export default function Fighter({ fighter, opponentRing = false }) {
                                 <div>
                                     <img
                                         alt="energy logo"
-                                        src="https://www.pngkit.com/png/full/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png"
+                                        src={punch_energy}
                                     />
                                     <span>{skill.cost}</span>
                                 </div>

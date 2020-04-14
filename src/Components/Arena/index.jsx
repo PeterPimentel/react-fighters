@@ -7,7 +7,7 @@ import Reserve from './reserve'
 import Hand from '../Hand'
 import Card from '../Card'
 
-import { Container, GridArea, FloattingCard, Background, OpponentCard, ArenaTitleBox } from './styles'
+import { Container, GridArea, FloattingCard, Background, OpponentCard, ArenaTitleBox, PunchEffect } from './styles'
 import { Title } from '../../styles/common'
 
 import { handleOpponentAction } from '../../redux/reducers/gameReducer'
