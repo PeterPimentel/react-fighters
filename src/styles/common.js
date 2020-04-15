@@ -40,7 +40,7 @@ export const SubTitle = styled.h4`
 `
 
 export const Text = styled.p`
-    font-size: ${({ fontSize }) => fontSize !== undefined ? fontSize : '2.5em'};
+    font-size: ${({ fontSize }) => fontSize !== undefined ? fontSize : '2em'};
     text-align: center;
     font-weight: 900;
     font-style: italic;
