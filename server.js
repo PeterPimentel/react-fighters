@@ -1,15 +1,18 @@
-const express = require('express');
-const path = require('path');
-const app = express();
+require('dotenv').config()
+const express = require('express')
+const path = require('path')
+const app = express()
 const http = require('http').createServer(app)
-const io = require('socket.io')(http);
+const io = require('socket.io')(http)
 const bodyParser = require('body-parser')
 
 const handlers = require('./server/handlers')
 const routes = require('./server/routes')
 
+const Log  = require('./server/util/Log')
+
 app.use((req, res, next) => {
-  req.io = io;
+  req.io = io
   next()
 })
 
@@ -25,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'build')))
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
-});
+})
 
 
 io.on('connection', function (socket) {
@@ -37,4 +40,8 @@ io.on('connection', function (socket) {
   socket.on('challengeResponse', handlers.handleChallengeResponse(socket, io))
 })
 
-http.listen(process.env.PORT || 8080);
+const PORT = process.env.PORT || 8080 
+
+http.listen(PORT)
+
+Log.trace(`Server running on port - ${PORT}`)

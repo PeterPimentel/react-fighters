@@ -1,5 +1,7 @@
+const Log = require('../util/Log')
+
 const handleJoin = (socket, io) => (data) => {
-    console.log(`User - ${data.username} joining in room BATTLE`)
+    Log.trace(`User - ${data.username} is logged`, 'handleJoin')
     socket.username = data.username
     socket.searching = true
     socket.join('battle')
@@ -15,7 +17,6 @@ const handleFigtherSelected = (socket, io) => (data) => {
                     ...data,
                     socketId: socket.id
                 }
-                console.log("Sending data for opponent...", response)
                 socket.to(clients[i]).emit('enemySelected', response);
             }
         }
@@ -35,7 +36,7 @@ const handleReady = (socket, io) => (status) => {
 }
 
 const handleChallenge = (socket, io) => (data) => {
-    console.log(`User - ${data.user.username} started matchmaking`)
+    Log.trace(`User - ${data.user.username} started matchmaking`, 'handleChallenge')
     io.of('/').in('battle').clients(function (error, clients) {
         let username = 'Anonymous'
         const opponent = clients.find(id => {
@@ -65,7 +66,7 @@ const handleChallenge = (socket, io) => (data) => {
 }
 
 const handleChallengeResponse = (socket, io) => (response) => {
-    console.log(`Challenge Accept - ${response.response}`)
+    Log.trace(`Challenge Response - ${response.response}`, 'handleChallengeResponse')
     socket.to(response.to.socketId).emit('challengeResponse', response)
 }
 

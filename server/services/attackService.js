@@ -93,10 +93,10 @@ const heal = (origin, target, skill) => {
 }
 
 const addEnergy = (origin, target, skill) => {
-    
+
     //Calc damage
     let damageResult = skill.damage + target.damageReceived || 0
-    
+
     //Calc energy
     let energyResult = origin.energy + skill.value
     let newEnergy = energyResult < 0 ? 0 : energyResult
@@ -126,7 +126,7 @@ const _skillTypes = {
     regular: regular,
     flipCoin: flipCoin,
     heal: heal,
-    addEnergy:addEnergy,
+    addEnergy: addEnergy,
     charge: charge
 }
 

@@ -3,31 +3,26 @@ const attackService = require('./attackService')
 const reserveService = require('./reserveService')
 const supporterService = require('./supporterService')
 
-const _log = (level, { action, origin, target, result }) => {
-    console.log(`${level}...`)
-    console.log(`\n ${level} - action${JSON.stringify(action)}`)
-    console.log(`\n ${level} - Origin ${JSON.stringify(origin)}`)
-    console.log(`\n ${level} - target ${JSON.stringify(target)}`)
-    console.log(`\n ${level} - RESULT ${JSON.stringify(result)}`)
-    console.log("------------------------------")
-}
+const { actionstypes, affectedTypes } = require('../contants')
+
+const Log = require('../util/Log')
 
 const handle = (action, origin, target) => {
-    if (action.type === "skip") {
+    if (action.type === actionstypes.SKIP) {
         return {
-            result: [{ affected: "endTurn" }],
+            result: [{ affected: affectedTypes.TURN_END }],
             action
         }
     }
 
-    if (action.type === "figtherFromReserve") {
+    if (action.type === actionstypes.FIGHTER_FROM_RESERVE) {
         return {
             result: reserveService.figtherFromReserve(origin, target),
             action
         }
     }
 
-    if (action.type === "attack") {
+    if (action.type === actionstypes.ATTACK) {
         const { skill } = action
         return {
             result: attackService.triggerAttack(origin, target, skill),
@@ -36,7 +31,7 @@ const handle = (action, origin, target) => {
         }
     }
 
-    if (action.type === "reserve") {
+    if (action.type === actionstypes.RESERVE) {
         return {
             result: reserveService[action.action](origin, target),
             action,
@@ -44,7 +39,7 @@ const handle = (action, origin, target) => {
         }
     }
 
-    if (action.type === "supporter") {
+    if (action.type === actionstypes.SUPPORTER) {
         return {
             result: supporterService.trigger(origin, target),
             action,
@@ -52,7 +47,7 @@ const handle = (action, origin, target) => {
         }
     }
 
-    if (action.type === "energy") {
+    if (action.type === actionstypes.ENERGY) {
         const { effect } = origin
         return {
             result: effectService[effect](origin, target),
@@ -65,12 +60,14 @@ const handle = (action, origin, target) => {
 const handleAction = (req, res) => {
     try {
         const { action, origin, target } = req.body
-        // _log("INPUT", req.body)
+        Log.trace(action.type, "handleAction - INPUT")
+        
         const result = handle(action, origin, target)
-        _log("OUTPUT", result)
+        Log.trace(result, "handleAction - OUTPUT")
+        
         req.io.to(action.to).emit('actionReceived', result)
         res.json(result)
-        
+
     } catch (error) {
         console.log("DEU RUIMMMM", error)
     }
