@@ -14,18 +14,34 @@
 
 /* Modal Content */
 .modalContent {
-    background-color: #40341e;
+    background: rgb(18,23,27);
+    background: linear-gradient(180deg,rgba(18,23,27,1) 71%,rgba(0,3,6,1) 99%);
     margin: auto;
-    padding: 20px;
-    border: 8px solid #ffe166;
-    width: 80%;
-    border-radius: 10px;
+    padding: 10px;
+    width: 70%;
     color: white;
+    border-color: #2b2b2b;
+    border-width: 4px 8px 4px 8px;
+    border-style: solid;
+    -webkit-box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+    -moz-box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+    box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .modalContent p {
     text-align: center;
-    font-size: 20px;
+    font-size: 1.5em;
+    padding-bottom: 1em;
+}
+
+.modalAction {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 8px;
 }
   
 /* The Close Button */
@@ -34,6 +50,7 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+    align-self: flex-end;
 }
   
 .close:hover,

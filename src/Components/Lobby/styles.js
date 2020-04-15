@@ -7,7 +7,7 @@ export const Container = styled.div`
     padding:10px;
     height: 100vh;
     width: 100vw;
-
+    background-position: center;
     & .user-list{
         justify-content:space-around;
     }

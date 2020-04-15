@@ -12,7 +12,6 @@ export const Loader = styled.div`
 `;
 
 export const Title = styled.h3`
-    font-size: 2.5em;
     font-size: ${({ fontSize }) => fontSize !== undefined ? fontSize : '2.5em'};
     text-align: center;
     font-weight: 900;
@@ -24,6 +23,46 @@ export const Title = styled.h3`
     background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow( 0 0 10px red);
+`
+
+export const SubTitle = styled.h4`
+    font-size: ${({ fontSize }) => fontSize !== undefined ? fontSize : '2.5em'};
+    text-align: center;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    color: #fff6b9;
+    background: linear-gradient(0deg,#fff6b9 0%,#fdfbfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow( 0 0 5px #ba3f0b);
+`
+
+export const Text = styled.p`
+    font-size: ${({ fontSize }) => fontSize !== undefined ? fontSize : '2.5em'};
+    text-align: center;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    color: #e8b50a;
+    filter: drop-shadow( 0 0 1px #ba3f0b);
+`
+
+export const Button = styled.button`
+    color:white;
+    padding: 0.8em 2.5em;
+    border: 1px solid white;
+    background: rgb(18,23,27);
+    background: linear-gradient(180deg, rgba(18,23,27,1) 71%, rgba(0,3,6,1) 99%);
+    font-weight: 900;
+    &:hover {
+        background: linear-gradient(0deg, #f6984c 0%, #fedc74 100%);
+        color: rgb(18,23,27);
+        -webkit-box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+        -moz-box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+        box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+    }
 `
 
 export const Row = styled.div`
