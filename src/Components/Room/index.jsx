@@ -12,7 +12,7 @@ import { opponentSelectFighter, opponentReady } from '../../redux/reducers/oppon
 import { setOpponentFighter, setTurn } from '../../redux/reducers/gameReducer'
 
 import {
-  emitJoin, emitFigtherSelected, emitReady,
+  emitFigtherSelected, emitReady,
   onEnemySelected, onReady,
   removeAllListeners
 } from '../../service/events'
@@ -33,13 +33,14 @@ const Room = () => {
   const [fighters, setFighters] = useState([])
 
   useEffect(() => {
-    // emitJoin({ username: user.username })
+    console.log("Calling")
     async function fectData() {
       const data = await fightersIndex()
       setFighters(data)
     }
     fectData()
-  }, [user.username])
+  // }, [user.username]) //OLD - observar a mudança
+  }, [])
 
   const handleReady = () => {
     if (opponent.ready === false) {

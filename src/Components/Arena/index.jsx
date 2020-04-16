@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import Header from './header'
 import Ring from './ring'
@@ -21,6 +22,8 @@ export default function Arena() {
     const { fighter, opponentFighter, reserve, opponentReserve } = useSelector(state => state.game)
     const { showPlayed, playedCard, playedClass } = useSelector(state => state.highlight)
     const { title } = useSelector(state => state.animation)
+    const user = useSelector(state => state.user)
+    const opponent = useSelector(state => state.opponent)
 
     const [highlighted, setHighlight, hide] = useCardHighlight(window.innerWidth)
 
@@ -30,6 +33,10 @@ export default function Arena() {
         })
         return () => removeAllListeners()
     }, [dispatch])
+
+    if(user.victorys >= 1 || opponent.victorys >= 1){
+        return <Redirect to="/arena/end" />
+    }
 
     return (
         <Background>

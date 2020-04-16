@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Modal from '../modal'
 
-import { Title, Row, Loader, Button } from '../../styles/common'
-import { UserItem, UserList, Container, ChallengeBox, MenuItem } from './styles'
+import { Title, Button } from '../../styles/common'
+import { Container, MenuItem } from './styles'
 
 import {
-    subscribeToUsersList,
     emitJoin,
     emitChallenge,
     emitChallengeResponse,
@@ -99,6 +98,9 @@ export default function MainMenu() {
             </Modal>
             <ul>
                 <MenuItem onClick={() => handleSubmitChallenger()}>ONLINE VS</MenuItem>
+                <Link to="/collection">
+                    <MenuItem>CARDS</MenuItem>
+                </Link>
             </ul>
         </Container>
     )

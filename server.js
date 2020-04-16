@@ -36,7 +36,7 @@ io.on('connection', function (socket) {
   socket.on('joinInGame', handlers.handleJoin(socket, io))
   socket.on('figtherSelected', handlers.handleFigtherSelected(socket, io))
   socket.on('ready', handlers.handleReady(socket, io))
-  socket.on('challenge', handlers.handleChallenge(socket, io))
+  socket.on('challenge', handlers.handleMatchmaking(socket, io))
   socket.on('challengeResponse', handlers.handleChallengeResponse(socket, io))
 })
 

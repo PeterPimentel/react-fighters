@@ -11,6 +11,9 @@ export const Container = styled.div`
     background-position: center;
     & > ul{
         margin-top: 30vh;
+        & > a {
+            text-decoration: none;
+        }
     }
 `;
 
@@ -25,6 +28,7 @@ export const MenuItem = styled.li`
     min-width: 200px;
     border-radius: 0px 0px 50px 0px;
     font-weight: 500;
+    margin-bottom: 4px;
 
     &:hover {
         background: linear-gradient(0deg, #f6984c 0%, #fedc74 100%);

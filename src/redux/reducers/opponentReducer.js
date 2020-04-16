@@ -3,18 +3,16 @@ export const Types = {
     OPPONENT_READY: 'OPPONENT_READY',
     OPPONENT_SELECTED_FIGHTER: 'OPPONENT_SELECTED_FIGHTER',
     OPPONENT_ADD_VICTORY: 'OPPONENT_ADD_VICTORY',
-    SET_OPPONENT:'SET_OPPONENT'
+    SET_OPPONENT: 'SET_OPPONENT'
 }
 
 // Reducer
 const initialState = {
     username: "",
-    fighter: {
-        id:1
-    },
-    socketId:"",
-    ready:false,
-    victorys:0
+    fighter: { id: 1 },
+    socketId: "",
+    ready: false,
+    victorys: 0
 }
 
 export default function opponentReducer(state = initialState, action) {
@@ -68,9 +66,9 @@ export function opponentAddVictory() {
     }
 }
 
-export function setOpponent ({username, socketId}) {
+export function setOpponent({ username, socketId }) {
     return {
         type: Types.SET_OPPONENT,
-        payload: {username, socketId}
+        payload: { username, socketId }
     }
 }

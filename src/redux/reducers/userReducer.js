@@ -8,11 +8,9 @@ export const Types = {
 // Reducer
 const initialState = {
     username: `GUEST-${Math.floor(Math.random() * 1000)}`,
-    fighter: {
-        id:1
-    },
+    fighter: { id: 1 },
     ready: false,
-    victorys:0
+    victorys: 0
 };
 
 export default function userReducer(state = initialState, action) {

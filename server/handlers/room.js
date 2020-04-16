@@ -35,25 +35,32 @@ const handleReady = (socket, io) => (status) => {
     })
 }
 
-const handleChallenge = (socket, io) => (data) => {
-    Log.trace(`User - ${data.user.username} started matchmaking`, 'handleChallenge')
+const handleMatchmaking = (socket, io) => (data) => {
+    Log.trace(`User - ${data.user.username} started matchmaking`, 'handleMatchmaking')
     io.of('/').in('battle').clients(function (error, clients) {
-        let username = 'Anonymous'
+        // let username = 'Anonymous'
         const opponent = clients.find(id => {
-            if (socket.id !== id) {
-                if (io.sockets.connected[id] && io.sockets.connected[id].searching) {
-                    username = io.sockets.connected[id].username
-                    io.sockets.connected[id].searching = false
-                    return true
-                } else {
-                    return false
-                }
-            } else {
-                return false
-            }
+            return (socket.id !== id && io.sockets.connected[id].searching)
         })
+
+        // const opponent = clients.find(id => {
+        //     if (socket.id !== id) {
+        //         if (io.sockets.connected[id] && io.sockets.connected[id].searching) {
+        //             username = io.sockets.connected[id].username
+        //             io.sockets.connected[id].searching = false
+        //             return true
+        //         } else {
+        //             return false
+        //         }
+        //     } else {
+        //         return false
+        //     }
+        // })
         //TODO tratar quando não achar uma partida
         if (opponent) {
+            io.sockets.connected[opponent].searching = false
+            const username = io.sockets.connected[opponent].username
+
             socket.to(opponent).emit('challengeReceived', { opponent: data.user })
             io.to(socket.id).emit('challengeReceived', {
                 opponent: {
@@ -74,6 +81,6 @@ module.exports = {
     handleJoin,
     handleFigtherSelected,
     handleReady,
-    handleChallenge,
+    handleMatchmaking,
     handleChallengeResponse
 }

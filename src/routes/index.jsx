@@ -6,6 +6,8 @@ import Loading from '../Components/Loading'
 import Lab from '../Components/Lab'
 import Arena from '../Components/Arena'
 import MainMenu from '../Components/MainMenu'
+import EndBattle from '../Components/EndBattle'
+import Collection from '../Components/Collection'
 
 export default function App() {
 
@@ -21,13 +23,19 @@ export default function App() {
         <Route path="/lab" exact>
           <Lab />
         </Route>
+        <Route path="/collection" exact>
+          <Collection />
+        </Route>
         <Route path="/arena" exact>
           <Arena />
+        </Route>
+        <Route path="/arena/end" exact>
+          <EndBattle />
         </Route>
         <Route path="/" exact>
           <MainMenu />
         </Route>
       </Switch>
     </Router>
-  );
+  )
 }

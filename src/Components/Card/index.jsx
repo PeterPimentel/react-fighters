@@ -29,7 +29,7 @@ const Effect = ({ data }) => (
 )
 
 
-export default function Card({ card, hideHighlight }) {
+export default function Card({ card, hideHighlight, draggable=true }) {
 
     const ref = useRef(null)
 
@@ -47,7 +47,9 @@ export default function Card({ card, hideHighlight }) {
         }
     })
 
-    dragRef(ref)
+    if(draggable){
+        dragRef(ref)
+    }
 
     return (
         <Container ref={ref} isDragging={isDragging}>

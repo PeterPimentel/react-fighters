@@ -69,7 +69,7 @@ const handleAction = (req, res) => {
         res.json(result)
 
     } catch (error) {
-        console.log("DEU RUIMMMM", error)
+       Log.error(error, 'handleAction')
     }
 }
 

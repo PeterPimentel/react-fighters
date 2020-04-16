@@ -59,9 +59,12 @@ export const Button = styled.button`
     &:hover {
         background: linear-gradient(0deg, #f6984c 0%, #fedc74 100%);
         color: rgb(18,23,27);
-        -webkit-box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+        -webkit-box-shadow: inset 0 0 10px red;
+        -moz-box-shadow: inset 0 0 10px red;
+        box-shadow: inset 0 0 10px red;
+        /* -webkit-box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
         -moz-box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
-        box-shadow: 0px 0px 14px 0px rgba(186,63,11,1);
+        box-shadow: 0px 0px 14px 0px rgba(186,63,11,1); */
     }
 `
 

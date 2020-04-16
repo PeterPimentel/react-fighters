@@ -130,7 +130,7 @@
                 "cost": 1,
                 "damage": 5,
                 "effect": "charge",
-                "value":5,
+                "value": 5,
                 "info": "It attack causes 5 of damage for energy attached to Akuma"
             }
         ],
@@ -154,10 +154,23 @@
             "heal",
             "addEnergy"
         ],
-        "info": "Remove 30 of damage from your Fighters. Then discard 3 Energys attached to it, if any.",
+        "info": "Remove 30 of damage from your Fighter. Then discard 3 Energys attached to it, if any.",
         "values": [
             30,
             -3
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Water",
+        "cardImage": "http://localhost:8080/static/supporter/bell_glove.png",
+        "type": "supporter",
+        "effects": [
+            "heal"
+        ],
+        "info": "Remove 10 of damage from your Fighter.",
+        "values": [
+            10
         ]
     }
 ]

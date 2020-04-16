@@ -3,12 +3,12 @@ const {
     handleJoin,
     handleFigtherSelected,
     handleReady,
-    handleChallenge,
+    handleMatchmaking,
     handleChallengeResponse
 } = require('./room')
 
 module.exports = {
-    handleChallenge,
+    handleMatchmaking,
     handleAction,
     handleJoin,
     handleFigtherSelected,

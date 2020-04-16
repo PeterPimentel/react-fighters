@@ -1,21 +1,9 @@
-export const index = async () => {
-    let response = await fetch("/api/fighter");
+import { get } from './apiService'
 
-    if (response.ok) {
-        let json = await response.json();
-        return json
-    } else {
-        alert("HTTP-Error: " + response.status);
-    }
+export const index = async () => {
+    return get("/fighter")
 }
 
 export const show = async (id) => {
-    let response = await fetch(`/api/fighter/${id}`);
-
-    if (response.ok) {
-        let json = await response.json();
-        return json
-    } else {
-        alert("HTTP-Error: " + response.status);
-    }
+    return get(`/api/fighter/${id}`)
 }
