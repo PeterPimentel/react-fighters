@@ -2,6 +2,7 @@ const affectedTypes = {
     FIGHTER: 'fighter',
     OPPONENT_FIGHTER: 'opponentFighter',
     HAND_REMOVE_ONE: 'handRemoveOne',
+    DECK_DRAW: 'deckDraw',
     TURN_ENERGY: 'turnEnergy',
     TURN_ARENA: 'turnArena',
     TURN_RESERVE: 'turnReserve',

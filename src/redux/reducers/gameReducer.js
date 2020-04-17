@@ -158,6 +158,9 @@ function _myActionsUpdate(dispatch, data) {
         if (el.affected === "handRemoveOne") {
             dispatch(removeCardFromHand(el.value))
         }
+        if (el.affected === "deckDraw") {
+            dispatch(drawCard(el.value))
+        }
         if (el.affected === "KO") {
             dispatch(userAddVictory())
             dispatch(setArenaTitle({

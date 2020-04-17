@@ -1,5 +1,12 @@
 const { affectedTypes } = require('../contants')
 
+const draw = (fighter, value) => fighter.concat([
+    {
+        affected: affectedTypes.DECK_DRAW,
+        value: value
+    }
+])
+
 const _transformTarget = (fighter) => {
     return [
         {
@@ -46,6 +53,7 @@ const addEnergy = (fighter, value) => {
 }
 
 const _effects = {
+    draw,
     heal,
     addEnergy
 }

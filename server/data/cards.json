@@ -30,7 +30,7 @@
         "name": "Balrog",
         "image": "http://localhost:8080/static/fighters/balrog_splash.png",
         "cardImage": "http://localhost:8080/static/fighters/balrog_card.jpg",
-        "life": 60,
+        "life": 80,
         "skills": [
             {
                 "id": 3,
@@ -137,6 +137,39 @@
         "type": "fighter"
     },
     {
+        "id": 7,
+        "name": "Chun-Li",
+        "image": "http://localhost:8080/static/fighters/chun_li_splash.png",
+        "cardImage": "http://localhost:8080/static/fighters/chun_li_card.jpg",
+        "life": 60,
+        "skills": [
+            {
+                "id": 71,
+                "name": "Koshuto",
+                "cost": 1,
+                "damage": 10,
+                "effect": "regular"
+            },
+            {
+                "id": 72,
+                "name": "Sohakkei",
+                "cost": 2,
+                "damage": 10,
+                "effect": "heal",
+                "value": 5,
+                "info": "Heal 5 of damage from Chun-Li"
+            },
+            {
+                "id": 73,
+                "name": "Hyakuretsukyaku",
+                "cost": 5,
+                "damage": 60,
+                "effect": "regular"
+            }
+        ],
+        "type": "fighter"
+    },
+    {
         "id": 10,
         "name": "Energy",
         "cardImage": "http://localhost:8080/static/supporter/punch_energy.jpg",
@@ -154,10 +187,10 @@
             "heal",
             "addEnergy"
         ],
-        "info": "Remove 30 of damage from your Fighter. Then discard 3 Energys attached to it, if any.",
+        "info": "Remove 30 of damage from your Fighter, then discard 2 Energys attached to it, if any.",
         "values": [
             30,
-            -3
+            -2
         ]
     },
     {
@@ -171,6 +204,61 @@
         "info": "Remove 10 of damage from your Fighter.",
         "values": [
             10
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Draw a card",
+        "cardImage": "http://localhost:8080/static/supporter/fresh_water.jpg",
+        "type": "supporter",
+        "effects": [
+            "draw"
+        ],
+        "info": "Draw 1 card.",
+        "values": [
+            1
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Journey for knowledge",
+        "cardImage": "http://localhost:8080/static/supporter/journey_for_knowledge.jpg",
+        "type": "supporter",
+        "effects": [
+            "draw",
+            "addEnergy"
+        ],
+        "info": "Draw 2 cards then discard 1 energy from your fighter, if any.",
+        "values": [
+            2, -1
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Energy drink",
+        "cardImage": "http://localhost:8080/static/supporter/energy_drink.jpg",
+        "type": "supporter",
+        "effects": [
+            "addEnergy"
+        ],
+        "info": "Give 1 energy to target fighter.",
+        "values": [
+            1
+        ]
+    },
+    {
+        "id": 16,
+        "name": "Seppuku",
+        "cardImage": "http://localhost:8080/static/supporter/seppuku.jpg",
+        "type": "supporter",
+        "effects": [
+            "heal",
+            "draw"
+        ],
+        "info": "Kill the target fighter then draw 4 cards. The fighter is not removed from the arena.",
+        "values": [
+            -500,
+            4
         ]
     }
 ]

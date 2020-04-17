@@ -28,5 +28,11 @@
         "name": "Akuma",
         "image": "http://localhost:8080/static/fighters/akuma_splash.png",
         "avatar": "http://localhost:8080/static/fighters/akuma_avatar.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Chun-Li",
+        "image": "http://localhost:8080/static/fighters/chun_li_splash.png",
+        "avatar": "http://localhost:8080/static/fighters/chun_li_avatar.jpg"
     }
 ]
