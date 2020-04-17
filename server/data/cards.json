@@ -139,7 +139,7 @@
     {
         "id": 10,
         "name": "Energy",
-        "cardImage": "https://www.pngkit.com/png/detail/353-3532588_pokemon-fighting-type-symbol-pokemon-card-fighting-energy.png",
+        "cardImage": "http://localhost:8080/static/supporter/punch_energy.jpg",
         "type": "energy",
         "effect": "addEnergy",
         "info": "Give 1 energy to target fighter",
@@ -162,8 +162,8 @@
     },
     {
         "id": 12,
-        "name": "Water",
-        "cardImage": "http://localhost:8080/static/supporter/bell_glove.png",
+        "name": "Fresh Water",
+        "cardImage": "http://localhost:8080/static/supporter/fresh_water.jpg",
         "type": "supporter",
         "effects": [
             "heal"

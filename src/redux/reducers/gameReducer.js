@@ -148,6 +148,9 @@ function _myActionsUpdate(dispatch, data) {
         if (el.affected === "turnArena") {
             dispatch(setTurn({ arenaEmpty: el.value }))
         }
+        if (el.affected === "turnSupporter") {
+            dispatch(setTurn({ supporter: el.value }))
+        }
         if (el.affected === "opponentFighter") {
             dispatch(setOpponentFighter(el.value))
             dispatch(setOpponentAnimation("wobbleHorBottom"))

@@ -56,7 +56,9 @@ export default function Card({ card, hideHighlight, draggable=true }) {
             <Header>
                 <div>{card.name}</div>
                 <div>
-                    <span>HP</span>
+                    {
+                        card.type === 'fighter' && <span>HP</span>
+                    }
                     <span>{card.life}</span>
                 </div>
             </Header>
