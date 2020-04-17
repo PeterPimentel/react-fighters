@@ -193,7 +193,7 @@ function _myActionsUpdate(dispatch, data) {
 export function handleUserAction(action, origin, target) {
     return async (dispatch, getState) => {
         const { turn } = getState().game
-        const rule = validateTurnRules(turn, action)
+        const rule = validateTurnRules(turn, action, target)
         if (rule.valid) {
             try {
                 const data = await triggerAction(action, origin, target)

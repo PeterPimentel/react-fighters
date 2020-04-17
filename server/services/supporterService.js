@@ -16,6 +16,11 @@ const _transformTarget = (fighter) => {
     ]
 }
 
+const sacrifice = (fighter) =>  fighter.concat(
+    { affected: affectedTypes.KO },
+    { affected: affectedTypes.TURN_ARENA, value: true }//Arena Empty = true
+)
+
 
 const heal = (fighter, value) => {
     const healResult = fighter.map(effect => {
@@ -55,7 +60,8 @@ const addEnergy = (fighter, value) => {
 const _effects = {
     draw,
     heal,
-    addEnergy
+    addEnergy,
+    sacrifice
 }
 
 

@@ -77,6 +77,16 @@ export const FighterBox = styled.div`
         justify-content: space-evenly;
         padding: 8px;
         font-weight:500;
+
+        & > .figther-name {
+            text-align: initial;
+            font-size: 1em;
+        }
+
+        & > .figther-name.mirror {
+            text-align: end;
+        }
+
         & > div.status-energy {
             display: flex;
             align-items: center;

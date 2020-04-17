@@ -248,12 +248,12 @@
         "cardImage": "http://localhost:8080/static/supporter/seppuku.jpg",
         "type": "supporter",
         "effects": [
-            "heal",
+            "sacrifice",
             "draw"
         ],
-        "info": "Kill the target fighter then draw 4 cards. The fighter is not removed from the arena.",
+        "info": "Kill the target fighter then draw 4 cards.",
         "values": [
-            -500,
+            true,
             4
         ]
     }

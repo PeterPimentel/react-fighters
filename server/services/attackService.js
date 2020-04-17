@@ -4,7 +4,7 @@ const _checkFighterDamage = (affectedArray) => {
     const fighter = affectedArray.find(el => el.affected === affectedTypes.OPPONENT_FIGHTER)
 
     if (fighter) {
-        if (fighter.value.life <= fighter.value.damageReceived) {
+        if (fighter.value.life <= fighter.value.damageReceived || !fighter.value.id) {
 
             affectedArray.push(
                 { affected: affectedTypes.KO },

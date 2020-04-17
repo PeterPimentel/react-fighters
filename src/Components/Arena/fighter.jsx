@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { handleUserAction } from '../../redux/reducers/gameReducer'
 
-import { FighterBox, SkillPanel, PunchEffect } from './styles'
+import { FighterBox, SkillPanel } from './styles'
+import {Text} from '../../styles/common'
 
 import punch_energy from '../../assets/punch_energy.png'
 
@@ -34,6 +35,7 @@ export default function Fighter({ fighter, opponentRing = false }) {
     return (
         <FighterBox bg={fighter.image} flip={opponentRing} width={barWidth} className={animation}>
             <div className="status">
+                <Text className={`figther-name ${opponentRing ? `mirror`: ``}`}>{fighter.name}</Text>
                 <div className="status-life">
                     <div>
                         <span>{`${hp}/${fighter.life}`}</span>
@@ -48,7 +50,6 @@ export default function Fighter({ fighter, opponentRing = false }) {
                 </div>
             </div>
             <div className="skill">
-                <PunchEffect/>
                 {
                     fighter.skills.map(skill =>
                         <SkillPanel key={skill.id} onClick={() => handleClick(skill)}>

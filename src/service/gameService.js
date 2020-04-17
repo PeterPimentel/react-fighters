@@ -5,7 +5,7 @@ export const triggerAction = async (action, origin, target) => {
 }
 
 
-export const validateTurnRules = (turn, action) => {
+export const validateTurnRules = (turn, action, target) => {
     const result = {
         valid:false,
         message:""
@@ -19,6 +19,9 @@ export const validateTurnRules = (turn, action) => {
 
     }else if(action.type === 'supporter' && turn.supporter === true){
         result.message = "You only could play one support card by turn."
+
+    }else if((action.type === 'supporter' || action.type === 'energy') && !target.id){
+        result.message = "You only could play a support card having a fighter on arena."
 
     }else if(action.type === 'figtherFromReserve' && turn.arenaEmpty === false){
         result.message = "The arena must by empty to put a new fighter there."
