@@ -144,13 +144,6 @@
         "life": 60,
         "skills": [
             {
-                "id": 71,
-                "name": "Koshuto",
-                "cost": 1,
-                "damage": 10,
-                "effect": "regular"
-            },
-            {
                 "id": 72,
                 "name": "Sohakkei",
                 "cost": 2,
@@ -163,10 +156,10 @@
                 "id": 73,
                 "name": "Hyakuretsukyaku",
                 "cost": 1,
-                "damage": 10,
-                "effect": "drainEnergy",
-                "value":-1,
-                "info": "Discard 1 energy attached to the opponent fighter."
+                "damage": 5,
+                "effect": "charge",
+                "value": 5,
+                "info": "It attack causes 5 of damage for energy attached to Chun-Li"
             }
         ],
         "type": "fighter"
@@ -210,8 +203,8 @@
     },
     {
         "id": 13,
-        "name": "Draw a card",
-        "cardImage": "http://localhost:8080/static/supporter/fresh_water.jpg",
+        "name": "Trainning shoes",
+        "cardImage": "http://localhost:8080/static/supporter/trainning_shoes.jpg",
         "type": "supporter",
         "effects": [
             "draw"
@@ -232,7 +225,8 @@
         ],
         "info": "Draw 2 cards then discard 1 energy from your fighter, if any.",
         "values": [
-            2, -1
+            2,
+            -1
         ]
     },
     {

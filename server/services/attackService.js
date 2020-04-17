@@ -137,11 +137,15 @@ const drainEnergy = (origin, target, skill) => {
     const damageResult = skill.damage + target.damageReceived || 0
 
     //Calc energy
-    // const energyResult = origin.energy + (skill.value * 1)
-    // let newEnergy = energyResult < 0 ? 0 : energyResult
+    let originEnergy = origin.energy
     
+    if(target.energy >= Math.abs(skill.value)){
+        const energyResult = origin.energy + Math.abs(skill.value)
+        originEnergy = energyResult <= 0 ? 0 : energyResult
+    }
+
     //Calc opponent energy
-    const oppEnergyResult = origin.energy + skill.value
+    const oppEnergyResult = target.energy + skill.value
     let oppNewEnergy = oppEnergyResult < 0 ? 0 : oppEnergyResult
 
     return [
@@ -151,6 +155,13 @@ const drainEnergy = (origin, target, skill) => {
                 ...target,
                 damageReceived: damageResult,
                 energy: oppNewEnergy
+            }
+        },
+        {
+            affected: affectedTypes.FIGHTER,
+            value: {
+                ...origin,
+                energy: originEnergy
             }
         },
         {
