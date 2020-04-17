@@ -162,9 +162,11 @@
             {
                 "id": 73,
                 "name": "Hyakuretsukyaku",
-                "cost": 5,
-                "damage": 60,
-                "effect": "regular"
+                "cost": 1,
+                "damage": 10,
+                "effect": "drainEnergy",
+                "value":-1,
+                "info": "Discard 1 energy attached to the opponent fighter."
             }
         ],
         "type": "fighter"

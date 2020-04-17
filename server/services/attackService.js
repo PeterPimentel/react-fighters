@@ -73,17 +73,26 @@ const charge = (origin, target, skill) => {
 }
 
 const heal = (origin, target, skill) => {
-    let damage = target.damageReceived || 0
-    let damageReceived = damage - skill.value
+    //Calc damage
+    let damageResult = skill.damage + target.damageReceived || 0
 
-    damageReceived = damageReceived < 0 ? 0 : damage
+    //Calc heal
+    let healResult = origin.damageReceived - skill.value
+    let newDamageResult = healResult < 0 ? 0 : healResult
 
     return [
+        {
+            affected: affectedTypes.OPPONENT_FIGHTER,
+            value: {
+                ...target,
+                damageReceived: damageResult
+            }
+        },
         {
             affected: affectedTypes.FIGHTER,
             value: {
                 ...origin,
-                damageReceived: damageReceived
+                damageReceived: newDamageResult
             }
         },
         {
@@ -122,12 +131,41 @@ const addEnergy = (origin, target, skill) => {
     ]
 }
 
+const drainEnergy = (origin, target, skill) => {
+
+    //Calc damage
+    const damageResult = skill.damage + target.damageReceived || 0
+
+    //Calc energy
+    // const energyResult = origin.energy + (skill.value * 1)
+    // let newEnergy = energyResult < 0 ? 0 : energyResult
+    
+    //Calc opponent energy
+    const oppEnergyResult = origin.energy + skill.value
+    let oppNewEnergy = oppEnergyResult < 0 ? 0 : oppEnergyResult
+
+    return [
+        {
+            affected: affectedTypes.OPPONENT_FIGHTER,
+            value: {
+                ...target,
+                damageReceived: damageResult,
+                energy: oppNewEnergy
+            }
+        },
+        {
+            affected: affectedTypes.TURN_END
+        }
+    ]
+}
+
 const _skillTypes = {
     regular: regular,
     flipCoin: flipCoin,
     heal: heal,
     addEnergy: addEnergy,
-    charge: charge
+    charge: charge,
+    drainEnergy: drainEnergy
 }
 
 
