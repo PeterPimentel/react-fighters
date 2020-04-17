@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import Card from '../Card'
 import { Container, CardsContainer } from './styles'
-import { Title, Button } from '../../styles/common'
+import { Title, Button, HeaderContainer } from '../../styles/common'
 
 import { index } from '../../service/cardService'
 
@@ -34,18 +34,20 @@ export default function Collection() {
 
     return (
         <Container>
-            <div className="header">
-                <select onChange={handleFilter} value={filter}>
-                    <option value="all">All</option>
-                    <option value="fighter">Fighter</option>
-                    <option value="energy">Energy</option>
-                    <option value="supporter">Support</option>
-                </select>
-                <Title>Cards</Title>
-                <Link to="/">
-                    <Button>Back</Button>
-                </Link>
-            </div>
+            <HeaderContainer>
+                <div className="header">
+                    <select onChange={handleFilter} value={filter}>
+                        <option value="all">All</option>
+                        <option value="fighter">Fighter</option>
+                        <option value="energy">Energy</option>
+                        <option value="supporter">Support</option>
+                    </select>
+                    <Title>Cards</Title>
+                    <Link to="/">
+                        <Button>Back</Button>
+                    </Link>
+                </div>
+            </HeaderContainer>
             <CardsContainer>
                 {
                     filteredCards.map(card =>

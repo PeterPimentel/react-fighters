@@ -34,15 +34,15 @@ export default function Arena() {
         return () => removeAllListeners()
     }, [dispatch])
 
-    if(user.victorys >= 1 || opponent.victorys >= 1){
+    if(user.victorys >= 2 || opponent.victorys >= 2){
         return <Redirect to="/arena/end" />
     }
 
     return (
         <Background>
+            <Header />
             {/* GRID Start */}
             <Container>
-                <Header />
                 <Reserve area="reserveUser" reserve={reserve} canDrop={true} />
                 <GridArea area="arenaUser">
                     <Ring fighter={fighter} />

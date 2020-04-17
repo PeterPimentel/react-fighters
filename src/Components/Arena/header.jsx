@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { GridArea, UserInfo, ButtonSkip } from './styles'
-import { Title, Row } from '../../styles/common'
+import { GridArea, UserInfo, ButtonSkip, HeaderGrid } from './styles'
+import { Row, HeaderContainer, Text, SubTitle } from '../../styles/common'
 
 import { handleUserAction } from '../../redux/reducers/gameReducer'
 
@@ -21,50 +21,52 @@ export default function Header() {
     }
 
     return (
-        <>
-            <GridArea area="arenaHeaderUserInfo">
-                <UserInfo>
-                    <div>
-                        <p>{`Username: ${user.username}`}</p>
+        <HeaderContainer>
+            <HeaderGrid>
+                <GridArea area="arenaHeaderUserInfo">
+                    <UserInfo>
                         <div>
-                            {
-                                Array.from({length: user.victorys}).map((_, idx)=>
-                                    <img key={idx} src={victory_img} alt="victorys" />
-                                )
-                            }
+                            <Text>{user.username}</Text>
+                            <div>
+                                {
+                                    Array.from({ length: user.victorys }).map((_, idx) =>
+                                        <img key={idx} src={victory_img} alt="victorys" />
+                                    )
+                                }
+                            </div>
                         </div>
-                    </div>
-                </UserInfo>
-            </GridArea>
-            <GridArea area="arenaHeaderUserTurn">
-                <Row>
-                    {turn.my &&
-                        <>
-                            <Title fontSize="1.5em">Your turn</Title>
-                            <ButtonSkip onClick={handleSkip}>&#11246;</ButtonSkip>
-                        </>
-                    }
-                </Row>
-            </GridArea>
-            <GridArea area="arenaHeaderOpponentTurn">
-                <Row>
-                    {!turn.my && <Title fontSize="1.5em">Playing</Title>}
-                </Row>
-            </GridArea>
-            <GridArea area="arenaHeaderOpponentInfo">
-                <UserInfo>
-                    <div>
-                        <p>{`Username: ${opponent.username}`}</p>
+                    </UserInfo>
+                </GridArea>
+                <GridArea area="arenaHeaderUserTurn">
+                    <Row>
+                        {turn.my &&
+                            <>
+                                <SubTitle fontSize="1.5em">Your turn</SubTitle>
+                                <ButtonSkip onClick={handleSkip}>&#11246;</ButtonSkip>
+                            </>
+                        }
+                    </Row>
+                </GridArea>
+                <GridArea area="arenaHeaderOpponentTurn">
+                    <Row>
+                        {!turn.my && <SubTitle fontSize="1.5em">Playing</SubTitle>}
+                    </Row>
+                </GridArea>
+                <GridArea area="arenaHeaderOpponentInfo">
+                    <UserInfo>
                         <div>
-                            {
-                                Array.from({length: opponent.victorys}).map((_, idx)=>
-                                    <img key={idx} src={victory_img} alt="victorys" />
-                                )
-                            }
+                            <Text>{opponent.username}</Text>
+                            <div>
+                                {
+                                    Array.from({ length: opponent.victorys }).map((_, idx) =>
+                                        <img key={idx} src={victory_img} alt="victorys" />
+                                    )
+                                }
+                            </div>
                         </div>
-                    </div>
-                </UserInfo>
-            </GridArea>
-        </>
+                    </UserInfo>
+                </GridArea>
+            </HeaderGrid>
+        </HeaderContainer>
     )
 }

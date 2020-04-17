@@ -84,3 +84,14 @@ export const Column = styled.div`
     width: 100%;
     height: 100%;
 `;
+
+export const HeaderContainer = styled.div`
+    background: rgb(18,23,27);
+    background: linear-gradient(180deg,rgba(18,23,27,1) 71%,rgba(0,3,6,1) 99%);
+    border-bottom: 4px solid #2b2b2b;
+    padding: 4px;
+    -webkit-box-shadow: 0px 5px 14px 0px rgba(186,63,11,1);
+    -moz-box-shadow: 0px 5px 14px 0px rgba(186,63,11,1);
+    box-shadow: 0px 5px 14px 0px rgba(186,63,11,1);
+    margin-bottom: 8px;
+`;

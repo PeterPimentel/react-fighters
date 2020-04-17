@@ -12,13 +12,22 @@ export const Container = styled.div`
     height: 80vh;
     width: 100vw;
     display: grid;
-    grid-template-areas:
-    "arenaHeaderUserInfo arenaHeaderUserTurn arenaHeaderOpponentTurn arenaHeaderOpponentInfo"
-    "reserveUser arenaUser arenaOpponent reserverOpponent";
+    grid-template-areas:"reserveUser arenaUser arenaOpponent reserverOpponent";
     grid-template-columns: 20vw 25vw 25vw 20vw;
-    grid-template-rows: 10vh 70vh;
+    grid-template-rows: 70vh;
     grid-gap: 0 1vw;
     justify-content: center;
+`;
+
+export const HeaderGrid = styled.div`
+    display: grid;
+    width: 100vw;
+    height: calc(10vh - 8px);
+    grid-template-areas:"arenaHeaderUserInfo arenaHeaderUserTurn arenaHeaderOpponentTurn arenaHeaderOpponentInfo";
+    grid-template-columns: 20vw 25vw 25vw 20vw;
+    grid-gap: 0 1vw;
+    justify-content: center;
+    color: white;
 `;
 
 export const GridArea = styled.div`
@@ -105,10 +114,6 @@ export const FighterBox = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        ${props => props.flip &&
-        css`
-            /* transform: scaleX(-1); */
-        `}
     }
 `;
 
@@ -177,8 +182,6 @@ export const UserInfo = styled.div`
     height: 100%;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(255,255,255,0.2);
-
     & div > p {
         font-size:small;
     }
@@ -203,7 +206,6 @@ export const ButtonSkip = styled.button`
 
 export const ReserveArea = styled.div`
     grid-area:${({ area }) => area};
-    /* border: ${({ color }) => `2px solid ${color}`}; */
     background-color: rgb(255, 255, 255,0.2);
     padding: 4px;
     display:flex;
