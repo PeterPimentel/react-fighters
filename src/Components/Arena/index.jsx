@@ -34,7 +34,7 @@ export default function Arena() {
         return () => removeAllListeners()
     }, [dispatch])
 
-    if(user.victorys >= 2 || opponent.victorys >= 2){
+    if(user.victorys >= 3 || opponent.victorys >= 3){
         return <Redirect to="/arena/end" />
     }
 

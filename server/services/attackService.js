@@ -1,10 +1,12 @@
 const { affectedTypes } = require('../contants')
 
 const _checkFighterDamage = (affectedArray) => {
-    const fighter = affectedArray.find(el => el.affected === affectedTypes.OPPONENT_FIGHTER)
+    const opponentFighter = affectedArray.find(el => el.affected === affectedTypes.OPPONENT_FIGHTER)
 
-    if (fighter) {
-        if (fighter.value.life <= fighter.value.damageReceived || !fighter.value.id) {
+    // Adicionar politica de DRAW
+    // Talvez baseado em um nome unico tipo END_ROUND
+    if (opponentFighter) {
+        if (opponentFighter.value.life <= opponentFighter.value.damageReceived || !opponentFighter.value.id) {
 
             affectedArray.push(
                 { affected: affectedTypes.KO },

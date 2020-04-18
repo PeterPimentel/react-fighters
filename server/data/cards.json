@@ -244,17 +244,19 @@
     },
     {
         "id": 16,
-        "name": "Seppuku",
-        "cardImage": "http://localhost:8080/static/supporter/seppuku.jpg",
+        "name": "Hands Up",
+        "cardImage": "http://localhost:8080/static/supporter/hands_up.jpg",
         "type": "supporter",
         "effects": [
-            "sacrifice",
-            "draw"
+            "addEnergy",
+            "draw",
+            "heal"
         ],
-        "info": "Kill the target fighter then draw 4 cards.",
+        "info": "Discard 3 energys attached to your fighter, then draw 2 cards and heal 10",
         "values": [
-            true,
-            4
+            -3,
+            2,
+            10
         ]
     }
 ]

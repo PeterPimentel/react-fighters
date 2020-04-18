@@ -10,8 +10,6 @@ const affectedTypes = {
     TURN_END: 'endTurn',
     RESERVE: 'reserve',
     KO: 'KO',
-    TIED_ROUND: 'TIED_ROUND',
-    SELF_KO:'SELF_KO',
     USER_ADD_VICTORY: 'userAddVictory'
 }
 
@@ -24,7 +22,6 @@ const actionstypes = {
     ENERGY: 'energy'
 }
 
-module.exports = {
-    affectedTypes,
-    actionstypes
+export {
+    affectedTypes, actionstypes
 }
