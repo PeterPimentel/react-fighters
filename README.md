@@ -1,9 +1,9 @@
 <p align="center">
-    <img src="./docs/assets/wizard.png" alt="React chat logo" width="120"/>
+    <img src="./docs/assets/logo.png" alt="React chat logo" width="360"/>
 </p>
-<h1 align="center" style="border-bottom: none;">React Fighters</h1>
+<h2 align="center" style="border-bottom: none;">React Fighters</h2>
 
-<h4 align="center">🎴 A simple card game based on Pokemon TCG 🎴</h4>
+<h4 align="center">A simple card game based on Pokemon TCG</h4>
 
 Remember it is only an input validator, you must handle form submit events.
 
