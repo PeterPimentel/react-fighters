@@ -6,3 +6,4 @@
 - Menu and video music - Ville Nousiainen [soundclound](http://soundcloud.com/mutkanto)
 - Punch energy - Pokemon TCG
 - Game styles - Pokemon TCG
+- Vídeo opening soundtrack - [Alezandr Zhelanov](https://soundcloud.com/alexandr-zhelanov)
