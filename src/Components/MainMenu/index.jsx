@@ -17,6 +17,8 @@ import {
 
 import { setOpponent } from '../../redux/reducers/opponentReducer'
 
+import audio from '../../assets/sounds/fight.ogg'
+
 export default function MainMenu() {
 
     const [show, setShow] = useState(false)
@@ -94,6 +96,13 @@ export default function MainMenu() {
                 <Title>React Fighters</Title>
                 <hr/>
             </div>
+            <audio
+                autoPlay
+                loop
+                src={audio}>
+                    Your browser does not support the
+                    <code>audio</code> element.
+            </audio>
             <Modal
                 show={show}
                 handleClose={() => sendResponse(false)}

@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
 import arena_bg from '../../assets/arena_bg.jpg'
-import shadow_assault_gif from '../../assets/animations/shadow-assault-effect-2.gif'
 
 export const Background = styled.div`
     background-image: url(${arena_bg});
@@ -264,7 +263,6 @@ export const ArenaTitleBox = styled.div`
     top: 30vh;
 `
 export const PunchEffect = styled.div`
-    background-image:url(${shadow_assault_gif});
     background-size: cover;
     background-repeat: no-repeat;
     width: 50%;

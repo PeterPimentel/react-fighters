@@ -36,13 +36,13 @@
                 "id": 3,
                 "name": "Jab",
                 "cost": 1,
-                "damage": 40,
+                "damage": 10,
                 "effect": "regular"
             },
             {
                 "id": 4,
                 "name": "Upper",
-                "cost": 3,
+                "cost": 4,
                 "damage": 40,
                 "effect": "regular"
             }

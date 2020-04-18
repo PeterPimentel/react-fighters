@@ -17,14 +17,14 @@ export default function EndBattle() {
             </Link>
             <BattleResult>
                 <UserContainer bg={user.fighter.image}>
-                    <SubTitle>{user.victorys >= 1 ? 'YOU WIN':'YOU LOSE'}</SubTitle>
+                    <SubTitle>{user.victorys >= 3 ? 'YOU WIN':'YOU LOSE'}</SubTitle>
                     <div>
                         <Text>{user.fighter.name}</Text>
                         <div className="user-info">{user.username}</div>
                     </div>
                 </UserContainer>
                 <UserContainer bg={opponent.fighter.image}>
-                    <SubTitle>{opponent.victorys >= 1 ? 'WIN':'LOSE'}</SubTitle>
+                    <SubTitle>{opponent.victorys >= 3 ? 'WIN':'LOSE'}</SubTitle>
                     <div>
                         <Text>{opponent.fighter.name}</Text>
                         <div className="user-info opponent">{opponent.username}</div>
