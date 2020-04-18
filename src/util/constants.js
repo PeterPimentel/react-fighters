@@ -15,7 +15,7 @@ const affectedTypes = {
 
 const actionstypes = {
     SKIP: 'skip',
-    FIGHTER_FROM_RESERVE: 'figtherFromReserve',
+    FIGHTER_FROM_RESERVE: 'fighterFromReserve',
     ATTACK: 'attack',
     RESERVE: 'reserve',
     SUPPORTER: 'supporter',

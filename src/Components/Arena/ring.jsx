@@ -17,9 +17,9 @@ export default function Ring({ fighter, opponentRing = false }) {
 
     const ref = useRef(null)
     const [, dropRef] = useDrop({
-        accept: ['supporter', 'energy', 'figtherFromReserve'],
+        accept: ['supporter', 'energy', 'fighterFromReserve'],
         drop(item) {
-            const target = item.type === 'figtherFromReserve' ? reserve : fighter
+            const target = item.type === 'fighterFromReserve' ? reserve : fighter
             dispatch(handleUserAction({ type: item.type, to: opponent.socketId }, item.card, target))
             return {
                 id: fighter.id

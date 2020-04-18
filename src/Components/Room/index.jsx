@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Link } from "react-router-dom"
 
-import FigtherBox from './figtherBox'
+import FighterBox from './figtherBox'
 import Footer from './footer'
 import { Row } from '../../styles/common'
 
@@ -33,13 +33,11 @@ const Room = () => {
   const [fighters, setFighters] = useState([])
 
   useEffect(() => {
-    console.log("Calling")
     async function fectData() {
       const data = await fightersIndex()
       setFighters(data)
     }
     fectData()
-  // }, [user.username]) //OLD - observar a mudança
   }, [])
 
   const handleReady = () => {
@@ -92,7 +90,7 @@ const Room = () => {
       <Row className={styles.characters}>
         {
           fighters.map(fighter =>
-            <FigtherBox
+            <FighterBox
               key={fighter.id}
               onSelect={handleSelect}
               fighter={fighter}

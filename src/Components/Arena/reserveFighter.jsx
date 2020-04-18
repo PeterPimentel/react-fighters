@@ -4,18 +4,18 @@ import { useDrag } from 'react-dnd'
 
 import { ReserveBox } from './styles'
 
-export default function ReserveFighter({ figther, flip = false }) {
+export default function ReserveFighter({ fighter, flip = false }) {
 
     const ref = useRef(null)
 
     const [, dragRef] = useDrag({
-        item: { type: 'figtherFromReserve', card: figther },
+        item: { type: 'fighterFromReserve', card: fighter },
     })
 
     dragRef(ref)
 
     return (
-        <ReserveBox bg={figther.cardImage} flip={flip} ref={ref}>
+        <ReserveBox bg={fighter.cardImage} flip={flip} ref={ref}>
             <div />
         </ReserveBox>
     )

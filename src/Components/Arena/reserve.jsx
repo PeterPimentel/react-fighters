@@ -39,7 +39,7 @@ export default function Reserve({ area, reserve, canDrop = false }) {
                     <ReserveFighter
                         key={fig.key}
                         flip={canDrop}
-                        figther={fig}
+                        fighter={fig}
                     />
                 )
             }

@@ -34,7 +34,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
   socket.on('action', handlers.handleAction(socket, io))
   socket.on('joinInGame', handlers.handleJoin(socket, io))
-  socket.on('figtherSelected', handlers.handleFigtherSelected(socket, io))
+  socket.on('fighterSelected', handlers.handleFighterSelected(socket, io))
   socket.on('ready', handlers.handleReady(socket, io))
   socket.on('challenge', handlers.handleMatchmaking(socket, io))
   socket.on('challengeResponse', handlers.handleChallengeResponse(socket, io))

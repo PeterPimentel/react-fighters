@@ -77,12 +77,12 @@ export const FighterBox = styled.div`
         padding: 8px;
         font-weight:500;
 
-        & > .figther-name {
+        & > .fighter-name {
             text-align: initial;
             font-size: 1em;
         }
 
-        & > .figther-name.mirror {
+        & > .fighter-name.mirror {
             text-align: end;
         }
 

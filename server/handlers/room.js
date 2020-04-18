@@ -8,7 +8,7 @@ const handleJoin = (socket, io) => (data) => {
     // socket.to('battle').emit('userJoin', {socketId:socket.id, username:data.username})
 }
 
-const handleFigtherSelected = (socket, io) => (data) => {
+const handleFighterSelected = (socket, io) => (data) => {
     console.log(`Enemy - ${data.username} is waiting for battle using ${data.fighter.name}`)
     io.of('/').in('battle').clients(function (error, clients) {
         for (let i in clients) {
@@ -79,7 +79,7 @@ const handleChallengeResponse = (socket, io) => (response) => {
 
 module.exports = {
     handleJoin,
-    handleFigtherSelected,
+    handleFighterSelected,
     handleReady,
     handleMatchmaking,
     handleChallengeResponse

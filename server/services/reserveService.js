@@ -1,6 +1,6 @@
 const { affectedTypes } = require('../contants')
 
-const figtherFromReserve = (fighter, reserve) => {
+const fighterFromReserve = (fighter, reserve) => {
     const newReserve = reserve.filter(fig => fig.key !== fighter.key)
     return [
         {
@@ -42,5 +42,5 @@ const addFighter = (fighter, reserve) => {
 
 module.exports = {
     addFighter,
-    figtherFromReserve
+    fighterFromReserve
 }

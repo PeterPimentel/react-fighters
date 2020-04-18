@@ -23,7 +23,7 @@ export const validateTurnRules = (turn, action, target) => {
     }else if((action.type === 'supporter' || action.type === 'energy') && !target.id){
         result.message = "You only could play a support card having a fighter on arena."
 
-    }else if(action.type === 'figtherFromReserve' && turn.arenaEmpty === false){
+    }else if(action.type === 'fighterFromReserve' && turn.arenaEmpty === false){
         result.message = "The arena must by empty to put a new fighter there."
 
     }else if(action.type === 'reserve' && turn.reserve === true){

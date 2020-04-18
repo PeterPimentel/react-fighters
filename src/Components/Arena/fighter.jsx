@@ -35,7 +35,7 @@ export default function Fighter({ fighter, opponentRing = false }) {
     return (
         <FighterBox bg={fighter.image} flip={opponentRing} width={barWidth} className={animation}>
             <div className="status">
-                <Text className={`figther-name ${opponentRing ? `mirror`: ``}`}>{fighter.name}</Text>
+                <Text className={`fighter-name ${opponentRing ? `mirror`: ``}`}>{fighter.name}</Text>
                 <div className="status-life">
                     <div>
                         <span>{`${hp}/${fighter.life}`}</span>

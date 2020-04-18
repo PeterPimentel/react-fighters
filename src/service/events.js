@@ -26,7 +26,7 @@ export const onAction = (callback) => {
 }
 
 export const emitFigtherSelected = (data) => {
-    socket.emit('figtherSelected', data)
+    socket.emit('fighterSelected', data)
 }
 
 export const onEnemySelected = (callback) => {

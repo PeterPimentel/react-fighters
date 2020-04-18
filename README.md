@@ -1,68 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+    <img src="./docs/assets/wizard.png" alt="React chat logo" width="120"/>
+</p>
+<h1 align="center" style="border-bottom: none;">React Fighters</h1>
 
-## Available Scripts
+<h4 align="center">🎴 A simple card game based on Pokemon TCG 🎴</h4>
 
-In the project directory, you can run:
+Remember it is only an input validator, you must handle form submit events.
 
-### `npm start`
+- [Getting Started](#start)
+- [Rules](#rules)
+- [References](/docs/references.md)
+- [TODO](/docs/todo.md)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Motivation
+I was tired of do APIs and other simple projects to training my React and Node skills then i tried to think and a simples project but different from other simple API consumers.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+I am fascinated for games, so here is the result!
 
-### `npm test`
+## <a name="start"></a>Getting Started
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+$ git clone https://github.com/PeterPimentel/react-card-game.git
+$ cd react-card-game/
+$ npm install
+$ npm start
+$ npm run server
+```
+Open 2 tabs from your browser and have fun!
 
-### `npm run build`
+## <a name="start"></a>Rules
+.There's no rules! 😈 Just kidding
+####Rules
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. You only can play one energy for turn.
+1. You only can play one support card for turn.
+1. Your attack is the last action in the turn.
+1. The game finishes when some one get 3 victorys.
+1. When you defeat a fighter you get one victory.
+1. If your fighter dies, your arena is open. If the opponent attacks it will add one victory to him.
+1. You only can play fighter in your arena from your reserve.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## License
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+MIT © [PeterPimentel](https://github.com/PeterPimentel)

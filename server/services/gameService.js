@@ -17,7 +17,7 @@ const handle = (action, origin, target) => {
             }
         case actionstypes.FIGHTER_FROM_RESERVE:
             return {
-                result: reserveService.figtherFromReserve(origin, target),
+                result: reserveService.fighterFromReserve(origin, target),
                 action
             }
         case actionstypes.ATTACK:

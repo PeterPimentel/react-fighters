@@ -1,7 +1,7 @@
 const handleAction = require('./action')
 const {
     handleJoin,
-    handleFigtherSelected,
+    handleFighterSelected,
     handleReady,
     handleMatchmaking,
     handleChallengeResponse
@@ -11,7 +11,7 @@ module.exports = {
     handleMatchmaking,
     handleAction,
     handleJoin,
-    handleFigtherSelected,
+    handleFighterSelected,
     handleReady,
     handleChallengeResponse
 }
