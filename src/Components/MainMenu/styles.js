@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-import street_bg from '../../assets/street_bg.jpg'
+import main_bg from '../../assets/main_bg.jpg'
 
 export const Container = styled.div`
-    background-image:url(${street_bg});
+    background-image:url(${main_bg});
     background-color:#032d39;
     padding:10px;
     height: 100vh;
@@ -14,6 +14,39 @@ export const Container = styled.div`
         & > a {
             text-decoration: none;
         }
+    }
+
+    & .main-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    & .main-title hr{
+        width: 80vw;
+        border: 0px;
+        -webkit-box-shadow: 0px 0px 10px 3px rgba(255,38,0,1);
+        -moz-box-shadow: 0px 0px 10px 3px rgba(255,38,0,1);
+        box-shadow: 0px 0px 10px 3px rgba(255,38,0,1);
+        position: relative;
+    }
+
+    & .main-title hr:nth-child(2){
+        width: 60vw;
+        border: 0px;
+        top:24px;
+        -webkit-box-shadow:  0px 0px 10px 3px rgba(255,132,0,1);
+        -moz-box-shadow:  0px 0px 10px 3px rgba(255,132,0,1);
+        box-shadow:  0px 0px 10px 3px rgba(255,132,0,1);
+    }
+
+    & .main-title hr:nth-child(1){
+        top:13px;
+    }
+
+    & .main-title hr:last-child{
+        bottom:13px;
     }
 `;
 

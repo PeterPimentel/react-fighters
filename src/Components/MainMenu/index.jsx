@@ -88,7 +88,12 @@ export default function MainMenu() {
 
     return (
         <Container>
-            <Title>Main Menu</Title>
+            <div className="main-title">
+                <hr/>
+                <hr/>
+                <Title>React Fighters</Title>
+                <hr/>
+            </div>
             <Modal
                 show={show}
                 handleClose={() => sendResponse(false)}
