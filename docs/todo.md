@@ -10,3 +10,4 @@
 - Trigger a sound effect when attack
 - Add database
 - In some places i wrote figther insted of fighter
+- Transition from last K.O to the end game screen

@@ -5,7 +5,7 @@
 
 <h4 align="center">A simple card game based on Pokemon TCG</h4>
 
-Remember it is only an input validator, you must handle form submit events.
+[Trailer](https://drive.google.com/file/d/1VChtCTkdbjb7_FuQ-Jiz6VXz7A5epZmw/view)
 
 - [Getting Started](#start)
 - [Rules](#rules)
@@ -13,15 +13,15 @@ Remember it is only an input validator, you must handle form submit events.
 - [TODO](/docs/todo.md)
 
 ## Motivation
-I was tired of do APIs and other simple projects to training my React and Node skills then i tried to think and a simples project but different from other simple API consumers.
+I was tired of do APIs and other simple projects to training my React and Node skills then i tried to think in a simple project but different from other API consumers.
 
 I am fascinated for games, so here is the result!
 
 ## <a name="start"></a>Getting Started
 
 ```bash
-$ git clone https://github.com/PeterPimentel/react-card-game.git
-$ cd react-card-game/
+$ git clone https://github.com/PeterPimentel/react-fighters.git
+$ cd react-fighters/
 $ npm install
 $ npm start
 $ npm run server
@@ -30,6 +30,7 @@ Open 2 tabs from your browser and have fun!
 
 ## <a name="start"></a>Rules
 .There's no rules! 😈 Just kidding
+
 ####Rules
 
 1. You only can play one energy for turn.
